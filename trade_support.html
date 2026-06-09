@@ -16,7 +16,6 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);}
 
-/* ===== PC: サイドバーレイアウト ===== */
 .shell{display:flex;height:100vh;overflow:hidden;}
 .sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;}
 .logo{padding:18px 16px 12px;border-bottom:1px solid var(--border);}
@@ -30,29 +29,24 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .nav-date{padding:10px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);font-family:var(--mono);}
 .main{flex:1;overflow-y:auto;}
 
-/* ===== モバイル: ボトムナビ ===== */
 .bottom-nav{display:none;}
 
-/* ===== Pages ===== */
 .page{display:none;padding:24px 28px;max-width:960px;}
 .page.active{display:block;}
 .page-title{font-size:20px;font-weight:700;margin-bottom:4px;}
 .page-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
 
-/* ===== Cards ===== */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
 .card-title{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:12px;letter-spacing:.5px;text-transform:uppercase;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
 
-/* ===== Forms ===== */
 label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px;}
 input,select,textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;transition:border .15s;-webkit-appearance:none;}
 input:focus,select:focus,textarea:focus{border-color:var(--accent);}
 textarea{resize:vertical;min-height:80px;}
 select option{background:var(--bg3);}
 
-/* ===== Buttons ===== */
 .btn{padding:9px 18px;border-radius:7px;border:none;cursor:pointer;font-size:13px;font-family:var(--font);font-weight:500;transition:all .15s;white-space:nowrap;}
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-sm{padding:7px 13px;font-size:12px;}
@@ -60,7 +54,6 @@ select option{background:var(--bg3);}
 .btn-teal{background:rgba(20,184,166,.15);color:var(--teal);border:1px solid rgba(20,184,166,.3);}
 .btn-tv{background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.3);}
 
-/* ===== Badges ===== */
 .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;}
 .badge-green{background:rgba(34,197,94,.15);color:var(--green);}
 .badge-red{background:rgba(239,68,68,.15);color:var(--red);}
@@ -68,7 +61,6 @@ select option{background:var(--bg3);}
 .badge-blue{background:rgba(79,142,247,.15);color:var(--accent);}
 .badge-teal{background:rgba(20,184,166,.15);color:var(--teal);}
 
-/* ===== Checklist ===== */
 .check-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
 .check-item:last-child{border-bottom:none;}
 .check-box{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
@@ -79,13 +71,25 @@ select option{background:var(--bg3);}
 .progress-bar{background:var(--bg3);border-radius:20px;height:6px;overflow:hidden;margin-top:12px;}
 .progress-fill{height:100%;border-radius:20px;background:var(--accent);transition:width .4s;}
 
-/* ===== ATR ===== */
 .calc-result{background:var(--bg3);border-radius:8px;padding:14px;margin-top:12px;}
 .calc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
 .calc-row:last-child{border-bottom:none;}
 .calc-val{font-family:var(--mono);font-size:14px;font-weight:600;}
 
-/* ===== Journal ===== */
+/* ===== 環境認識タイムフレームタブ ===== */
+.tf-tabs{display:flex;gap:0;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.tf-tab{flex:1;padding:9px;border:none;background:var(--bg3);color:var(--muted);font-size:12px;font-family:var(--font);font-weight:500;cursor:pointer;transition:all .15s;border-right:1px solid var(--border);}
+.tf-tab:last-child{border-right:none;}
+.tf-tab.active{background:var(--bg4);color:var(--accent);}
+.tf-tab .tf-icon{font-size:14px;display:block;margin-bottom:2px;}
+.tf-panel{display:none;}
+.tf-panel.active{display:block;}
+.tf-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;padding:4px 10px;border-radius:20px;background:var(--bg3);}
+.tf-label.monthly{color:#a78bfa;background:rgba(167,139,250,.1);}
+.tf-label.weekly{color:var(--amber);background:rgba(245,158,11,.1);}
+.tf-label.daily{color:var(--teal);background:rgba(20,184,166,.1);}
+
+/* ===== ジャーナル ===== */
 .journal-entry{background:var(--bg3);border-radius:8px;padding:14px;margin-bottom:10px;border-left:3px solid transparent;}
 .journal-entry.win{border-left-color:var(--green);}
 .journal-entry.loss{border-left-color:var(--red);}
@@ -94,14 +98,20 @@ select option{background:var(--bg3);}
 .entry-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px;}
 .entry-date{font-size:11px;color:var(--muted);font-family:var(--mono);flex-shrink:0;}
 .entry-body{font-size:13px;line-height:1.6;}
+.entry-meta{font-size:11px;color:var(--muted);margin-top:6px;display:flex;flex-wrap:wrap;gap:8px;}
+.entry-meta span{background:var(--bg4);padding:2px 8px;border-radius:4px;}
 .entry-img{width:100%;max-height:220px;object-fit:cover;border-radius:6px;margin-top:10px;cursor:pointer;}
 
-/* ===== Stats ===== */
+/* ===== pips入力グループ ===== */
+.pnl-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.pnl-group .input-unit{position:relative;}
+.pnl-group .input-unit input{padding-right:44px;}
+.pnl-group .unit-label{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);font-family:var(--mono);pointer-events:none;}
+
 .stat-card{background:var(--bg3);border-radius:8px;padding:14px;text-align:center;}
 .stat-num{font-size:26px;font-weight:700;font-family:var(--mono);}
 .stat-label{font-size:11px;color:var(--muted);margin-top:4px;}
 
-/* ===== Chat ===== */
 .chat-area{background:var(--bg3);border-radius:8px;padding:14px;min-height:260px;max-height:380px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:10px;}
 .chat-msg{max-width:85%;}
 .chat-msg.user{align-self:flex-end;}
@@ -117,7 +127,6 @@ select option{background:var(--bg3);}
 .dot:nth-child(3){animation-delay:.4s;}
 @keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
 
-/* ===== Env tags ===== */
 .env-tag{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:none;color:var(--muted);font-size:13px;font-family:var(--font);cursor:pointer;transition:all .15s;}
 .env-tag.selected-long{border-color:var(--green);color:var(--green);background:rgba(34,197,94,.08);}
 .env-tag.selected-short{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08);}
@@ -125,19 +134,16 @@ select option{background:var(--bg3);}
 .env-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 .ai-summary{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(124,58,237,.08));border:1px solid rgba(79,142,247,.25);border-radius:8px;padding:14px;font-size:13px;line-height:1.8;color:var(--text);}
 
-/* ===== TradingView ===== */
 .tv-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
-.tv-toolbar select,.tv-toolbar input{width:auto;padding:6px 10px;font-size:12px;}
-.tv-toolbar input{width:110px;}
+.tv-toolbar select,.tv-toolbar input{width:auto;padding:6px 10px;font-size:13px;}
+.tv-toolbar input{width:120px;}
 
-/* ===== Upload ===== */
 .upload-zone{border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;position:relative;}
 .upload-zone:hover{border-color:var(--accent);background:rgba(79,142,247,.04);}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .upload-zone p{font-size:13px;color:var(--muted);margin-top:6px;}
 .preview-img{width:100%;max-height:260px;object-fit:contain;border-radius:6px;margin-top:10px;display:none;}
 
-/* ===== Lightbox ===== */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;}
 .lightbox.open{display:flex;}
 .lightbox img{max-width:94vw;max-height:88vh;border-radius:8px;object-fit:contain;}
@@ -147,48 +153,111 @@ select option{background:var(--bg3);}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 
-/* ===== モバイル対応 ===== */
+/* ===== モバイル ===== */
 @media(max-width:640px){
+  /* 基本レイアウト */
   .shell{flex-direction:column;height:100dvh;}
   .sidebar{display:none;}
 
-  /* ボトムナビ */
+  /* ===== ボトムナビ ===== */
   .bottom-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;
     background:var(--bg2);border-top:1px solid var(--border);
     z-index:100;padding-bottom:env(safe-area-inset-bottom);
+    height:calc(56px + env(safe-area-inset-bottom));
   }
   .bnav-btn{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:8px 4px;border:none;background:none;color:var(--muted);
-    font-size:10px;font-family:var(--font);cursor:pointer;gap:3px;transition:color .15s;
+    padding:6px 2px;border:none;background:none;color:var(--muted);
+    font-size:9px;font-family:var(--font);cursor:pointer;gap:2px;transition:color .15s;
+    min-width:0;/* overflow防止 */
   }
   .bnav-btn.active{color:var(--accent);}
-  .bnav-icon{font-size:20px;line-height:1;}
+  .bnav-icon{font-size:18px;line-height:1;}
 
-  .main{flex:1;overflow-y:auto;padding-bottom:calc(65px + env(safe-area-inset-bottom));}
-  .page{padding:16px 14px;max-width:100%;}
-  .page-title{font-size:18px;}
-  .page-sub{font-size:12px;margin-bottom:16px;}
+  /* ===== スクロール領域 ===== */
+  .main{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(60px + env(safe-area-inset-bottom));}
 
-  .card{padding:14px;margin-bottom:12px;}
+  /* ===== ページ ===== */
+  .page{padding:14px 12px;max-width:100%;}
+  .page-title{font-size:17px;}
+  .page-sub{font-size:12px;margin-bottom:14px;}
+
+  /* ===== カード ===== */
+  .card{padding:12px;margin-bottom:10px;}
+  .card-title{font-size:10px;margin-bottom:10px;}
+
+  /* ===== グリッド: モバイルは基本1列 ===== */
   .grid2{grid-template-columns:1fr;gap:10px;}
   .grid3{grid-template-columns:1fr 1fr;gap:8px;}
-
-  .btn{font-size:13px;padding:10px 14px;}
-  .btn-sm{padding:8px 12px;font-size:12px;}
-
-  .tv-toolbar{gap:6px;padding:8px 10px;}
-  .tv-toolbar input{width:90px;}
-
-  .chat-area{max-height:300px;}
-
-  .stat-num{font-size:22px;}
-
-  .env-tag{font-size:12px;padding:7px 12px;}
-
-  /* グリッドを1列に */
   .stats-grid3{grid-template-columns:1fr 1fr;}
+  .pnl-group{grid-template-columns:1fr 1fr;}
+
+  /* ===== フォーム: 16px以上でSafari自動ズーム防止 ===== */
+  input,select,textarea{
+    font-size:16px !important;  /* これが最重要: 16px未満でSafariがズームする */
+    padding:11px 12px;
+  }
+  label{font-size:13px;}
+
+  /* ===== ボタン ===== */
+  .btn{font-size:14px;padding:11px 16px;}
+  .btn-sm{padding:9px 12px;font-size:13px;}
+  /* タッチターゲット最低44px確保 */
+  .btn,.btn-sm{min-height:44px;}
+
+  /* ===== TradingViewツールバー: モバイルは折り返しレイアウト ===== */
+  .tv-toolbar{
+    gap:6px;padding:8px 10px;
+    display:flex;flex-wrap:wrap;align-items:center;
+  }
+  .tv-toolbar > span{width:100%;font-size:10px;margin-bottom:2px;}
+  .tv-toolbar input{flex:1;min-width:80px;font-size:16px !important;}
+  .tv-toolbar select{flex:0 0 auto;font-size:16px !important;padding:9px 10px;}
+  .tv-toolbar .btn-sm{flex:0 0 auto;padding:9px 12px;font-size:13px;min-height:42px;}
+
+  /* ===== チャットエリア ===== */
+  .chat-area{max-height:260px;min-height:180px;}
+  .chat-bubble{font-size:14px;}
+  .chat-input-row input{font-size:16px !important;}
+
+  /* ===== 統計カード ===== */
+  .stat-num{font-size:20px;}
+  .stat-card{padding:12px 10px;}
+
+  /* ===== タイムフレームタブ ===== */
+  .tf-tab{font-size:13px;padding:10px 6px;}
+  .tf-tab .tf-icon{font-size:16px;}
+
+  /* ===== 環境タグ ===== */
+  .env-tag{font-size:13px;padding:9px 12px;min-height:40px;}
+
+  /* ===== チェックリスト ===== */
+  .check-box{width:26px;height:26px;flex-shrink:0;} /* タッチしやすく拡大 */
+  .check-label{font-size:13px;}
+  .check-sub{font-size:11px;}
+  .check-item{padding:13px 0;gap:14px;}
+
+  /* ===== 心理タグ ===== */
+  #psychoTags .env-tag{font-size:12px;padding:8px 10px;}
+
+  /* ===== ジャーナルエントリー ===== */
+  .entry-body{font-size:13px;}
+  .entry-meta{font-size:11px;}
+
+  /* ===== ATR計算結果 ===== */
+  .calc-row{font-size:13px;padding:9px 0;}
+  .calc-val{font-size:13px;}
+
+  /* ===== バッジ ===== */
+  .badge{font-size:11px;padding:4px 10px;}
+
+  /* ===== プレビュー画像 ===== */
+  .preview-img{max-height:200px;}
+  .entry-img{max-height:180px;}
+
+  /* ===== テキストエリア ===== */
+  textarea{min-height:90px;}
 }
 </style>
 </head>
@@ -220,73 +289,164 @@ select option{background:var(--bg3);}
   <!-- メインコンテンツ -->
   <div class="main">
 
-    <!-- 環境認識 -->
+    <!-- ===== 環境認識 ===== -->
     <div class="page active" id="page-env">
       <div class="page-title">環境認識メモ</div>
-      <div class="page-sub">相場状況を整理してAIにバイアス分析をしてもらう</div>
+      <div class="page-sub">月足→週足→日足で相場を整理してAIにバイアス分析してもらう</div>
 
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="tv-toolbar">
           <span style="font-size:11px;color:var(--muted);font-weight:500;">TradingView</span>
-          <input id="tvSymbolEnv" type="text" placeholder="" style="">
+          <input id="tvSymbolEnv" type="text" placeholder="" autocapitalize="characters" autocorrect="off" spellcheck="false">
           <select id="tvIntervalEnv">
-            <option value="D">日足</option>
-            <option value="W">週足</option>
             <option value="M">月足</option>
+            <option value="W">週足</option>
+            <option value="D" selected>日足</option>
             <option value="240">4H</option>
             <option value="60">1H</option>
             <option value="15">15m</option>
           </select>
           <button class="btn btn-sm btn-ghost" onclick="loadTVWidget('env')">表示</button>
           <button class="btn btn-sm btn-teal" onclick="toggleTVWidget('env')">開閉</button>
-          <button class="btn btn-sm btn-tv" onclick="openTVTab('env')">↗ TVで開く</button>
+          <button class="btn btn-sm btn-tv" onclick="openTVTab('env')">↗ TV</button>
         </div>
         <div id="tvWrap-env" style="display:none;">
           <div id="tv-widget-env" style="height:400px;"></div>
         </div>
       </div>
 
+      <!-- 月足・週足・日足 タブ -->
       <div class="card">
-        <div class="card-title">相場の方向感</div>
-        <div class="env-row" id="dirRow">
-          <button class="env-tag" onclick="selectDir(this,'long')">↑ ロング優位</button>
-          <button class="env-tag" onclick="selectDir(this,'short')">↓ ショート優位</button>
-          <button class="env-tag" onclick="selectDir(this,'range')">↔ レンジ</button>
+        <div class="card-title">タイムフレーム別 環境認識</div>
+        <div class="tf-tabs">
+          <button class="tf-tab active" onclick="switchTF('monthly',this)">
+            <span class="tf-icon">🌙</span>月足
+          </button>
+          <button class="tf-tab" onclick="switchTF('weekly',this)">
+            <span class="tf-icon">📅</span>週足
+          </button>
+          <button class="tf-tab" onclick="switchTF('daily',this)">
+            <span class="tf-icon">📆</span>日足
+          </button>
         </div>
-        <div class="grid2">
-          <div>
-            <label>前日足</label>
-            <select id="prevCandle">
-              <option value="">選択...</option>
-              <option>陽線（スラスト）</option>
-              <option>陰線（スラスト）</option>
-              <option>陽線（逆ヒゲ）</option>
-              <option>陰線（逆ヒゲ）</option>
-              <option>コマ足・ハラミ</option>
-            </select>
-          </div>
-          <div>
-            <label>トレンド / レンジ</label>
-            <select id="marketState">
-              <option value="">選択...</option>
-              <option>トレンド継続</option>
-              <option>レンジ中</option>
-              <option>レンジ→トレンド移行疑い</option>
-              <option>トレンド→レンジ移行疑い</option>
-            </select>
-          </div>
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="card-title">注目節目</div>
-        <div class="grid3" style="margin-bottom:12px;">
-          <div><label>アジア高値</label><input id="asiaH" type="number" placeholder="例: 3310.5"></div>
-          <div><label>アジア安値</label><input id="asiaL" type="number" placeholder="例: 3295.0"></div>
-          <div><label>キリ番・節目</label><input id="keyLevel" type="text" placeholder="例: 3300"></div>
+        <!-- 月足パネル -->
+        <div class="tf-panel active" id="tf-monthly">
+          <div class="tf-label monthly">🌙 月足</div>
+          <div class="env-row" id="dirRow-monthly">
+            <button class="env-tag" onclick="selectDirTF(this,'long','monthly')">↑ ロング優位</button>
+            <button class="env-tag" onclick="selectDirTF(this,'short','monthly')">↓ ショート優位</button>
+            <button class="env-tag" onclick="selectDirTF(this,'range','monthly')">↔ レンジ</button>
+          </div>
+          <div class="grid2" style="margin-bottom:10px;">
+            <div>
+              <label>直近月足の形</label>
+              <select id="prevCandle-monthly">
+                <option value="">選択...</option>
+                <option>陽線（スラスト）</option>
+                <option>陰線（スラスト）</option>
+                <option>陽線（逆ヒゲ）</option>
+                <option>陰線（逆ヒゲ）</option>
+                <option>コマ足・ハラミ</option>
+              </select>
+            </div>
+            <div>
+              <label>トレンド / レンジ</label>
+              <select id="marketState-monthly">
+                <option value="">選択...</option>
+                <option>トレンド継続</option>
+                <option>レンジ中</option>
+                <option>レンジ→トレンド移行疑い</option>
+                <option>トレンド→レンジ移行疑い</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:8px;">
+            <label>月足の主要節目・意識ライン</label>
+            <input id="keyLevel-monthly" type="text" placeholder="例: 3000, 3200（心理的節目）">
+          </div>
+          <label>月足メモ</label>
+          <textarea id="envNote-monthly" placeholder="月足で見えるトレンド・大局観など"></textarea>
         </div>
-        <label>補足メモ</label>
-        <textarea id="envNote" placeholder="ヘッドラインレート・週足節目など"></textarea>
+
+        <!-- 週足パネル -->
+        <div class="tf-panel" id="tf-weekly">
+          <div class="tf-label weekly">📅 週足</div>
+          <div class="env-row" id="dirRow-weekly">
+            <button class="env-tag" onclick="selectDirTF(this,'long','weekly')">↑ ロング優位</button>
+            <button class="env-tag" onclick="selectDirTF(this,'short','weekly')">↓ ショート優位</button>
+            <button class="env-tag" onclick="selectDirTF(this,'range','weekly')">↔ レンジ</button>
+          </div>
+          <div class="grid2" style="margin-bottom:10px;">
+            <div>
+              <label>直近週足の形</label>
+              <select id="prevCandle-weekly">
+                <option value="">選択...</option>
+                <option>陽線（スラスト）</option>
+                <option>陰線（スラスト）</option>
+                <option>陽線（逆ヒゲ）</option>
+                <option>陰線（逆ヒゲ）</option>
+                <option>コマ足・ハラミ</option>
+              </select>
+            </div>
+            <div>
+              <label>トレンド / レンジ</label>
+              <select id="marketState-weekly">
+                <option value="">選択...</option>
+                <option>トレンド継続</option>
+                <option>レンジ中</option>
+                <option>レンジ→トレンド移行疑い</option>
+                <option>トレンド→レンジ移行疑い</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:8px;">
+            <label>週足の主要節目・意識ライン</label>
+            <input id="keyLevel-weekly" type="text" placeholder="例: 3280（先週安値）, 3320（先々週高値）">
+          </div>
+          <label>週足メモ</label>
+          <textarea id="envNote-weekly" placeholder="週足で見えるトレンド・節目・週ボラ残余など"></textarea>
+        </div>
+
+        <!-- 日足パネル -->
+        <div class="tf-panel" id="tf-daily">
+          <div class="tf-label daily">📆 日足</div>
+          <div class="env-row" id="dirRow-daily">
+            <button class="env-tag" onclick="selectDirTF(this,'long','daily')">↑ ロング優位</button>
+            <button class="env-tag" onclick="selectDirTF(this,'short','daily')">↓ ショート優位</button>
+            <button class="env-tag" onclick="selectDirTF(this,'range','daily')">↔ レンジ</button>
+          </div>
+          <div class="grid2" style="margin-bottom:10px;">
+            <div>
+              <label>前日足の形</label>
+              <select id="prevCandle-daily">
+                <option value="">選択...</option>
+                <option>陽線（スラスト）</option>
+                <option>陰線（スラスト）</option>
+                <option>陽線（逆ヒゲ）</option>
+                <option>陰線（逆ヒゲ）</option>
+                <option>コマ足・ハラミ</option>
+              </select>
+            </div>
+            <div>
+              <label>トレンド / レンジ</label>
+              <select id="marketState-daily">
+                <option value="">選択...</option>
+                <option>トレンド継続</option>
+                <option>レンジ中</option>
+                <option>レンジ→トレンド移行疑い</option>
+                <option>トレンド→レンジ移行疑い</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid3" style="margin-bottom:10px;">
+            <div><label>アジア高値</label><input id="asiaH" type="number" placeholder="例: 3310.5"></div>
+            <div><label>アジア安値</label><input id="asiaL" type="number" placeholder="例: 3295.0"></div>
+            <div><label>キリ番・節目</label><input id="keyLevel" type="text" placeholder="例: 3300"></div>
+          </div>
+          <label>日足メモ</label>
+          <textarea id="envNote-daily" placeholder="ヘッドラインレート・アジア高安・当日バイアスなど"></textarea>
+        </div>
       </div>
 
       <div class="card">
@@ -309,7 +469,7 @@ select option{background:var(--bg3);}
       </div>
     </div>
 
-    <!-- エントリーチェック -->
+    <!-- ===== エントリーチェック ===== -->
     <div class="page" id="page-check">
       <div class="page-title">エントリー前チェックリスト</div>
       <div class="page-sub">全て揃って初めてエントリーOK</div>
@@ -329,19 +489,39 @@ select option{background:var(--bg3);}
       </div>
     </div>
 
-    <!-- ATR計算機 -->
+    <!-- ===== ATR計算機（海外口座） ===== -->
     <div class="page" id="page-atr">
       <div class="page-title">ATR・ポジション計算機</div>
-      <div class="page-sub">ボラティリティから利確目標とロットを算出</div>
+      <div class="page-sub">海外口座（1ロット = 100oz）でのロット計算　※国内100枚 = 海外1ロット相当</div>
       <div class="card">
-        <div class="card-title">入力</div>
+        <div class="card-title">市場・ボラティリティ</div>
         <div class="grid2">
           <div><label>ATR（日足5期間）</label><input id="atrVal" type="number" placeholder="例: 28.5" oninput="calcATR()"></div>
           <div><label>アジア消費値幅</label><input id="asiaRange" type="number" placeholder="例: 12.0" oninput="calcATR()"></div>
-          <div><label>口座残高（円）</label><input id="balance" type="number" placeholder="例: 500000" oninput="calcATR()"></div>
-          <div><label>許容損失（%）</label><input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()"></div>
-          <div><label>損切り幅（ドル）</label><input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()"></div>
-          <div><label>RR比率</label>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">口座・リスク設定</div>
+        <div class="grid2">
+          <div>
+            <label>口座残高（USD）</label>
+            <input id="balance" type="number" placeholder="例: 5000" oninput="calcATR()">
+          </div>
+          <div>
+            <label>許容損失（%）</label>
+            <input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">トレード設定</div>
+        <div class="grid2">
+          <div>
+            <label>損切り幅（ドル / oz）</label>
+            <input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()">
+          </div>
+          <div>
+            <label>RR比率</label>
             <select id="rrRatio" onchange="calcATR()">
               <option value="1.5">1:1.5</option>
               <option value="2" selected>1:2</option>
@@ -355,13 +535,31 @@ select option{background:var(--bg3);}
         <div class="card-title" style="margin-bottom:10px;">計算結果</div>
         <div class="calc-row"><span>ATR残余力</span><span class="calc-val" id="r_remain" style="color:var(--teal)">-</span></div>
         <div class="calc-row"><span>利確目標（RR基準）</span><span class="calc-val" id="r_tp" style="color:var(--green)">-</span></div>
-        <div class="calc-row"><span>許容損失額</span><span class="calc-val" id="r_riskAmt" style="color:var(--red)">-</span></div>
-        <div class="calc-row"><span>推奨ロット</span><span class="calc-val" id="r_lot" style="color:var(--accent)">-</span></div>
+        <div class="calc-row"><span>許容損失額（USD）</span><span class="calc-val" id="r_riskAmt" style="color:var(--red)">-</span></div>
+        <div class="calc-row">
+          <div>
+            <div>推奨ロット（海外口座）</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;">1ロット = 100oz　※国内換算も表示</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="calc-val" id="r_lot" style="color:var(--accent)">-</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="r_lot_domestic">-</div>
+          </div>
+        </div>
+        <div class="calc-row"><span>リスク金額（損切り時）</span><span class="calc-val" id="r_actual_risk" style="color:var(--amber)">-</span></div>
         <div class="calc-row"><span>判定</span><span id="r_judge">-</span></div>
+      </div>
+      <div class="card" style="margin-top:4px;padding:12px 16px;">
+        <div class="card-title">換算メモ</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.9;">
+          🌍 海外口座: 1ロット = 100oz（Gold 100オンス）<br>
+          🇯🇵 国内口座: 1枚 = 1oz → 国内100枚 = 海外1ロット<br>
+          💰 損益計算: ロット × 100 × 値幅($/oz) = 損益(USD)
+        </div>
       </div>
     </div>
 
-    <!-- 振り返りノート -->
+    <!-- ===== 振り返りノート ===== -->
     <div class="page" id="page-journal">
       <div class="page-title">振り返りノート</div>
       <div class="page-sub">勝ち・負け・見送り成功・機会損失を記録する</div>
@@ -369,7 +567,7 @@ select option{background:var(--bg3);}
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="tv-toolbar">
           <span style="font-size:11px;color:var(--muted);font-weight:500;">TradingView</span>
-          <input id="tvSymbolJnl" type="text" placeholder="">
+          <input id="tvSymbolJnl" type="text" placeholder="" autocapitalize="characters" autocorrect="off" spellcheck="false">
           <select id="tvIntervalJnl">
             <option value="D">日足</option>
             <option value="60">1H</option>
@@ -379,7 +577,7 @@ select option{background:var(--bg3);}
           </select>
           <button class="btn btn-sm btn-ghost" onclick="loadTVWidget('jnl')">表示</button>
           <button class="btn btn-sm btn-teal" onclick="toggleTVWidget('jnl')">開閉</button>
-          <button class="btn btn-sm btn-tv" onclick="openTVTab('jnl')">↗ TVで開く</button>
+          <button class="btn btn-sm btn-tv" onclick="openTVTab('jnl')">↗ TV</button>
         </div>
         <div id="tvWrap-jnl" style="display:none;">
           <div id="tv-widget-jnl" style="height:400px;"></div>
@@ -388,6 +586,8 @@ select option{background:var(--bg3);}
 
       <div class="card">
         <div class="card-title">新規記録</div>
+
+        <!-- 結果タイプ -->
         <div class="grid2" style="margin-bottom:12px;">
           <div>
             <label>結果タイプ</label>
@@ -398,16 +598,99 @@ select option{background:var(--bg3);}
               <option value="miss">⚠️ 機会損失</option>
             </select>
           </div>
-          <div><label>損益（円）</label><input id="jPnl" type="number" placeholder="+15000 / -8000"></div>
+          <div>
+            <label>損切り幅（pips / oz）</label>
+            <div class="input-unit" style="position:relative;">
+              <input id="jSlPips" type="number" placeholder="例: 8.0" style="padding-right:44px;">
+              <span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span>
+            </div>
+          </div>
         </div>
+
+        <!-- 損益（ドル + pips） -->
+        <div style="margin-bottom:12px;">
+          <label>損益</label>
+          <div class="pnl-group">
+            <div class="input-unit" style="position:relative;">
+              <input id="jPnlUsd" type="number" placeholder="+500 / -200" style="padding-right:44px;">
+              <span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">USD</span>
+            </div>
+            <div class="input-unit" style="position:relative;">
+              <input id="jPnlPips" type="number" placeholder="+15.0 / -8.0" style="padding-right:44px;">
+              <span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- セットアップ -->
         <div style="margin-bottom:12px;">
           <label>セットアップ・環境</label>
           <input id="jSetup" type="text" placeholder="日足スラスト陽線、アジア安値でピンバー確認後ロング">
         </div>
+
+        <!-- トレード時の状況 -->
         <div style="margin-bottom:12px;">
+          <label>トレード時の状況</label>
+          <div class="grid2" style="margin-bottom:8px;">
+            <div>
+              <label style="font-size:11px;">月足バイアス</label>
+              <select id="jBiasMonthly">
+                <option value="">-</option>
+                <option>ロング優位</option>
+                <option>ショート優位</option>
+                <option>レンジ</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;">週足バイアス</label>
+              <select id="jBiasWeekly">
+                <option value="">-</option>
+                <option>ロング優位</option>
+                <option>ショート優位</option>
+                <option>レンジ</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;">日足バイアス</label>
+              <select id="jBiasDaily">
+                <option value="">-</option>
+                <option>ロング優位</option>
+                <option>ショート優位</option>
+                <option>レンジ</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;">エントリー方向</label>
+              <select id="jDirection">
+                <option value="">-</option>
+                <option>ロング</option>
+                <option>ショート</option>
+              </select>
+            </div>
+          </div>
+          <textarea id="jSituation" placeholder="価格がアジア安値を一度ヒゲで割ってから戻り。前日陽線スラストの流れに乗る形。NYオープン前の動き。"></textarea>
+        </div>
+
+        <!-- 心理状態 -->
+        <div style="margin-bottom:12px;">
+          <label>心理状態</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;" id="psychoTags">
+            <button class="env-tag" onclick="togglePsycho(this,'冷静')">😌 冷静</button>
+            <button class="env-tag" onclick="togglePsycho(this,'焦り')">😰 焦り</button>
+            <button class="env-tag" onclick="togglePsycho(this,'FOMO')">😤 FOMO</button>
+            <button class="env-tag" onclick="togglePsycho(this,'迷い')">😕 迷い</button>
+            <button class="env-tag" onclick="togglePsycho(this,'自信')">💪 自信</button>
+            <button class="env-tag" onclick="togglePsycho(this,'恐怖')">😱 恐怖</button>
+          </div>
+          <textarea id="jPsycho" placeholder="エントリー時は冷静だったが、含み損が出た瞬間に焦りが生じた。損切りラインは守れた。"></textarea>
+        </div>
+
+        <!-- 良かった点・反省点 -->
+        <div style="margin-bottom:14px;">
           <label>良かった点 / 反省点</label>
           <textarea id="jNote" placeholder="根拠明確だったが利確を引っ張りすぎた。次回は節目利確を徹底する。"></textarea>
         </div>
+
         <div style="margin-bottom:14px;">
           <label>チャートスクショ（任意）</label>
           <div class="upload-zone" style="padding:14px;">
@@ -421,16 +704,17 @@ select option{background:var(--bg3);}
       <div id="journalList"></div>
     </div>
 
-    <!-- パフォーマンス -->
+    <!-- ===== パフォーマンス ===== -->
     <div class="page" id="page-stats">
       <div class="page-title">パフォーマンス分析</div>
       <div class="page-sub">記録の集計・傾向分析</div>
       <div class="grid3 stats-grid3" style="margin-bottom:12px;">
         <div class="stat-card"><div class="stat-num" id="s_total">0</div><div class="stat-label">総記録数</div></div>
         <div class="stat-card"><div class="stat-num" id="s_wr" style="color:var(--green)">0%</div><div class="stat-label">勝率</div></div>
-        <div class="stat-card"><div class="stat-num" id="s_pnl" style="color:var(--accent)">¥0</div><div class="stat-label">累計損益</div></div>
+        <div class="stat-card"><div class="stat-num" id="s_pnl" style="color:var(--accent)">$0</div><div class="stat-label">累計損益(USD)</div></div>
       </div>
-      <div class="grid2" style="margin-bottom:14px;">
+      <div class="grid3 stats-grid3" style="margin-bottom:12px;">
+        <div class="stat-card"><div class="stat-num" id="s_pips" style="color:var(--accent)">0</div><div class="stat-label">累計損益(pips)</div></div>
         <div class="stat-card"><div class="stat-num" id="s_pass" style="color:var(--teal)">0</div><div class="stat-label">見送り成功</div></div>
         <div class="stat-card"><div class="stat-num" id="s_miss" style="color:var(--amber)">0</div><div class="stat-label">機会損失</div></div>
       </div>
@@ -442,7 +726,7 @@ select option{background:var(--bg3);}
       <div id="statsAI" style="display:none;margin-top:12px;" class="ai-summary"></div>
     </div>
 
-    <!-- AIチャット -->
+    <!-- ===== AIチャット ===== -->
     <div class="page" id="page-chat">
       <div class="page-title">AIトレード相談</div>
       <div class="page-sub">プライスアクション・オーダーフローをベースに答えます</div>
@@ -486,8 +770,9 @@ select option{background:var(--bg3);}
 
 <script>
 let journals = JSON.parse(localStorage.getItem('tradeJournals') || '[]');
-let selectedDir = '';
+let selectedDirByTF = { monthly: '', weekly: '', daily: '' };
 let jnlUploadDataUrl = null;
+let selectedPsychoTags = [];
 
 const SYSTEM_PROMPT = `あなたはプライスアクション・オーダーフロー分析専門のトレードアドバイザーです。
 【基本哲学】ローソク足は結果。勝つより負けないことが最優先。環境認識は「選別」。
@@ -500,253 +785,386 @@ const SYSTEM_PROMPT = `あなたはプライスアクション・オーダーフ
 
 // ===== ナビ =====
 function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
-  if(id==='stats') updateStats();
+  if (id === 'stats') updateStats();
 }
 function showPageMobile(id, btn) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
   document.querySelector('.main').scrollTop = 0;
-  if(id==='stats') updateStats();
+  if (id === 'stats') updateStats();
 }
 
 // ===== 日付 =====
-(function(){
-  const now=new Date();
-  const el=document.getElementById('sideDate');
-  if(el) el.textContent=now.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
+(function () {
+  const now = new Date();
+  const el = document.getElementById('sideDate');
+  if (el) el.textContent = now.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
 })();
 
 // ===== GC 限月自動計算 =====
-function getNextGCSymbol(){
-  const majors=[{month:2,code:'G'},{month:4,code:'J'},{month:6,code:'M'},{month:8,code:'Q'},{month:10,code:'V'},{month:12,code:'Z'}];
-  const now=new Date(); const m=now.getMonth()+1; const y=now.getFullYear();
-  for(const mj of majors){ if(mj.month>m) return `GC${mj.code}${y}`; }
-  return `GCG${y+1}`;
+function getNextGCSymbol() {
+  const majors = [{ month: 2, code: 'G' }, { month: 4, code: 'J' }, { month: 6, code: 'M' }, { month: 8, code: 'Q' }, { month: 10, code: 'V' }, { month: 12, code: 'Z' }];
+  const now = new Date(); const m = now.getMonth() + 1; const y = now.getFullYear();
+  for (const mj of majors) { if (mj.month > m) return `GC${mj.code}${y}`; }
+  return `GCG${y + 1}`;
 }
 
 // ===== TradingView =====
-function loadTVWidget(id){
-  const suffix=id==='env'?'Env':'Jnl';
-  const inputEl=document.getElementById('tvSymbol'+suffix);
-  const symbol=(inputEl.value.trim()||getNextGCSymbol()).toUpperCase();
-  const interval=document.getElementById('tvInterval'+suffix).value;
-  const wrap=document.getElementById('tvWrap-'+id);
-  const container=document.getElementById('tv-widget-'+id);
-  wrap.style.display='block';
-  container.innerHTML='';
-  function create(){
+function loadTVWidget(id) {
+  const suffix = id === 'env' ? 'Env' : 'Jnl';
+  const inputEl = document.getElementById('tvSymbol' + suffix);
+  const symbol = (inputEl.value.trim() || getNextGCSymbol()).toUpperCase();
+  const interval = document.getElementById('tvInterval' + suffix).value;
+  const wrap = document.getElementById('tvWrap-' + id);
+  const container = document.getElementById('tv-widget-' + id);
+  wrap.style.display = 'block';
+  container.innerHTML = '';
+  function create() {
     new TradingView.widget({
-      container_id:'tv-widget-'+id,width:'100%',height:400,
-      symbol,interval,timezone:'Asia/Tokyo',theme:'dark',style:'1',locale:'ja',
-      toolbar_bg:'#141720',enable_publishing:false,hide_side_toolbar:false,
-      allow_symbol_change:true,save_image:true,studies:[]
+      container_id: 'tv-widget-' + id, width: '100%', height: 400,
+      symbol, interval, timezone: 'Asia/Tokyo', theme: 'dark', style: '1', locale: 'ja',
+      toolbar_bg: '#141720', enable_publishing: false, hide_side_toolbar: false,
+      allow_symbol_change: true, save_image: true, studies: []
     });
   }
-  if(typeof TradingView!=='undefined'){create();}
-  else{
-    const s=document.createElement('script');
-    s.src='https://s3.tradingview.com/tv.js';
-    s.onload=create;
+  if (typeof TradingView !== 'undefined') { create(); }
+  else {
+    const s = document.createElement('script');
+    s.src = 'https://s3.tradingview.com/tv.js';
+    s.onload = create;
     document.head.appendChild(s);
   }
 }
-function toggleTVWidget(id){
-  const wrap=document.getElementById('tvWrap-'+id);
-  if(wrap.style.display==='none'){loadTVWidget(id);}else{wrap.style.display='none';}
+function toggleTVWidget(id) {
+  const wrap = document.getElementById('tvWrap-' + id);
+  if (wrap.style.display === 'none') { loadTVWidget(id); } else { wrap.style.display = 'none'; }
 }
-function openTVTab(id){
-  const suffix=id==='env'?'Env':'Jnl';
-  const symbol=(document.getElementById('tvSymbol'+suffix).value.trim()||getNextGCSymbol()).toUpperCase();
-  const interval=document.getElementById('tvInterval'+suffix).value;
-  const map={'D':'1D','W':'1W','M':'1M','240':'240','60':'60','15':'15','5':'5','1':'1'};
-  window.open(`https://www.tradingview.com/chart/?symbol=${encodeURIComponent(symbol)}&interval=${map[interval]||interval}`,'_blank');
+function openTVTab(id) {
+  const suffix = id === 'env' ? 'Env' : 'Jnl';
+  const symbol = (document.getElementById('tvSymbol' + suffix).value.trim() || getNextGCSymbol()).toUpperCase();
+  const interval = document.getElementById('tvInterval' + suffix).value;
+  const map = { 'D': '1D', 'W': '1W', 'M': '1M', '240': '240', '60': '60', '15': '15', '5': '5', '1': '1' };
+  window.open(`https://www.tradingview.com/chart/?symbol=${encodeURIComponent(symbol)}&interval=${map[interval] || interval}`, '_blank');
 }
 
-// デフォルトplaceholderを自動シンボルに
-(function(){
-  const sym=getNextGCSymbol();
-  ['tvSymbolEnv','tvSymbolJnl'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.placeholder=sym;
+(function () {
+  const sym = getNextGCSymbol();
+  ['tvSymbolEnv', 'tvSymbolJnl'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.placeholder = sym;
   });
 })();
 
 // ===== 画像 =====
-function handleUpload(event,previewId){
-  const file=event.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const img=document.getElementById(previewId);
-    img.src=e.target.result; img.style.display='block';
-    if(previewId==='jnlPreview') jnlUploadDataUrl=e.target.result;
+function handleUpload(event, previewId) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(previewId);
+    img.src = e.target.result; img.style.display = 'block';
+    if (previewId === 'jnlPreview') jnlUploadDataUrl = e.target.result;
   };
   reader.readAsDataURL(file);
 }
-function openLightbox(src){document.getElementById('lightboxImg').src=src;document.getElementById('lightbox').classList.add('open');}
-function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('open'); }
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
 
-// ===== 環境認識 =====
-function selectDir(el,dir){
-  document.querySelectorAll('#dirRow .env-tag').forEach(b=>b.className='env-tag');
-  selectedDir=dir; el.classList.add('selected-'+dir);
+// ===== 環境認識 タイムフレームタブ =====
+function switchTF(tf, btn) {
+  document.querySelectorAll('.tf-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tf-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tf-' + tf).classList.add('active');
 }
-async function analyzeEnv(){
-  const dir=selectedDir?(selectedDir==='long'?'ロング優位':selectedDir==='short'?'ショート優位':'レンジ'):'不明';
-  const prev=document.getElementById('prevCandle').value||'未入力';
-  const state=document.getElementById('marketState').value||'未入力';
-  const asiaH=document.getElementById('asiaH').value;
-  const asiaL=document.getElementById('asiaL').value;
-  const key=document.getElementById('keyLevel').value;
-  const note=document.getElementById('envNote').value;
-  const prompt=`今日の環境認識: 方向感:${dir} 前日足:${prev} 相場状態:${state} アジア高値:${asiaH||'未入力'} アジア安値:${asiaL||'未入力'} 主要節目:${key||'未入力'} 補足:${note||'なし'}。①当日バイアス②注意レベル③狙えるセットアップ④注意点を簡潔にまとめてください。`;
-  document.getElementById('envResult').style.display='block';
-  document.getElementById('envResultText').textContent='分析中...';
-  try{ const res=await callClaude(prompt); document.getElementById('envResultText').textContent=res; }
-  catch(e){ document.getElementById('envResultText').textContent='エラーが発生しました。'; }
+
+function selectDirTF(el, dir, tf) {
+  document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b => b.className = 'env-tag');
+  selectedDirByTF[tf] = dir;
+  el.classList.add('selected-' + dir);
 }
-function saveEnvMemo(){
-  localStorage.setItem('lastEnvMemo',JSON.stringify({date:new Date().toLocaleDateString('ja-JP'),dir:selectedDir,prevCandle:document.getElementById('prevCandle').value,state:document.getElementById('marketState').value,note:document.getElementById('envNote').value}));
+
+// 後方互換（旧コードがある場合用）
+let selectedDir = '';
+function selectDir(el, dir) { selectDirTF(el, dir, 'daily'); selectedDir = dir; }
+
+// ===== 環境認識 AI分析 =====
+async function analyzeEnv() {
+  const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '未設定';
+  const monthly = {
+    dir: dirLabel(selectedDirByTF.monthly),
+    candle: document.getElementById('prevCandle-monthly').value || '未入力',
+    state: document.getElementById('marketState-monthly').value || '未入力',
+    key: document.getElementById('keyLevel-monthly').value || '',
+    note: document.getElementById('envNote-monthly').value || ''
+  };
+  const weekly = {
+    dir: dirLabel(selectedDirByTF.weekly),
+    candle: document.getElementById('prevCandle-weekly').value || '未入力',
+    state: document.getElementById('marketState-weekly').value || '未入力',
+    key: document.getElementById('keyLevel-weekly').value || '',
+    note: document.getElementById('envNote-weekly').value || ''
+  };
+  const daily = {
+    dir: dirLabel(selectedDirByTF.daily),
+    candle: document.getElementById('prevCandle-daily').value || '未入力',
+    state: document.getElementById('marketState-daily').value || '未入力',
+    key: document.getElementById('keyLevel').value || '',
+    note: document.getElementById('envNote-daily').value || '',
+    asiaH: document.getElementById('asiaH').value || '未入力',
+    asiaL: document.getElementById('asiaL').value || '未入力'
+  };
+
+  const prompt = `【環境認識 マルチタイムフレーム分析】
+■月足: 方向感:${monthly.dir} | 足型:${monthly.candle} | 状態:${monthly.state} | 節目:${monthly.key || 'なし'} | メモ:${monthly.note || 'なし'}
+■週足: 方向感:${weekly.dir} | 足型:${weekly.candle} | 状態:${weekly.state} | 節目:${weekly.key || 'なし'} | メモ:${weekly.note || 'なし'}
+■日足: 方向感:${daily.dir} | 前日足:${daily.candle} | 状態:${daily.state} | アジア高値:${daily.asiaH} | アジア安値:${daily.asiaL} | 節目:${daily.key || 'なし'} | メモ:${daily.note || 'なし'}
+
+上記をもとに以下を簡潔にまとめてください：
+①マルチTFでのバイアス整合性（月足・週足・日足が揃っているか）
+②当日バイアスと推奨方向
+③狙えるセットアップ候補
+④注意すべきポイント・NGシナリオ`;
+
+  document.getElementById('envResult').style.display = 'block';
+  document.getElementById('envResultText').textContent = '分析中...';
+  try {
+    const res = await callClaude(prompt);
+    document.getElementById('envResultText').textContent = res;
+  } catch (e) {
+    document.getElementById('envResultText').textContent = 'エラーが発生しました。';
+  }
+}
+
+function saveEnvMemo() {
+  const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '';
+  localStorage.setItem('lastEnvMemo', JSON.stringify({
+    date: new Date().toLocaleDateString('ja-JP'),
+    monthly: { dir: dirLabel(selectedDirByTF.monthly), note: document.getElementById('envNote-monthly').value },
+    weekly: { dir: dirLabel(selectedDirByTF.weekly), note: document.getElementById('envNote-weekly').value },
+    daily: { dir: dirLabel(selectedDirByTF.daily), note: document.getElementById('envNote-daily').value }
+  }));
   alert('保存しました');
 }
 
 // ===== チェックリスト =====
-const checkItems={
-  'checks-env':[
-    {label:'上位足のトレンド・レンジ方向を確認した',sub:'月足→週足→日足の順で確認'},
-    {label:'前日足の方向（陽線/陰線）とスラストを確認した',sub:'逆ヒゲ・コマ足はレンジを疑う'},
-    {label:'アジア高安・キリ番・ヘッドラインレートを把握している',sub:'節目が明確でないと根拠が弱い'},
+const checkItems = {
+  'checks-env': [
+    { label: '上位足（月足・週足・日足）のトレンド方向を確認した', sub: '月足→週足→日足の順で確認。3つが揃っていると優位性高い' },
+    { label: '前日足の方向（陽線/陰線）とスラストを確認した', sub: '逆ヒゲ・コマ足はレンジを疑う' },
+    { label: 'アジア高安・キリ番・ヘッドラインレートを把握している', sub: '節目が明確でないと根拠が弱い' },
   ],
-  'checks-momentum':[
-    {label:'モメンタムは環境認識と一致している',sub:'スラスト方向とポジション方向が合っているか'},
-    {label:'逆方向の強いヒゲや実体縮小が出ていないか確認した',sub:'出ていたら逆張り不可'},
-    {label:'現在の足がモメンタムありの状態を確認した',sub:'大陽線・大陰線中に逆張りしていないか'},
+  'checks-momentum': [
+    { label: 'モメンタムは環境認識と一致している', sub: 'スラスト方向とポジション方向が合っているか' },
+    { label: '逆方向の強いヒゲや実体縮小が出ていないか確認した', sub: '出ていたら逆張り不可' },
+    { label: '現在の足がモメンタムありの状態を確認した', sub: '大陽線・大陰線中に逆張りしていないか' },
   ],
-  'checks-pa':[
-    {label:'節目（サポート・レジスタンス）を背にしたポジションか',sub:'根拠のない場所のエントリーは避ける'},
-    {label:'売り買いバランスで優位性を確認した',sub:'スイングの値幅・時間を比較した'},
-    {label:'エントリートリガー（PA）が出ている',sub:'ピンバー・アウトサイド・ピアスライン等'},
+  'checks-pa': [
+    { label: '節目（サポート・レジスタンス）を背にしたポジションか', sub: '根拠のない場所のエントリーは避ける' },
+    { label: '売り買いバランスで優位性を確認した', sub: 'スイングの値幅・時間を比較した' },
+    { label: 'エントリートリガー（PA）が出ている', sub: 'ピンバー・アウトサイド・ピアスライン等' },
   ],
-  'checks-risk':[
-    {label:'損切りラインが明確に設定されている',sub:'エントリー前に必ず決める'},
-    {label:'RRが最低1:1.5以上ある',sub:'RRが悪い場合は見送りを検討'},
-    {label:'ATR残余力が目標値幅をカバーできる',sub:'アジアで消費済みの値幅を考慮した'},
+  'checks-risk': [
+    { label: '損切りラインが明確に設定されている', sub: 'エントリー前に必ず決める' },
+    { label: 'RRが最低1:1.5以上ある', sub: 'RRが悪い場合は見送りを検討' },
+    { label: 'ATR残余力が目標値幅をカバーできる', sub: 'アジアで消費済みの値幅を考慮した' },
   ],
 };
-function initChecks(){
-  Object.entries(checkItems).forEach(([id,items])=>{
-    const c=document.getElementById(id); c.innerHTML='';
-    items.forEach(item=>{
-      const d=document.createElement('div'); d.className='check-item';
-      d.innerHTML=`<div class="check-box" onclick="toggleCheck(this)"></div><div><div class="check-label">${item.label}</div><div class="check-sub">${item.sub}</div></div>`;
+function initChecks() {
+  Object.entries(checkItems).forEach(([id, items]) => {
+    const c = document.getElementById(id); c.innerHTML = '';
+    items.forEach(item => {
+      const d = document.createElement('div'); d.className = 'check-item';
+      d.innerHTML = `<div class="check-box" onclick="toggleCheck(this)"></div><div><div class="check-label">${item.label}</div><div class="check-sub">${item.sub}</div></div>`;
       c.appendChild(d);
     });
   });
   updateCheckProgress();
 }
-function toggleCheck(box){box.classList.toggle('checked');updateCheckProgress();}
-function updateCheckProgress(){
-  const total=document.querySelectorAll('.check-box').length;
-  const done=document.querySelectorAll('.check-box.checked').length;
-  const pct=Math.round(done/total*100);
-  document.getElementById('checkProgress').style.width=pct+'%';
-  document.getElementById('checkSummary').textContent=`${done} / ${total} 完了`;
-  let judge='',color='var(--muted)';
-  if(pct===100){judge='✅ 全条件クリア — エントリーOK';color='var(--green)';}
-  else if(pct>=75){judge='⚠️ もう少し';color='var(--amber)';}
-  else if(pct>=50){judge='🔍 まだ確認が必要です';color='var(--accent)';}
-  else{judge='❌ 条件不足 — 見送りを検討';color='var(--red)';}
-  const el=document.getElementById('checkJudge'); el.textContent=judge; el.style.color=color;
+function toggleCheck(box) { box.classList.toggle('checked'); updateCheckProgress(); }
+function updateCheckProgress() {
+  const total = document.querySelectorAll('.check-box').length;
+  const done = document.querySelectorAll('.check-box.checked').length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('checkProgress').style.width = pct + '%';
+  document.getElementById('checkSummary').textContent = `${done} / ${total} 完了`;
+  let judge = '', color = 'var(--muted)';
+  if (pct === 100) { judge = '✅ 全条件クリア — エントリーOK'; color = 'var(--green)'; }
+  else if (pct >= 75) { judge = '⚠️ もう少し'; color = 'var(--amber)'; }
+  else if (pct >= 50) { judge = '🔍 まだ確認が必要です'; color = 'var(--accent)'; }
+  else { judge = '❌ 条件不足 — 見送りを検討'; color = 'var(--red)'; }
+  const el = document.getElementById('checkJudge'); el.textContent = judge; el.style.color = color;
 }
-function resetChecks(){document.querySelectorAll('.check-box').forEach(b=>b.classList.remove('checked'));updateCheckProgress();}
+function resetChecks() { document.querySelectorAll('.check-box').forEach(b => b.classList.remove('checked')); updateCheckProgress(); }
 initChecks();
 
-// ===== ATR =====
-function calcATR(){
-  const atr=parseFloat(document.getElementById('atrVal').value);
-  const asia=parseFloat(document.getElementById('asiaRange').value)||0;
-  const bal=parseFloat(document.getElementById('balance').value);
-  const riskPct=parseFloat(document.getElementById('riskPct').value)||1;
-  const sl=parseFloat(document.getElementById('slPips').value);
-  const rr=parseFloat(document.getElementById('rrRatio').value);
-  if(!atr) return;
-  document.getElementById('atrResult').style.display='block';
-  const remain=Math.max(0,atr-asia);
-  const tp=sl*rr;
-  const riskAmt=bal?bal*riskPct/100:null;
-  const lot=riskAmt&&sl?(riskAmt/(sl*100)).toFixed(2):null;
-  document.getElementById('r_remain').textContent=remain.toFixed(1)+' ドル';
-  document.getElementById('r_tp').textContent=tp?tp.toFixed(1)+' ドル':'-';
-  document.getElementById('r_riskAmt').textContent=riskAmt?'¥'+Math.round(riskAmt).toLocaleString():'残高未入力';
-  document.getElementById('r_lot').textContent=lot?lot+' lot':'損切り幅・残高を入力';
-  let judge='';
-  if(sl&&remain<sl) judge='<span class="badge badge-red">⚠️ 余力不足 — 見送り検討</span>';
-  else if(sl&&tp&&remain>=tp) judge='<span class="badge badge-green">✅ 余力十分 — エントリー可</span>';
-  else if(sl) judge='<span class="badge badge-amber">△ 余力あり — サイズに注意</span>';
-  document.getElementById('r_judge').innerHTML=judge;
+// ===== ATR（海外口座） =====
+// Gold海外口座: 1ロット = 100oz
+// 損益(USD) = ロット数 × 100 × 値幅($/oz)
+// 許容損失(USD) = 口座残高(USD) × リスク%
+// 推奨ロット = 許容損失(USD) / (損切り幅($/oz) × 100)
+function calcATR() {
+  const atr = parseFloat(document.getElementById('atrVal').value);
+  const asia = parseFloat(document.getElementById('asiaRange').value) || 0;
+  const bal = parseFloat(document.getElementById('balance').value);
+  const riskPct = parseFloat(document.getElementById('riskPct').value) || 1;
+  const sl = parseFloat(document.getElementById('slPips').value);
+  const rr = parseFloat(document.getElementById('rrRatio').value);
+  if (!atr) return;
+  document.getElementById('atrResult').style.display = 'block';
+
+  const remain = Math.max(0, atr - asia);
+  const tp = sl * rr;
+  const riskAmt = bal ? bal * riskPct / 100 : null;
+  // 海外口座ロット計算: 1ロット=100oz
+  const lot = (riskAmt && sl) ? riskAmt / (sl * 100) : null;
+  const lotRounded = lot ? Math.floor(lot * 100) / 100 : null; // 小数点2位切り捨て
+  const actualRisk = (lotRounded && sl) ? (lotRounded * 100 * sl) : null;
+
+  document.getElementById('r_remain').textContent = remain.toFixed(1) + ' $/oz';
+  document.getElementById('r_tp').textContent = tp ? tp.toFixed(1) + ' $/oz' : '-';
+  document.getElementById('r_riskAmt').textContent = riskAmt ? '$' + riskAmt.toFixed(2) : '残高未入力';
+  document.getElementById('r_lot').textContent = lotRounded !== null ? lotRounded.toFixed(2) + ' lot' : '損切り幅・残高を入力';
+  document.getElementById('r_lot_domestic').textContent = lotRounded !== null ? `国内換算: 約${Math.round(lotRounded * 100)}枚` : '';
+  document.getElementById('r_actual_risk').textContent = actualRisk !== null ? '$' + actualRisk.toFixed(2) : '-';
+
+  let judge = '';
+  if (sl && remain < sl) judge = '<span class="badge badge-red">⚠️ 余力不足 — 見送り検討</span>';
+  else if (sl && tp && remain >= tp) judge = '<span class="badge badge-green">✅ 余力十分 — エントリー可</span>';
+  else if (sl) judge = '<span class="badge badge-amber">△ 余力あり — サイズに注意</span>';
+  document.getElementById('r_judge').innerHTML = judge;
+}
+
+// ===== 心理タグ =====
+function togglePsycho(el, tag) {
+  const idx = selectedPsychoTags.indexOf(tag);
+  if (idx === -1) {
+    selectedPsychoTags.push(tag);
+    el.classList.add('selected-long'); // 選択色（緑系で流用）
+  } else {
+    selectedPsychoTags.splice(idx, 1);
+    el.className = 'env-tag';
+  }
 }
 
 // ===== ジャーナル =====
-function addJournal(){
-  const type=document.getElementById('jType').value;
-  const pnl=document.getElementById('jPnl').value;
-  const setup=document.getElementById('jSetup').value;
-  const note=document.getElementById('jNote').value;
-  if(!note&&!setup){alert('セットアップかメモを入力してください');return;}
-  const entry={id:Date.now(),date:new Date().toLocaleDateString('ja-JP'),type,pnl:pnl?parseInt(pnl):null,setup,note,img:jnlUploadDataUrl||null};
+function addJournal() {
+  const type = document.getElementById('jType').value;
+  const pnlUsd = document.getElementById('jPnlUsd').value;
+  const pnlPips = document.getElementById('jPnlPips').value;
+  const slPips = document.getElementById('jSlPips').value;
+  const setup = document.getElementById('jSetup').value;
+  const situation = document.getElementById('jSituation').value;
+  const psychoNote = document.getElementById('jPsycho').value;
+  const note = document.getElementById('jNote').value;
+  const biasMonthly = document.getElementById('jBiasMonthly').value;
+  const biasWeekly = document.getElementById('jBiasWeekly').value;
+  const biasDaily = document.getElementById('jBiasDaily').value;
+  const direction = document.getElementById('jDirection').value;
+
+  if (!note && !setup && !situation) { alert('セットアップ・状況・メモのいずれかを入力してください'); return; }
+
+  const entry = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString('ja-JP'),
+    type,
+    pnlUsd: pnlUsd ? parseFloat(pnlUsd) : null,
+    pnlPips: pnlPips ? parseFloat(pnlPips) : null,
+    slPips: slPips ? parseFloat(slPips) : null,
+    setup, situation, psychoTags: [...selectedPsychoTags], psychoNote,
+    note, biasMonthly, biasWeekly, biasDaily, direction,
+    img: jnlUploadDataUrl || null
+  };
   journals.unshift(entry);
-  localStorage.setItem('tradeJournals',JSON.stringify(journals.map(j=>({...j,img:null}))));
-  document.getElementById('jPnl').value='';
-  document.getElementById('jSetup').value='';
-  document.getElementById('jNote').value='';
-  document.getElementById('jnlPreview').style.display='none';
-  jnlUploadDataUrl=null;
+  localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
+
+  // フォームリセット
+  ['jPnlUsd', 'jPnlPips', 'jSlPips', 'jSetup', 'jSituation', 'jPsycho', 'jNote'].forEach(id => document.getElementById(id).value = '');
+  ['jBiasMonthly', 'jBiasWeekly', 'jBiasDaily', 'jDirection'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('jnlPreview').style.display = 'none';
+  document.querySelectorAll('#psychoTags .env-tag').forEach(b => b.className = 'env-tag');
+  selectedPsychoTags = [];
+  jnlUploadDataUrl = null;
   renderJournals();
 }
-function renderJournals(){
-  const list=document.getElementById('journalList');
-  if(!journals.length){list.innerHTML='<p style="color:var(--muted);font-size:13px;">まだ記録がありません</p>';return;}
-  const tl={win:'✅ 勝ち',loss:'❌ 負け',pass:'⭕ 見送り成功',miss:'⚠️ 機会損失'};
-  const bc={win:'badge-green',loss:'badge-red',pass:'badge-teal',miss:'badge-amber'};
-  list.innerHTML=journals.slice(0,20).map(e=>`
+
+function renderJournals() {
+  const list = document.getElementById('journalList');
+  if (!journals.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;">まだ記録がありません</p>'; return; }
+  const tl = { win: '✅ 勝ち', loss: '❌ 負け', pass: '⭕ 見送り成功', miss: '⚠️ 機会損失' };
+  const bc = { win: 'badge-green', loss: 'badge-red', pass: 'badge-teal', miss: 'badge-amber' };
+
+  list.innerHTML = journals.slice(0, 20).map(e => {
+    const pnlBadge = (() => {
+      if (e.pnlUsd !== null && e.pnlPips !== null)
+        return `<span class="badge ${e.pnlUsd >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlUsd >= 0 ? '+' : ''}$${e.pnlUsd.toFixed(2)} / ${e.pnlPips >= 0 ? '+' : ''}${e.pnlPips}pips</span>`;
+      if (e.pnlUsd !== null)
+        return `<span class="badge ${e.pnlUsd >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlUsd >= 0 ? '+' : ''}$${e.pnlUsd.toFixed(2)}</span>`;
+      if (e.pnlPips !== null)
+        return `<span class="badge ${e.pnlPips >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlPips >= 0 ? '+' : ''}${e.pnlPips}pips</span>`;
+      // 旧データ（円）互換
+      if (e.pnl !== undefined && e.pnl !== null)
+        return `<span class="badge ${e.pnl >= 0 ? 'badge-green' : 'badge-red'}">${e.pnl >= 0 ? '+' : ''}¥${Math.abs(e.pnl).toLocaleString()}</span>`;
+      return '';
+    })();
+
+    const metaParts = [];
+    if (e.direction) metaParts.push(`方向: ${e.direction}`);
+    if (e.biasMonthly || e.biasWeekly || e.biasDaily)
+      metaParts.push(`月:${e.biasMonthly || '-'} 週:${e.biasWeekly || '-'} 日:${e.biasDaily || '-'}`);
+    if (e.slPips) metaParts.push(`SL: ${e.slPips}pips`);
+    if (e.psychoTags && e.psychoTags.length) metaParts.push(`心理: ${e.psychoTags.join(' ')}`);
+
+    return `
     <div class="journal-entry ${e.type}">
       <div class="entry-header">
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
           <span class="badge ${bc[e.type]}">${tl[e.type]}</span>
-          ${e.pnl!==null?`<span class="badge ${e.pnl>=0?'badge-green':'badge-red'}">${e.pnl>=0?'+':''}${e.pnl.toLocaleString()}円</span>`:''}
+          ${pnlBadge}
         </div>
         <span class="entry-date">${e.date}</span>
       </div>
-      ${e.setup?`<div style="font-size:12px;color:var(--muted);margin-bottom:6px;">📌 ${e.setup}</div>`:''}
+      ${e.setup ? `<div style="font-size:12px;color:var(--muted);margin-bottom:6px;">📌 ${e.setup}</div>` : ''}
+      ${metaParts.length ? `<div class="entry-meta">${metaParts.map(p => `<span>${p}</span>`).join('')}</div>` : ''}
+      ${e.situation ? `<div style="font-size:12px;color:var(--accent);margin-top:8px;margin-bottom:4px;">📊 状況: ${e.situation}</div>` : ''}
+      ${e.psychoNote ? `<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>` : ''}
       <div class="entry-body">${e.note}</div>
-      ${e.img?`<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">`:''}
-    </div>`).join('');
+      ${e.img ? `<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">` : ''}
+    </div>`;
+  }).join('');
 }
 renderJournals();
 
 // ===== 統計 =====
-function updateStats(){
-  const total=journals.length;
-  const wins=journals.filter(j=>j.type==='win').length;
-  const losses=journals.filter(j=>j.type==='loss').length;
-  const pass=journals.filter(j=>j.type==='pass').length;
-  const miss=journals.filter(j=>j.type==='miss').length;
-  const pnl=journals.reduce((s,j)=>s+(j.pnl||0),0);
-  const wr=(wins+losses)>0?Math.round(wins/(wins+losses)*100):0;
-  document.getElementById('s_total').textContent=total;
-  document.getElementById('s_wr').textContent=wr+'%';
-  document.getElementById('s_pnl').textContent=(pnl>=0?'+':'')+'¥'+Math.abs(pnl).toLocaleString();
-  document.getElementById('s_pnl').style.color=pnl>=0?'var(--green)':'var(--red)';
-  document.getElementById('s_pass').textContent=pass;
-  document.getElementById('s_miss').textContent=miss;
-  const detail=document.getElementById('statsDetail');
-  if(!total){detail.textContent='記録が増えると分析が表示されます。';return;}
-  detail.innerHTML=`
+function updateStats() {
+  const total = journals.length;
+  const wins = journals.filter(j => j.type === 'win').length;
+  const losses = journals.filter(j => j.type === 'loss').length;
+  const pass = journals.filter(j => j.type === 'pass').length;
+  const miss = journals.filter(j => j.type === 'miss').length;
+
+  // ドル損益集計（旧円データも互換）
+  const pnlUsd = journals.reduce((s, j) => s + (j.pnlUsd !== undefined && j.pnlUsd !== null ? j.pnlUsd : (j.pnl ? j.pnl / 150 : 0)), 0);
+  const pnlPips = journals.reduce((s, j) => s + (j.pnlPips || 0), 0);
+
+  const wr = (wins + losses) > 0 ? Math.round(wins / (wins + losses) * 100) : 0;
+  document.getElementById('s_total').textContent = total;
+  document.getElementById('s_wr').textContent = wr + '%';
+  document.getElementById('s_pnl').textContent = (pnlUsd >= 0 ? '+' : '') + '$' + Math.abs(pnlUsd).toFixed(2);
+  document.getElementById('s_pnl').style.color = pnlUsd >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('s_pips').textContent = (pnlPips >= 0 ? '+' : '') + pnlPips.toFixed(1);
+  document.getElementById('s_pips').style.color = pnlPips >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('s_pass').textContent = pass;
+  document.getElementById('s_miss').textContent = miss;
+
+  const detail = document.getElementById('statsDetail');
+  if (!total) { detail.textContent = '記録が増えると分析が表示されます。'; return; }
+  detail.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
       <div>勝ち: <strong style="color:var(--green)">${wins}回</strong></div>
       <div>負け: <strong style="color:var(--red)">${losses}回</strong></div>
@@ -754,59 +1172,67 @@ function updateStats(){
       <div>機会損失: <strong style="color:var(--amber)">${miss}回</strong></div>
     </div>
     <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
-      見送り成功率: <strong style="color:var(--accent)">${(pass+miss)>0?Math.round(pass/(pass+miss)*100):0}%</strong>
+      見送り成功率: <strong style="color:var(--accent)">${(pass + miss) > 0 ? Math.round(pass / (pass + miss) * 100) : 0}%</strong>
     </div>`;
 }
-async function analyzeStats(){
-  if(!journals.length){alert('記録がありません');return;}
-  const summary=journals.slice(0,30).map(j=>`${j.date}[${j.type}]${j.pnl?j.pnl+'円':''} ${j.setup||''} ${j.note}`).join('\n');
-  document.getElementById('statsAI').style.display='block';
-  document.getElementById('statsAI').textContent='分析中...';
-  try{const res=await callClaude(`以下は直近のトレード記録です。負けパターン・改善点・強みを分析してください。\n${summary}`);document.getElementById('statsAI').textContent=res;}
-  catch(e){document.getElementById('statsAI').textContent='エラーが発生しました。';}
+
+async function analyzeStats() {
+  if (!journals.length) { alert('記録がありません'); return; }
+  const summary = journals.slice(0, 30).map(j =>
+    `${j.date}[${j.type}] USD:${j.pnlUsd !== undefined ? j.pnlUsd : ''} pips:${j.pnlPips || ''} ` +
+    `月:${j.biasMonthly || ''} 週:${j.biasWeekly || ''} 日:${j.biasDaily || ''} ` +
+    `方向:${j.direction || ''} 心理:${(j.psychoTags || []).join(',')} ` +
+    `${j.setup || ''} ${j.situation || ''} ${j.note}`
+  ).join('\n');
+  document.getElementById('statsAI').style.display = 'block';
+  document.getElementById('statsAI').textContent = '分析中...';
+  try {
+    const res = await callClaude(`以下は直近のトレード記録です。負けパターン・改善点・強みを分析してください。心理状態と結果の相関にも注目してください。\n${summary}`);
+    document.getElementById('statsAI').textContent = res;
+  } catch (e) { document.getElementById('statsAI').textContent = 'エラーが発生しました。'; }
 }
 
 // ===== チャット =====
-let chatHistory=[];
-async function sendChat(){
-  const input=document.getElementById('chatInput');
-  const msg=input.value.trim(); if(!msg) return;
-  input.value='';
-  appendChat('user',msg);
-  chatHistory.push({role:'user',content:msg});
-  const tid=appendTyping();
-  try{
-    const res=await callClaude(msg,chatHistory);
-    removeTyping(tid); appendChat('ai',res);
-    chatHistory.push({role:'assistant',content:res});
-    if(chatHistory.length>20) chatHistory=chatHistory.slice(-20);
-  }catch(e){removeTyping(tid);appendChat('ai','エラーが発生しました。もう一度お試しください。');}
+let chatHistory = [];
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim(); if (!msg) return;
+  input.value = '';
+  appendChat('user', msg);
+  chatHistory.push({ role: 'user', content: msg });
+  const tid = appendTyping();
+  try {
+    const res = await callClaude(msg, chatHistory);
+    removeTyping(tid); appendChat('ai', res);
+    chatHistory.push({ role: 'assistant', content: res });
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+  } catch (e) { removeTyping(tid); appendChat('ai', 'エラーが発生しました。もう一度お試しください。'); }
 }
-function quickChat(msg){document.getElementById('chatInput').value=msg;sendChat();}
-function appendChat(role,text){
-  const area=document.getElementById('chatArea');
-  const div=document.createElement('div'); div.className=`chat-msg ${role}`;
-  div.innerHTML=`<div class="chat-sender">${role==='user'?'あなた':'Trade AI'}</div><div class="chat-bubble">${text.replace(/\n/g,'<br>')}</div>`;
-  area.appendChild(div); area.scrollTop=area.scrollHeight;
+function quickChat(msg) { document.getElementById('chatInput').value = msg; sendChat(); }
+function appendChat(role, text) {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div'); div.className = `chat-msg ${role}`;
+  div.innerHTML = `<div class="chat-sender">${role === 'user' ? 'あなた' : 'Trade AI'}</div><div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+  area.appendChild(div); area.scrollTop = area.scrollHeight;
 }
-function appendTyping(){
-  const area=document.getElementById('chatArea');
-  const id='typing-'+Date.now();
-  const div=document.createElement('div'); div.className='chat-msg ai'; div.id=id;
-  div.innerHTML=`<div class="chat-sender">Trade AI</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
-  area.appendChild(div); area.scrollTop=area.scrollHeight; return id;
+function appendTyping() {
+  const area = document.getElementById('chatArea');
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div'); div.className = 'chat-msg ai'; div.id = id;
+  div.innerHTML = `<div class="chat-sender">Trade AI</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  area.appendChild(div); area.scrollTop = area.scrollHeight; return id;
 }
-function removeTyping(id){const el=document.getElementById(id);if(el)el.remove();}
+function removeTyping(id) { const el = document.getElementById(id); if (el) el.remove(); }
 
 // ===== Claude API =====
-async function callClaude(userMsg,history=[]){
-  const messages=(history.length>0&&history[history.length-1].role==='user')?history:[...history,{role:'user',content:userMsg}];
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM_PROMPT,messages})
+async function callClaude(userMsg, history = []) {
+  const messages = (history.length > 0 && history[history.length - 1].role === 'user') ? history : [...history, { role: 'user', content: userMsg }];
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages })
   });
-  const data=await res.json();
-  return data.content?.[0]?.text||'レスポンスが空でした';
+  const data = await res.json();
+  return data.content?.[0]?.text || 'レスポンスが空でした';
 }
 </script>
 </body>
