@@ -337,10 +337,48 @@ select option{background:var(--bg3);}
 .apikey-box input::placeholder{color:var(--muted);font-size:12px;}
 .apikey-actions{display:flex;gap:10px;margin-top:6px;}
 .apikey-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6;padding:10px;background:var(--bg3);border-radius:6px;}
+
+/* ===== Notion設定モーダル ===== */
+.notion-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
+.notion-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:480px;width:100%;}
+.notion-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
+.notion-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.notion-box label{font-size:12px;color:var(--muted);margin-bottom:4px;display:block;}
+.notion-box input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:11px 14px;color:var(--text);font-size:13px;font-family:var(--mono);outline:none;margin-bottom:12px;}
+.notion-box input:focus{border-color:var(--accent);}
+.notion-status{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:6px;display:none;}
+.notion-status.ok{background:rgba(34,197,94,.15);color:var(--green);display:block;}
+.notion-status.err{background:rgba(239,68,68,.15);color:var(--red);display:block;}
+.notion-status.loading{background:var(--bg3);color:var(--muted);display:block;}
 </style>
 </head>
 <body>
 
+
+
+<!-- Notion設定モーダル -->
+<div class="notion-modal" id="notionModal" style="display:none;">
+  <div class="notion-box">
+    <h2>📓 Notion連携設定</h2>
+    <p>NotionのアクセストークンとデータベースIDを設定してください。一度設定すればこのブラウザに保存されます。</p>
+    <label>Notionアクセストークン（ntn_で始まる）</label>
+    <input type="password" id="notionTokenInput" placeholder="ntn_..." autocomplete="off" spellcheck="false">
+    <label>環境認識メモ データベースID</label>
+    <input type="text" id="notionEnvDbInput" placeholder="37bd96539c7c8013a44af906b8342251" autocomplete="off" spellcheck="false">
+    <label>振り返りノート データベースID</label>
+    <input type="text" id="notionJnlDbInput" placeholder="データベースIDを入力" autocomplete="off" spellcheck="false">
+    <div style="display:flex;gap:10px;margin-top:4px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveNotionSettings()">💾 保存</button>
+      <button class="btn btn-ghost btn-sm" onclick="testNotionConnection()">接続テスト</button>
+      <button class="btn btn-ghost" onclick="closeNotionModal()">閉じる</button>
+    </div>
+    <div class="notion-status" id="notionStatus"></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;line-height:1.7;">
+      🔒 設定はブラウザのlocalStorageに保存されます<br>
+      📋 トークン取得: <span style="color:var(--accent);">app.notion.com/developers/tokens</span>
+    </div>
+  </div>
+</div>
 
 <!-- APIキー設定モーダル -->
 <div class="apikey-modal" id="apikeyModal" style="display:none;">
@@ -381,6 +419,7 @@ select option{background:var(--bg3);}
     </nav>
     <div style="padding:8px;">
       <button class="nav-btn" onclick="openApiKeyModal()" style="font-size:12px;color:var(--muted);"><span class="nav-icon">🔑</span> APIキー設定</button>
+      <button class="nav-btn" onclick="openNotionModal()" style="font-size:12px;color:var(--muted);"><span class="nav-icon">📓</span> Notion連携設定</button>
     </div>
     <div class="nav-date" id="sideDate"></div>
   </div>
@@ -1405,7 +1444,7 @@ function getEnvDateLabel() {
   return `${y}年${m}月 第${w}週 ${d}曜`;
 }
 
-function saveEnvMemo() {
+async function saveEnvMemo() {
   const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '未設定';
   const memo = {
     id: Date.now(),
@@ -1450,7 +1489,15 @@ function saveEnvMemo() {
     daily:   {...m.daily,   img: null}
   }));
   localStorage.setItem('envMemos', JSON.stringify(toSave));
-  alert(`💾 ${memo.dateLabel}の環境認識を保存しました`);
+  // Notion連携
+  const notionResult = await saveEnvMemoToNotion(memo).catch(e => ({ error: e.message }));
+  if (notionResult?.error) {
+    alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`);
+  } else if (notionResult?.id) {
+    alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n✅ Notionにも同期しました！`);
+  } else {
+    alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n（Notion未設定のためローカルのみ）`);
+  }
   renderEnvHistory();
 }
 
@@ -1706,7 +1753,7 @@ function togglePsycho(el, tag) {
 }
 
 // ===== ジャーナル =====
-function addJournal() {
+async function addJournal() {
   const type = document.getElementById('jType').value;
   const pnlUsd = document.getElementById('jPnlUsd').value;
   const pnlPips = document.getElementById('jPnlPips').value;
@@ -1735,6 +1782,14 @@ function addJournal() {
   };
   journals.unshift(entry);
   localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
+
+  // Notion連携
+  const notionResult = await saveJournalToNotion(entry).catch(e => ({ error: e.message }));
+  if (notionResult?.error) {
+    alert(`✅ 記録しました\n⚠️ Notion保存失敗: ${notionResult.error}`);
+  } else if (notionResult?.id) {
+    alert('✅ 記録しました！Notionにも同期しました！');
+  }
 
   // フォームリセット
   ['jPnlUsd', 'jPnlPips', 'jSlPips', 'jSetup', 'jSituation', 'jPsycho', 'jNote'].forEach(id => document.getElementById(id).value = '');
@@ -1907,6 +1962,274 @@ function openApiKeyModal() {
     setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800);
   }
 })();
+
+// ===== Notion連携 =====
+function getNotionToken() { return localStorage.getItem('notionToken') || ''; }
+function getNotionEnvDbId() { return localStorage.getItem('notionEnvDbId') || ''; }
+
+function openNotionModal() {
+  const modal = document.getElementById('notionModal');
+  modal.style.display = 'flex';
+  const t = getNotionToken();
+  const d = getNotionEnvDbId();
+  const j = localStorage.getItem('notionJnlDbId') || '';
+  if (t) document.getElementById('notionTokenInput').value = t;
+  if (d) document.getElementById('notionEnvDbInput').value = d;
+  if (j) document.getElementById('notionJnlDbInput').value = j;
+  document.getElementById('notionStatus').className = 'notion-status';
+}
+function closeNotionModal() {
+  document.getElementById('notionModal').style.display = 'none';
+}
+function saveNotionSettings() {
+  const token = document.getElementById('notionTokenInput').value.trim();
+  const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
+  if (!token) { alert('トークンを入力してください'); return; }
+  if (!dbId)  { alert('データベースIDを入力してください'); return; }
+  const jnlDbId = document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,'');
+  localStorage.setItem('notionToken', token);
+  localStorage.setItem('notionEnvDbId', dbId);
+  if (jnlDbId) localStorage.setItem('notionJnlDbId', jnlDbId);
+  const st = document.getElementById('notionStatus');
+  st.className = 'notion-status ok';
+  st.textContent = '✅ 設定を保存しました！';
+  setTimeout(() => closeNotionModal(), 1200);
+}
+
+async function testNotionConnection() {
+  const token = document.getElementById('notionTokenInput').value.trim();
+  const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
+  const st = document.getElementById('notionStatus');
+  if (!token || !dbId) { alert('トークンとデータベースIDを入力してください'); return; }
+  st.className = 'notion-status loading'; st.textContent = '接続テスト中...';
+  try {
+    const res = await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Notion-Version': '2022-06-28'
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      st.className = 'notion-status ok';
+      st.textContent = `✅ 接続成功！DB名: ${data.title?.[0]?.plain_text || 'OK'}`;
+    } else {
+      const err = await res.json();
+      st.className = 'notion-status err';
+      st.textContent = `❌ エラー: ${err.message || res.status}`;
+    }
+  } catch(e) {
+    st.className = 'notion-status err';
+    st.textContent = `❌ 接続失敗: ${e.message}`;
+  }
+}
+
+// ===== Notion DBプロパティ自動セットアップ =====
+// 初回保存時に必要なプロパティを自動作成する
+const notionSetupDone = {}; // セッション中は1回だけ実行
+
+async function setupNotionDb(token, dbId, type) {
+  const key = type + '_' + dbId;
+  if (notionSetupDone[key]) return; // 既に実行済み
+
+  // 必要なプロパティ定義
+  const envProps = {
+    '日付キー':    { rich_text: {} },
+    '月足バイアス': { select: { options: [{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}] } },
+    '週足バイアス': { select: { options: [{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}] } },
+    '日足バイアス': { select: { options: [{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}] } },
+    '月足足型':    { rich_text: {} },
+    '週足足型':    { rich_text: {} },
+    '日足足型':    { rich_text: {} },
+    'AS高値':      { rich_text: {} },
+    'AS安値':      { rich_text: {} },
+  };
+
+  const jnlProps = {
+    '結果':        { select: { options: [{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}] } },
+    '損益USD':     { number: { format: 'number' } },
+    '損益pips':    { number: { format: 'number' } },
+    'SL幅pips':    { number: { format: 'number' } },
+    '月足バイアス': { rich_text: {} },
+    '週足バイアス': { rich_text: {} },
+    '日足バイアス': { rich_text: {} },
+    '方向':        { rich_text: {} },
+    '心理タグ':    { rich_text: {} },
+  };
+
+  const properties = type === 'env' ? envProps : jnlProps;
+
+  try {
+    // 既存プロパティを取得
+    const res = await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Notion-Version': '2022-06-28'
+      }
+    });
+    if (!res.ok) return;
+    const db = await res.json();
+    const existing = Object.keys(db.properties || {});
+
+    // 存在しないプロパティだけ追加
+    const toAdd = {};
+    Object.entries(properties).forEach(([name, def]) => {
+      if (!existing.includes(name)) toAdd[name] = def;
+    });
+
+    if (Object.keys(toAdd).length === 0) {
+      notionSetupDone[key] = true;
+      return; // 全部あればスキップ
+    }
+
+    // プロパティを追加
+    await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28'
+      },
+      body: JSON.stringify({ properties: toAdd })
+    });
+
+    notionSetupDone[key] = true;
+    console.log(`Notion DB setup complete (${type}): added ${Object.keys(toAdd).length} properties`);
+  } catch(e) {
+    console.warn('Notion DB setup failed:', e.message);
+  }
+}
+
+async function saveEnvMemoToNotion(memo) {
+  const token = getNotionToken();
+  const dbId  = getNotionEnvDbId();
+  if (!token || !dbId) return null; // 未設定はスキップ
+
+  // プロパティ自動セットアップ
+  await setupNotionDb(token, dbId, 'env').catch(() => {});
+
+  // Notionプロパティ構築
+  const props = {
+    '名前': { title: [{ text: { content: memo.dateLabel } }] },
+    '日付キー': { rich_text: [{ text: { content: memo.dateKey } }] },
+    '月足バイアス': { select: { name: memo.monthly?.dir || '未設定' } },
+    '週足バイアス': { select: { name: memo.weekly?.dir  || '未設定' } },
+    '日足バイアス': { select: { name: memo.daily?.dir   || '未設定' } },
+    '月足足型':    { rich_text: [{ text: { content: memo.monthly?.candle || '' } }] },
+    '週足足型':    { rich_text: [{ text: { content: memo.weekly?.candle  || '' } }] },
+    '日足足型':    { rich_text: [{ text: { content: memo.daily?.candle   || '' } }] },
+    'AS高値':      { rich_text: [{ text: { content: String(memo.daily?.asiaH || '') } }] },
+    'AS安値':      { rich_text: [{ text: { content: String(memo.daily?.asiaL || '') } }] },
+  };
+
+  // ページ本文（メモ・AI結果）
+  const children = [];
+  if (memo.monthly?.note) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'🌙 月足メモ'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.monthly.note}}] } }
+  );
+  if (memo.weekly?.note) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📅 週足メモ'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.weekly.note}}] } }
+  );
+  if (memo.daily?.note) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📆 日足メモ'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.daily.note}}] } }
+  );
+  if (memo.aiResult) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'🤖 AI分析結果'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.aiResult}}] } }
+  );
+
+  const res = await fetch('https://api.notion.com/v1/pages', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'Notion-Version': '2022-06-28'
+    },
+    body: JSON.stringify({
+      parent: { database_id: dbId },
+      properties: props,
+      children
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Notion API error ' + res.status);
+  }
+  return await res.json();
+}
+
+
+async function saveJournalToNotion(entry) {
+  const token = getNotionToken();
+  const dbId  = localStorage.getItem('notionJnlDbId') || '';
+  if (!token || !dbId) return null;
+
+  // プロパティ自動セットアップ
+  await setupNotionDb(token, dbId, 'journal').catch(() => {});
+
+  const typeLabel = { win:'勝ち', loss:'負け', pass:'見送り成功', miss:'機会損失' };
+  const title = `${entry.date} ${typeLabel[entry.type] || entry.type}`;
+
+  const props = {
+    '名前':       { title: [{ text: { content: title } }] },
+    '結果':       { select: { name: typeLabel[entry.type] || entry.type } },
+    '損益USD':    { number: entry.pnlUsd ?? null },
+    '損益pips':   { number: entry.pnlPips ?? null },
+    'SL幅pips':   { number: entry.slPips ?? null },
+    '月足バイアス': { rich_text: [{ text: { content: entry.biasMonthly || '' } }] },
+    '週足バイアス': { rich_text: [{ text: { content: entry.biasWeekly  || '' } }] },
+    '日足バイアス': { rich_text: [{ text: { content: entry.biasDaily   || '' } }] },
+    '方向':       { rich_text: [{ text: { content: entry.direction || '' } }] },
+    '心理タグ':   { rich_text: [{ text: { content: (entry.psychoTags||[]).join(', ') } }] },
+  };
+
+  // null の number プロパティを除去
+  Object.keys(props).forEach(k => {
+    if (props[k].number === null) delete props[k];
+  });
+
+  const children = [];
+  if (entry.setup) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📌 セットアップ'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.setup}}] } }
+  );
+  if (entry.situation) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📊 トレード時の状況'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.situation}}] } }
+  );
+  if (entry.psychoNote) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'🧠 心理状態'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.psychoNote}}] } }
+  );
+  if (entry.note) children.push(
+    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📝 良かった点 / 反省点'}}] } },
+    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.note}}] } }
+  );
+
+  const res = await fetch('https://api.notion.com/v1/pages', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'Notion-Version': '2022-06-28'
+    },
+    body: JSON.stringify({
+      parent: { database_id: dbId },
+      properties: props,
+      children
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Notion API error ' + res.status);
+  }
+  return await res.json();
+}
 
 // ===== Claude API =====
 async function callClaude(userMsg, history = []) {
