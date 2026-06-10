@@ -159,11 +159,8 @@ select option{background:var(--bg3);}
 
 /* ===== モバイル ===== */
 @media(max-width:640px){
-  /* 基本レイアウト */
   .shell{flex-direction:column;height:100dvh;}
   .sidebar{display:none;}
-
-  /* ===== ボトムナビ ===== */
   .bottom-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;
     background:var(--bg2);border-top:1px solid var(--border);
@@ -174,93 +171,50 @@ select option{background:var(--bg3);}
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
     padding:6px 2px;border:none;background:none;color:var(--muted);
     font-size:9px;font-family:var(--font);cursor:pointer;gap:2px;transition:color .15s;
-    min-width:0;/* overflow防止 */
+    min-width:0;
   }
   .bnav-btn.active{color:var(--accent);}
   .bnav-icon{font-size:18px;line-height:1;}
-
-  /* ===== スクロール領域 ===== */
   .main{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(60px + env(safe-area-inset-bottom));}
-
-  /* ===== ページ ===== */
   .page{padding:14px 12px;max-width:100%;}
   .page-title{font-size:17px;}
   .page-sub{font-size:12px;margin-bottom:14px;}
-
-  /* ===== カード ===== */
   .card{padding:12px;margin-bottom:10px;}
   .card-title{font-size:10px;margin-bottom:10px;}
-
-  /* ===== グリッド: モバイルは基本1列 ===== */
   .grid2{grid-template-columns:1fr;gap:10px;}
   .grid3{grid-template-columns:1fr 1fr;gap:8px;}
   .stats-grid3{grid-template-columns:1fr 1fr;}
   .pnl-group{grid-template-columns:1fr 1fr;}
-
-  /* ===== フォーム: 16px以上でSafari自動ズーム防止 ===== */
-  input,select,textarea{
-    font-size:16px !important;  /* これが最重要: 16px未満でSafariがズームする */
-    padding:11px 12px;
-  }
+  input,select,textarea{font-size:16px !important;padding:11px 12px;}
   label{font-size:13px;}
-
-  /* ===== ボタン ===== */
   .btn{font-size:14px;padding:11px 16px;}
   .btn-sm{padding:9px 12px;font-size:13px;}
-  /* タッチターゲット最低44px確保 */
   .btn,.btn-sm{min-height:44px;}
-
-  /* ===== TradingViewツールバー: モバイルは折り返しレイアウト ===== */
-  .tv-toolbar{
-    gap:6px;padding:8px 10px;
-    display:flex;flex-wrap:wrap;align-items:center;
-  }
+  .tv-toolbar{gap:6px;padding:8px 10px;display:flex;flex-wrap:wrap;align-items:center;}
   .tv-toolbar > span{width:100%;font-size:10px;margin-bottom:2px;}
   .tv-toolbar input{flex:1;min-width:80px;font-size:16px !important;}
   .tv-toolbar select{flex:0 0 auto;font-size:16px !important;padding:9px 10px;}
   .tv-toolbar .btn-sm{flex:0 0 auto;padding:9px 12px;font-size:13px;min-height:42px;}
-
-  /* ===== チャットエリア ===== */
   .chat-area{max-height:260px;min-height:180px;}
   .chat-bubble{font-size:14px;}
   .chat-input-row input{font-size:16px !important;}
-
-  /* ===== 統計カード ===== */
   .stat-num{font-size:20px;}
   .stat-card{padding:12px 10px;}
-
-  /* ===== タイムフレームタブ ===== */
   .tf-tab{font-size:13px;padding:10px 6px;}
   .tf-tab .tf-icon{font-size:16px;}
-
-  /* ===== 環境タグ ===== */
   .env-tag{font-size:13px;padding:9px 12px;min-height:40px;}
-
-  /* ===== チェックリスト ===== */
-  .check-box{width:26px;height:26px;flex-shrink:0;} /* タッチしやすく拡大 */
+  .check-box{width:26px;height:26px;flex-shrink:0;}
   .check-label{font-size:13px;}
   .check-sub{font-size:11px;}
   .check-item{padding:13px 0;gap:14px;}
-
-  /* ===== 心理タグ ===== */
   #psychoTags .env-tag{font-size:12px;padding:8px 10px;}
-
-  /* ===== ジャーナルエントリー ===== */
   .entry-body{font-size:13px;}
   .entry-meta{font-size:11px;}
-
-  /* ===== ATR計算結果 ===== */
   .calc-row{font-size:13px;padding:9px 0;}
   .calc-val{font-size:13px;}
-
-  /* ===== バッジ ===== */
   .badge{font-size:11px;padding:4px 10px;}
-
-  /* ===== プレビュー画像 ===== */
   .preview-img{max-height:200px;}
   .entry-img{max-height:180px;}
-
-  /* ===== テキストエリア ===== */
   textarea{min-height:90px;}
 }
 
@@ -354,13 +308,11 @@ select option{background:var(--bg3);}
 </head>
 <body>
 
-
-
 <!-- Notion設定モーダル -->
 <div class="notion-modal" id="notionModal" style="display:none;">
   <div class="notion-box">
     <h2>📓 Notion連携設定</h2>
-    <p>NotionのアクセストークンとデータベースIDを設定してください。一度設定すればこのブラウザに保存されます。</p>
+    <p>NotionのアクセストークンとデータベースIDを設定してください。保存時にClaude AI経由で自動的にNotionへ書き込まれます（CORSエラー回避）。</p>
     <label>Notionアクセストークン（ntn_で始まる）</label>
     <input type="password" id="notionTokenInput" placeholder="ntn_..." autocomplete="off" spellcheck="false">
     <label>環境認識メモ データベースID</label>
@@ -375,7 +327,8 @@ select option{background:var(--bg3);}
     <div class="notion-status" id="notionStatus"></div>
     <div style="font-size:11px;color:var(--muted);margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;line-height:1.7;">
       🔒 設定はブラウザのlocalStorageに保存されます<br>
-      📋 トークン取得: <span style="color:var(--accent);">app.notion.com/developers/tokens</span>
+      📋 トークン取得: <span style="color:var(--accent);">app.notion.com/developers/tokens</span><br>
+      🤖 保存時はClaude API経由でNotionに書き込みます（CORSエラー回避）
     </div>
   </div>
 </div>
@@ -517,24 +470,17 @@ select option{background:var(--bg3);}
               <select id="prevCandle-monthly">
                 <option value="">選択...</option>
                 <optgroup label="── トレンド継続 ──">
-                <option>陽線（スラスト）</option>
-                <option>陰線（スラスト）</option>
+                <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
                 </optgroup>
                 <optgroup label="── 反転・調整サイン ──">
-                <option>陽線（上ヒゲ＞実体）</option>
-                <option>陰線（上ヒゲ＞実体）</option>
-                <option>陽線（下ヒゲ＞実体）</option>
-                <option>陰線（下ヒゲ＞実体）</option>
-                <option>ピンバー（上ヒゲ）</option>
-                <option>ピンバー（下ヒゲ）</option>
+                <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
+                <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
+                <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
                 </optgroup>
                 <optgroup label="── レンジ・迷い ──">
-                <option>コマ足（陽線）</option>
-                <option>コマ足（陰線）</option>
-                <option>ハラミ足（陽線）</option>
-                <option>ハラミ足（陰線）</option>
-                <option>逆ヒゲ陽線（下ヒゲなし）</option>
-                <option>逆ヒゲ陰線（上ヒゲなし）</option>
+                <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
+                <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
+                <option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option>
                 <option>十字線（ドージ）</option>
                 </optgroup>
               </select>
@@ -543,10 +489,8 @@ select option{background:var(--bg3);}
               <label>トレンド / レンジ</label>
               <select id="marketState-monthly">
                 <option value="">選択...</option>
-                <option>トレンド継続</option>
-                <option>レンジ中</option>
-                <option>レンジ→トレンド移行疑い</option>
-                <option>トレンド→レンジ移行疑い</option>
+                <option>トレンド継続</option><option>レンジ中</option>
+                <option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option>
               </select>
             </div>
           </div>
@@ -572,24 +516,17 @@ select option{background:var(--bg3);}
               <select id="prevCandle-weekly">
                 <option value="">選択...</option>
                 <optgroup label="── トレンド継続 ──">
-                <option>陽線（スラスト）</option>
-                <option>陰線（スラスト）</option>
+                <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
                 </optgroup>
                 <optgroup label="── 反転・調整サイン ──">
-                <option>陽線（上ヒゲ＞実体）</option>
-                <option>陰線（上ヒゲ＞実体）</option>
-                <option>陽線（下ヒゲ＞実体）</option>
-                <option>陰線（下ヒゲ＞実体）</option>
-                <option>ピンバー（上ヒゲ）</option>
-                <option>ピンバー（下ヒゲ）</option>
+                <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
+                <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
+                <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
                 </optgroup>
                 <optgroup label="── レンジ・迷い ──">
-                <option>コマ足（陽線）</option>
-                <option>コマ足（陰線）</option>
-                <option>ハラミ足（陽線）</option>
-                <option>ハラミ足（陰線）</option>
-                <option>逆ヒゲ陽線（下ヒゲなし）</option>
-                <option>逆ヒゲ陰線（上ヒゲなし）</option>
+                <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
+                <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
+                <option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option>
                 <option>十字線（ドージ）</option>
                 </optgroup>
               </select>
@@ -598,10 +535,8 @@ select option{background:var(--bg3);}
               <label>トレンド / レンジ</label>
               <select id="marketState-weekly">
                 <option value="">選択...</option>
-                <option>トレンド継続</option>
-                <option>レンジ中</option>
-                <option>レンジ→トレンド移行疑い</option>
-                <option>トレンド→レンジ移行疑い</option>
+                <option>トレンド継続</option><option>レンジ中</option>
+                <option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option>
               </select>
             </div>
           </div>
@@ -627,24 +562,17 @@ select option{background:var(--bg3);}
               <select id="prevCandle-daily">
                 <option value="">選択...</option>
                 <optgroup label="── トレンド継続 ──">
-                <option>陽線（スラスト）</option>
-                <option>陰線（スラスト）</option>
+                <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
                 </optgroup>
                 <optgroup label="── 反転・調整サイン ──">
-                <option>陽線（上ヒゲ＞実体）</option>
-                <option>陰線（上ヒゲ＞実体）</option>
-                <option>陽線（下ヒゲ＞実体）</option>
-                <option>陰線（下ヒゲ＞実体）</option>
-                <option>ピンバー（上ヒゲ）</option>
-                <option>ピンバー（下ヒゲ）</option>
+                <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
+                <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
+                <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
                 </optgroup>
                 <optgroup label="── レンジ・迷い ──">
-                <option>コマ足（陽線）</option>
-                <option>コマ足（陰線）</option>
-                <option>ハラミ足（陽線）</option>
-                <option>ハラミ足（陰線）</option>
-                <option>逆ヒゲ陽線（下ヒゲなし）</option>
-                <option>逆ヒゲ陰線（上ヒゲなし）</option>
+                <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
+                <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
+                <option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option>
                 <option>十字線（ドージ）</option>
                 </optgroup>
               </select>
@@ -653,10 +581,8 @@ select option{background:var(--bg3);}
               <label>トレンド / レンジ</label>
               <select id="marketState-daily">
                 <option value="">選択...</option>
-                <option>トレンド継続</option>
-                <option>レンジ中</option>
-                <option>レンジ→トレンド移行疑い</option>
-                <option>トレンド→レンジ移行疑い</option>
+                <option>トレンド継続</option><option>レンジ中</option>
+                <option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option>
               </select>
             </div>
           </div>
@@ -670,12 +596,10 @@ select option{background:var(--bg3);}
         </div>
       </div>
 
-      <!-- スクショ: 月足・週足・日足 別々に貼れる -->
+      <!-- スクショ -->
       <div class="card">
         <div class="card-title">📷 チャートスクショ</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">画像を貼り付け(Ctrl+V / 長押しペースト) またはタップして添付</div>
-
-        <!-- 月足スクショ -->
         <div style="margin-bottom:12px;">
           <div class="tf-label monthly" style="margin-bottom:6px;">🌙 月足チャート</div>
           <div class="paste-zone" id="pasteZone-monthly" tabindex="0">
@@ -686,8 +610,6 @@ select option{background:var(--bg3);}
           </div>
           <div class="img-wrap" id="imgWrap-monthly"><button class="img-clear-btn" onclick="clearPreview('monthly')" title="削除">✕</button><img id="envPreview-monthly" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
-
-        <!-- 週足スクショ -->
         <div style="margin-bottom:12px;">
           <div class="tf-label weekly" style="margin-bottom:6px;">📅 週足チャート</div>
           <div class="paste-zone" id="pasteZone-weekly" tabindex="0">
@@ -698,8 +620,6 @@ select option{background:var(--bg3);}
           </div>
           <div class="img-wrap" id="imgWrap-weekly"><button class="img-clear-btn" onclick="clearPreview('weekly')" title="削除">✕</button><img id="envPreview-weekly" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
-
-        <!-- 日足スクショ -->
         <div>
           <div class="tf-label daily" style="margin-bottom:6px;">📆 日足チャート</div>
           <div class="paste-zone" id="pasteZone-daily" tabindex="0">
@@ -721,7 +641,7 @@ select option{background:var(--bg3);}
         <div class="ai-summary" id="envResultText"></div>
       </div>
 
-      <!-- ===== 履歴一覧 ===== -->
+      <!-- 履歴一覧 -->
       <div style="border-top:2px solid var(--border);margin-top:8px;padding-top:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
           <div>
@@ -765,7 +685,7 @@ select option{background:var(--bg3);}
       </div>
     </div>
 
-    <!-- ===== ATR計算機（海外口座） ===== -->
+    <!-- ===== ATR計算機 ===== -->
     <div class="page" id="page-atr">
       <div class="page-title">ATR・ポジション計算機</div>
       <div class="page-sub">海外口座（1ロット = 100oz）でのロット計算　※国内100枚 = 海外1ロット相当</div>
@@ -779,23 +699,14 @@ select option{background:var(--bg3);}
       <div class="card">
         <div class="card-title">口座・リスク設定</div>
         <div class="grid2">
-          <div>
-            <label>口座残高（USD）</label>
-            <input id="balance" type="number" placeholder="例: 5000" oninput="calcATR()">
-          </div>
-          <div>
-            <label>許容損失（%）</label>
-            <input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()">
-          </div>
+          <div><label>口座残高（USD）</label><input id="balance" type="number" placeholder="例: 5000" oninput="calcATR()"></div>
+          <div><label>許容損失（%）</label><input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()"></div>
         </div>
       </div>
       <div class="card">
         <div class="card-title">トレード設定</div>
         <div class="grid2">
-          <div>
-            <label>損切り幅（ドル / oz）</label>
-            <input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()">
-          </div>
+          <div><label>損切り幅（ドル / oz）</label><input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()"></div>
           <div>
             <label>RR比率</label>
             <select id="rrRatio" onchange="calcATR()">
@@ -862,8 +773,6 @@ select option{background:var(--bg3);}
 
       <div class="card">
         <div class="card-title">新規記録</div>
-
-        <!-- 結果タイプ -->
         <div class="grid2" style="margin-bottom:12px;">
           <div>
             <label>結果タイプ</label>
@@ -882,8 +791,6 @@ select option{background:var(--bg3);}
             </div>
           </div>
         </div>
-
-        <!-- 損益（ドル + pips） -->
         <div style="margin-bottom:12px;">
           <label>損益</label>
           <div class="pnl-group">
@@ -897,57 +804,20 @@ select option{background:var(--bg3);}
             </div>
           </div>
         </div>
-
-        <!-- セットアップ -->
         <div style="margin-bottom:12px;">
           <label>セットアップ・環境</label>
           <input id="jSetup" type="text" placeholder="日足スラスト陽線、アジア安値でピンバー確認後ロング">
         </div>
-
-        <!-- トレード時の状況 -->
         <div style="margin-bottom:12px;">
           <label>トレード時の状況</label>
           <div class="grid2" style="margin-bottom:8px;">
-            <div>
-              <label style="font-size:11px;">月足バイアス</label>
-              <select id="jBiasMonthly">
-                <option value="">-</option>
-                <option>ロング優位</option>
-                <option>ショート優位</option>
-                <option>レンジ</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;">週足バイアス</label>
-              <select id="jBiasWeekly">
-                <option value="">-</option>
-                <option>ロング優位</option>
-                <option>ショート優位</option>
-                <option>レンジ</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;">日足バイアス</label>
-              <select id="jBiasDaily">
-                <option value="">-</option>
-                <option>ロング優位</option>
-                <option>ショート優位</option>
-                <option>レンジ</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;">エントリー方向</label>
-              <select id="jDirection">
-                <option value="">-</option>
-                <option>ロング</option>
-                <option>ショート</option>
-              </select>
-            </div>
+            <div><label style="font-size:11px;">月足バイアス</label><select id="jBiasMonthly"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select></div>
+            <div><label style="font-size:11px;">週足バイアス</label><select id="jBiasWeekly"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select></div>
+            <div><label style="font-size:11px;">日足バイアス</label><select id="jBiasDaily"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select></div>
+            <div><label style="font-size:11px;">エントリー方向</label><select id="jDirection"><option value="">-</option><option>ロング</option><option>ショート</option></select></div>
           </div>
           <textarea id="jSituation" placeholder="価格がアジア安値を一度ヒゲで割ってから戻り。前日陽線スラストの流れに乗る形。NYオープン前の動き。"></textarea>
         </div>
-
-        <!-- 心理状態 -->
         <div style="margin-bottom:12px;">
           <label>心理状態</label>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;" id="psychoTags">
@@ -960,13 +830,10 @@ select option{background:var(--bg3);}
           </div>
           <textarea id="jPsycho" placeholder="エントリー時は冷静だったが、含み損が出た瞬間に焦りが生じた。損切りラインは守れた。"></textarea>
         </div>
-
-        <!-- 良かった点・反省点 -->
         <div style="margin-bottom:14px;">
           <label>良かった点 / 反省点</label>
           <textarea id="jNote" placeholder="根拠明確だったが利確を引っ張りすぎた。次回は節目利確を徹底する。"></textarea>
         </div>
-
         <div style="margin-bottom:14px;">
           <label>チャートスクショ（任意）</label>
           <div class="paste-zone" id="pasteZone-jnl" tabindex="0">
@@ -1049,7 +916,7 @@ select option{background:var(--bg3);}
 <script>
 let journals = JSON.parse(localStorage.getItem('tradeJournals') || '[]');
 let envMemos = JSON.parse(localStorage.getItem('envMemos') || '[]');
-let envImgs = { monthly: null, weekly: null, daily: null }; // セッション中のみ保持
+let envImgs = { monthly: null, weekly: null, daily: null };
 let selectedDirByTF = { monthly: '', weekly: '', daily: '' };
 let jnlUploadDataUrl = null;
 let selectedPsychoTags = [];
@@ -1148,15 +1015,12 @@ function handleUpload(event, previewId) {
 }
 function setPreviewFromFile(file, previewId) {
   const reader = new FileReader();
-  reader.onload = e => {
-    setPreviewSrc(previewId, e.target.result);
-  };
+  reader.onload = e => { setPreviewSrc(previewId, e.target.result); };
   reader.readAsDataURL(file);
 }
 function setPreviewSrc(previewId, src) {
   const img = document.getElementById(previewId);
   if (img) { img.src = src; }
-  // ラッパーを表示
   const wrapMap = {
     'envPreview-monthly': 'imgWrap-monthly',
     'envPreview-weekly':  'imgWrap-weekly',
@@ -1170,20 +1034,9 @@ function setPreviewSrc(previewId, src) {
   if (previewId === 'envPreview-weekly')  envImgs.weekly  = src;
   if (previewId === 'envPreview-daily')   envImgs.daily   = src;
 }
-
 function clearPreview(key) {
-  const previewMap = {
-    'monthly': 'envPreview-monthly',
-    'weekly':  'envPreview-weekly',
-    'daily':   'envPreview-daily',
-    'jnl':     'jnlPreview'
-  };
-  const wrapMap = {
-    'monthly': 'imgWrap-monthly',
-    'weekly':  'imgWrap-weekly',
-    'daily':   'imgWrap-daily',
-    'jnl':     'imgWrap-jnl'
-  };
+  const previewMap = { 'monthly': 'envPreview-monthly', 'weekly': 'envPreview-weekly', 'daily': 'envPreview-daily', 'jnl': 'jnlPreview' };
+  const wrapMap = { 'monthly': 'imgWrap-monthly', 'weekly': 'imgWrap-weekly', 'daily': 'imgWrap-daily', 'jnl': 'imgWrap-jnl' };
   const img = document.getElementById(previewMap[key]);
   if (img) { img.src = ''; }
   const wrap = document.getElementById(wrapMap[key]);
@@ -1194,26 +1047,22 @@ function clearPreview(key) {
   if (key === 'daily')   envImgs.daily   = null;
 }
 
-// ===== クリップボード画像ペースト =====
-// ペーストゾーンIDとプレビューIDのマッピング
+// ===== ペーストゾーン =====
 const PASTE_MAP = {
   'pasteZone-monthly': 'envPreview-monthly',
   'pasteZone-weekly':  'envPreview-weekly',
   'pasteZone-daily':   'envPreview-daily',
   'pasteZone-jnl':     'jnlPreview'
 };
-// ファイル選択ダイアログとのマッピング
 const FILE_MAP = {
   'pasteZone-monthly': 'fileEnv-monthly',
   'pasteZone-weekly':  'fileEnv-weekly',
   'pasteZone-daily':   'fileEnv-daily',
   'pasteZone-jnl':     'fileJnl'
 };
-
-let activePasteZoneId = null; // 現在選択中のゾーン
+let activePasteZoneId = null;
 
 function setActivePasteZone(zoneId) {
-  // 全ゾーンのアクティブ解除
   document.querySelectorAll('.paste-zone').forEach(z => z.classList.remove('paste-active'));
   activePasteZoneId = zoneId;
   if (zoneId) {
@@ -1225,21 +1074,15 @@ function setActivePasteZone(zoneId) {
 function initPasteZones() {
   document.querySelectorAll('.paste-zone').forEach(zone => {
     const zoneId = zone.id;
-
-    // クリック: アクティブ化 or ファイル選択
     zone.addEventListener('click', e => {
-      // 既にアクティブなら → ファイル選択ダイアログを開く
       if (activePasteZoneId === zoneId) {
         const fileInput = document.getElementById(FILE_MAP[zoneId]);
         if (fileInput) fileInput.click();
         return;
       }
-      // 初回クリック: アクティブ化してCtrl+V待ち
       setActivePasteZone(zoneId);
       zone.focus();
     });
-
-    // キーボード: Enter/Space でファイル選択
     zone.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -1247,8 +1090,6 @@ function initPasteZones() {
         if (fileInput) fileInput.click();
       }
     });
-
-    // フォーカス離れ: アクティブ解除（ただし200ms後。ファイルダイアログ等の考慮）
     zone.addEventListener('blur', () => {
       setTimeout(() => {
         if (document.activeElement !== zone) {
@@ -1257,8 +1098,6 @@ function initPasteZones() {
         }
       }, 200);
     });
-
-    // ドラッグ&ドロップ
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
     zone.addEventListener('drop', e => {
@@ -1271,7 +1110,6 @@ function initPasteZones() {
     });
   });
 
-  // ===== グローバル Ctrl+V / ペーストイベント =====
   document.addEventListener('paste', e => {
     const items = e.clipboardData?.items;
     if (!items) return;
@@ -1279,19 +1117,12 @@ function initPasteZones() {
       if (!item.type.startsWith('image/')) continue;
       const file = item.getAsFile();
       if (!file) continue;
-
       let targetPreviewId = null;
-
-      // 1) アクティブなペーストゾーンがあればそこへ
       if (activePasteZoneId && PASTE_MAP[activePasteZoneId]) {
         targetPreviewId = PASTE_MAP[activePasteZoneId];
-      }
-      // 2) フォーカスがペーストゾーン上にある場合
-      else if (document.activeElement?.classList.contains('paste-zone')) {
+      } else if (document.activeElement?.classList.contains('paste-zone')) {
         targetPreviewId = PASTE_MAP[document.activeElement.id];
-      }
-      // 3) フォールバック: 現在のページとTFパネルから推定
-      else {
+      } else {
         if (document.getElementById('page-env')?.classList.contains('active')) {
           const activeTF = document.querySelector('.tf-panel.active');
           if (activeTF?.id === 'tf-monthly')     targetPreviewId = 'envPreview-monthly';
@@ -1301,13 +1132,10 @@ function initPasteZones() {
           targetPreviewId = 'jnlPreview';
         }
       }
-
       if (targetPreviewId) {
         setPreviewFromFile(file, targetPreviewId);
-        setActivePasteZone(null); // 貼り付け後はアクティブ解除
+        setActivePasteZone(null);
         e.preventDefault();
-
-        // 成功フィードバック: ゾーンを一瞬光らせる
         const zoneId = Object.keys(PASTE_MAP).find(k => PASTE_MAP[k] === targetPreviewId);
         if (zoneId) {
           const zone = document.getElementById(zoneId);
@@ -1322,31 +1150,26 @@ function initPasteZones() {
     }
   });
 
-  // ページ外クリックでアクティブ解除
   document.addEventListener('click', e => {
-    if (!e.target.closest('.paste-zone')) {
-      setActivePasteZone(null);
-    }
+    if (!e.target.closest('.paste-zone')) setActivePasteZone(null);
   });
 }
+
 function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('open'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
 
-// ===== 環境認識 タイムフレームタブ =====
+// ===== タイムフレームタブ =====
 function switchTF(tf, btn) {
   document.querySelectorAll('.tf-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tf-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tf-' + tf).classList.add('active');
 }
-
 function selectDirTF(el, dir, tf) {
   document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b => b.className = 'env-tag');
   selectedDirByTF[tf] = dir;
   el.classList.add('selected-' + dir);
 }
-
-// 後方互換（旧コードがある場合用）
 let selectedDir = '';
 function selectDir(el, dir) { selectDirTF(el, dir, 'daily'); selectedDir = dir; }
 
@@ -1376,7 +1199,6 @@ async function analyzeEnv() {
     asiaH: document.getElementById('asiaH').value || '未入力',
     asiaL: document.getElementById('asiaL').value || '未入力'
   };
-
   const prompt = `【環境認識 マルチタイムフレーム分析】
 ■月足: 方向感:${monthly.dir} | 足型:${monthly.candle} | 状態:${monthly.state} | 節目:${monthly.key || 'なし'} | メモ:${monthly.note || 'なし'}
 ■週足: 方向感:${weekly.dir} | 足型:${weekly.candle} | 状態:${weekly.state} | 節目:${weekly.key || 'なし'} | メモ:${weekly.note || 'なし'}
@@ -1398,7 +1220,7 @@ async function analyzeEnv() {
   }
 }
 
-// ===== 日付バー初期化 =====
+// ===== 日付バー =====
 function initEnvDateBar() {
   const now = new Date();
   const yearSel = document.getElementById('envYear');
@@ -1409,7 +1231,6 @@ function initEnvDateBar() {
     yearSel.appendChild(o);
   }
   document.getElementById('envMonth').value = now.getMonth() + 1;
-  // 第何週か自動計算
   const weekNum = Math.ceil(now.getDate() / 7);
   document.getElementById('envWeek').value = weekNum;
   const days = ['日','月','火','水','木','金','土'];
@@ -1419,7 +1240,6 @@ function initEnvDateBar() {
   ['envYear','envMonth','envWeek','envDay'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateEnvDateLabel)
   );
-  // 初回レンダリング
   renderEnvHistory();
 }
 function updateEnvDateLabel() {
@@ -1478,10 +1298,8 @@ async function saveEnvMemo() {
     },
     aiResult: document.getElementById('envResultText').textContent || ''
   };
-  // 同じdateKeyがあれば上書き
   const idx = envMemos.findIndex(m => m.dateKey === memo.dateKey);
   if (idx >= 0) envMemos[idx] = memo; else envMemos.unshift(memo);
-  // 画像なしで保存(容量節約)
   const toSave = envMemos.map(m => ({
     ...m,
     monthly: {...m.monthly, img: null},
@@ -1489,7 +1307,8 @@ async function saveEnvMemo() {
     daily:   {...m.daily,   img: null}
   }));
   localStorage.setItem('envMemos', JSON.stringify(toSave));
-  // Notion連携
+
+  // Notion連携（Claude API + MCP経由）
   const notionResult = await saveEnvMemoToNotion(memo).catch(e => ({ error: e.message }));
   if (notionResult?.error) {
     alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`);
@@ -1504,8 +1323,6 @@ async function saveEnvMemo() {
 function renderEnvHistory() {
   const list = document.getElementById('envHistoryList');
   if (!list) return;
-
-  // フィルタ年プルダウン初期化
   const yearSel = document.getElementById('histFilterYear');
   if (yearSel && yearSel.options.length <= 1) {
     const years = [...new Set(envMemos.map(m => m.dateKey?.split('-')[0]).filter(Boolean))].sort().reverse();
@@ -1514,8 +1331,6 @@ function renderEnvHistory() {
       yearSel.appendChild(o);
     });
   }
-
-  // フィルタ適用
   const filterYear  = document.getElementById('histFilterYear')?.value  || '';
   const filterMonth = document.getElementById('histFilterMonth')?.value || '';
   let memos = [...envMemos];
@@ -1524,13 +1339,10 @@ function renderEnvHistory() {
     const mo = m.dateKey?.split('-')[1];
     return mo && parseInt(mo) === parseInt(filterMonth);
   });
-
   if (!memos.length) {
     list.innerHTML = '<div class="hist-empty">📭 保存された環境認識メモはありません<br><span style="font-size:11px;margin-top:6px;display:block;">記録入力後「💾 保存して記録」で保存されます</span></div>';
     return;
   }
-
-  // 月ごとにグループ化
   const groups = {};
   memos.forEach(m => {
     const y = m.dateKey?.split('-')[0] || '?';
@@ -1539,14 +1351,12 @@ function renderEnvHistory() {
     if (!groups[key]) groups[key] = { label: `${y}年 ${parseInt(mo)}月`, items: [] };
     groups[key].items.push(m);
   });
-
   const biasChip = dir => {
     if (dir === 'ロング優位') return `<span class="hist-bias-chip hist-bias-long">↑ ロング</span>`;
     if (dir === 'ショート優位') return `<span class="hist-bias-chip hist-bias-short">↓ ショート</span>`;
     if (dir === 'レンジ') return `<span class="hist-bias-chip hist-bias-range">↔ レンジ</span>`;
     return `<span class="hist-bias-chip hist-bias-none">未設定</span>`;
   };
-
   const tfSection = (tf, data, label, cls) => {
     if (!data) return '';
     const hasContent = data.candle || data.state || data.note || data.key || data.asiaH || data.asiaL;
@@ -1565,7 +1375,6 @@ function renderEnvHistory() {
         ${data.img  ? `<div class="hist-thumbs"><img src="${data.img}" class="hist-thumb" onclick="openLightbox(this.src)" loading="lazy"></div>` : ''}
       </div>`;
   };
-
   list.innerHTML = Object.entries(groups).map(([key, group]) => `
     <div class="month-group">
       <div class="month-group-label">📅 ${group.label} (${group.items.length}件)</div>
@@ -1600,32 +1409,27 @@ function toggleHistCard(id) {
   const isOpen = body.classList.toggle('open');
   if (chevron) chevron.classList.toggle('open', isOpen);
 }
-
 function deleteEnvMemo(id) {
   if (!confirm('このメモを削除しますか？')) return;
   envMemos = envMemos.filter(m => String(m.id) !== String(id));
   localStorage.setItem('envMemos', JSON.stringify(envMemos));
   renderEnvHistory();
 }
-
 function loadEnvMemo(id) {
   const m = envMemos.find(x => String(x.id) === String(id));
   if (!m) return;
-  // 日付セット
   const [y, mo, w, d] = [m.dateKey.split('-')[0], m.dateKey.split('-')[1], m.dateKey.split('-W')[1]?.split('-')[0], m.dateKey.split('-').pop()];
   if(document.getElementById('envYear')) document.getElementById('envYear').value = y;
   if(document.getElementById('envMonth')) document.getElementById('envMonth').value = parseInt(mo);
   if(document.getElementById('envWeek')) document.getElementById('envWeek').value = w;
   if(document.getElementById('envDay')) document.getElementById('envDay').value = d;
   updateEnvDateLabel();
-  // 月足
   const setTF = (tf, data) => {
     if(!data) return;
     document.getElementById(`prevCandle-${tf}`).value = data.candle || '';
     document.getElementById(`marketState-${tf}`).value = data.state || '';
     if(document.getElementById(`keyLevel-${tf}`)) document.getElementById(`keyLevel-${tf}`).value = data.key || '';
     document.getElementById(`envNote-${tf}`).value = data.note || '';
-    // dir
     const dirMap = {'ロング優位':'long','ショート優位':'short','レンジ':'range'};
     const dir = dirMap[data.dir];
     if(dir){
@@ -1703,11 +1507,7 @@ initChecks();
 initEnvDateBar();
 initPasteZones();
 
-// ===== ATR（海外口座） =====
-// Gold海外口座: 1ロット = 100oz
-// 損益(USD) = ロット数 × 100 × 値幅($/oz)
-// 許容損失(USD) = 口座残高(USD) × リスク%
-// 推奨ロット = 許容損失(USD) / (損切り幅($/oz) × 100)
+// ===== ATR =====
 function calcATR() {
   const atr = parseFloat(document.getElementById('atrVal').value);
   const asia = parseFloat(document.getElementById('asiaRange').value) || 0;
@@ -1717,22 +1517,18 @@ function calcATR() {
   const rr = parseFloat(document.getElementById('rrRatio').value);
   if (!atr) return;
   document.getElementById('atrResult').style.display = 'block';
-
   const remain = Math.max(0, atr - asia);
   const tp = sl * rr;
   const riskAmt = bal ? bal * riskPct / 100 : null;
-  // 海外口座ロット計算: 1ロット=100oz
   const lot = (riskAmt && sl) ? riskAmt / (sl * 100) : null;
-  const lotRounded = lot ? Math.floor(lot * 100) / 100 : null; // 小数点2位切り捨て
+  const lotRounded = lot ? Math.floor(lot * 100) / 100 : null;
   const actualRisk = (lotRounded && sl) ? (lotRounded * 100 * sl) : null;
-
   document.getElementById('r_remain').textContent = remain.toFixed(1) + ' $/oz';
   document.getElementById('r_tp').textContent = tp ? tp.toFixed(1) + ' $/oz' : '-';
   document.getElementById('r_riskAmt').textContent = riskAmt ? '$' + riskAmt.toFixed(2) : '残高未入力';
   document.getElementById('r_lot').textContent = lotRounded !== null ? lotRounded.toFixed(2) + ' lot' : '損切り幅・残高を入力';
   document.getElementById('r_lot_domestic').textContent = lotRounded !== null ? `国内換算: 約${Math.round(lotRounded * 100)}枚` : '';
   document.getElementById('r_actual_risk').textContent = actualRisk !== null ? '$' + actualRisk.toFixed(2) : '-';
-
   let judge = '';
   if (sl && remain < sl) judge = '<span class="badge badge-red">⚠️ 余力不足 — 見送り検討</span>';
   else if (sl && tp && remain >= tp) judge = '<span class="badge badge-green">✅ 余力十分 — エントリー可</span>';
@@ -1743,13 +1539,8 @@ function calcATR() {
 // ===== 心理タグ =====
 function togglePsycho(el, tag) {
   const idx = selectedPsychoTags.indexOf(tag);
-  if (idx === -1) {
-    selectedPsychoTags.push(tag);
-    el.classList.add('selected-long'); // 選択色（緑系で流用）
-  } else {
-    selectedPsychoTags.splice(idx, 1);
-    el.className = 'env-tag';
-  }
+  if (idx === -1) { selectedPsychoTags.push(tag); el.classList.add('selected-long'); }
+  else { selectedPsychoTags.splice(idx, 1); el.className = 'env-tag'; }
 }
 
 // ===== ジャーナル =====
@@ -1766,9 +1557,7 @@ async function addJournal() {
   const biasWeekly = document.getElementById('jBiasWeekly').value;
   const biasDaily = document.getElementById('jBiasDaily').value;
   const direction = document.getElementById('jDirection').value;
-
   if (!note && !setup && !situation) { alert('セットアップ・状況・メモのいずれかを入力してください'); return; }
-
   const entry = {
     id: Date.now(),
     date: new Date().toLocaleDateString('ja-JP'),
@@ -1783,7 +1572,7 @@ async function addJournal() {
   journals.unshift(entry);
   localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
 
-  // Notion連携
+  // Notion連携（Claude API + MCP経由）
   const notionResult = await saveJournalToNotion(entry).catch(e => ({ error: e.message }));
   if (notionResult?.error) {
     alert(`✅ 記録しました\n⚠️ Notion保存失敗: ${notionResult.error}`);
@@ -1791,7 +1580,6 @@ async function addJournal() {
     alert('✅ 記録しました！Notionにも同期しました！');
   }
 
-  // フォームリセット
   ['jPnlUsd', 'jPnlPips', 'jSlPips', 'jSetup', 'jSituation', 'jPsycho', 'jNote'].forEach(id => document.getElementById(id).value = '');
   ['jBiasMonthly', 'jBiasWeekly', 'jBiasDaily', 'jDirection'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('jnlPreview').style.display = 'none';
@@ -1806,7 +1594,6 @@ function renderJournals() {
   if (!journals.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;">まだ記録がありません</p>'; return; }
   const tl = { win: '✅ 勝ち', loss: '❌ 負け', pass: '⭕ 見送り成功', miss: '⚠️ 機会損失' };
   const bc = { win: 'badge-green', loss: 'badge-red', pass: 'badge-teal', miss: 'badge-amber' };
-
   list.innerHTML = journals.slice(0, 20).map(e => {
     const pnlBadge = (() => {
       if (e.pnlUsd !== null && e.pnlPips !== null)
@@ -1815,19 +1602,16 @@ function renderJournals() {
         return `<span class="badge ${e.pnlUsd >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlUsd >= 0 ? '+' : ''}$${e.pnlUsd.toFixed(2)}</span>`;
       if (e.pnlPips !== null)
         return `<span class="badge ${e.pnlPips >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlPips >= 0 ? '+' : ''}${e.pnlPips}pips</span>`;
-      // 旧データ（円）互換
       if (e.pnl !== undefined && e.pnl !== null)
         return `<span class="badge ${e.pnl >= 0 ? 'badge-green' : 'badge-red'}">${e.pnl >= 0 ? '+' : ''}¥${Math.abs(e.pnl).toLocaleString()}</span>`;
       return '';
     })();
-
     const metaParts = [];
     if (e.direction) metaParts.push(`方向: ${e.direction}`);
     if (e.biasMonthly || e.biasWeekly || e.biasDaily)
       metaParts.push(`月:${e.biasMonthly || '-'} 週:${e.biasWeekly || '-'} 日:${e.biasDaily || '-'}`);
     if (e.slPips) metaParts.push(`SL: ${e.slPips}pips`);
     if (e.psychoTags && e.psychoTags.length) metaParts.push(`心理: ${e.psychoTags.join(' ')}`);
-
     return `
     <div class="journal-entry ${e.type}">
       <div class="entry-header">
@@ -1855,11 +1639,8 @@ function updateStats() {
   const losses = journals.filter(j => j.type === 'loss').length;
   const pass = journals.filter(j => j.type === 'pass').length;
   const miss = journals.filter(j => j.type === 'miss').length;
-
-  // ドル損益集計（旧円データも互換）
   const pnlUsd = journals.reduce((s, j) => s + (j.pnlUsd !== undefined && j.pnlUsd !== null ? j.pnlUsd : (j.pnl ? j.pnl / 150 : 0)), 0);
   const pnlPips = journals.reduce((s, j) => s + (j.pnlPips || 0), 0);
-
   const wr = (wins + losses) > 0 ? Math.round(wins / (wins + losses) * 100) : 0;
   document.getElementById('s_total').textContent = total;
   document.getElementById('s_wr').textContent = wr + '%';
@@ -1869,7 +1650,6 @@ function updateStats() {
   document.getElementById('s_pips').style.color = pnlPips >= 0 ? 'var(--green)' : 'var(--red)';
   document.getElementById('s_pass').textContent = pass;
   document.getElementById('s_miss').textContent = miss;
-
   const detail = document.getElementById('statsDetail');
   if (!total) { detail.textContent = '記録が増えると分析が表示されます。'; return; }
   detail.innerHTML = `
@@ -1883,7 +1663,6 @@ function updateStats() {
       見送り成功率: <strong style="color:var(--accent)">${(pass + miss) > 0 ? Math.round(pass / (pass + miss) * 100) : 0}%</strong>
     </div>`;
 }
-
 async function analyzeStats() {
   if (!journals.length) { alert('記録がありません'); return; }
   const summary = journals.slice(0, 30).map(j =>
@@ -1933,22 +1712,15 @@ function appendTyping() {
 function removeTyping(id) { const el = document.getElementById(id); if (el) el.remove(); }
 
 // ===== APIキー管理 =====
-function getApiKey() {
-  return localStorage.getItem('anthropicApiKey') || '';
-}
+function getApiKey() { return localStorage.getItem('anthropicApiKey') || ''; }
 function saveApiKey() {
   const key = document.getElementById('apikeyInput').value.trim();
-  if (!key.startsWith('sk-ant-')) {
-    alert('APIキーは sk-ant- で始まる文字列です。確認してください。');
-    return;
-  }
+  if (!key.startsWith('sk-ant-')) { alert('APIキーは sk-ant- で始まる文字列です。確認してください。'); return; }
   localStorage.setItem('anthropicApiKey', key);
   document.getElementById('apikeyModal').style.display = 'none';
   alert('✅ APIキーを保存しました！AI機能が使えるようになりました。');
 }
-function closeApiKeyModal() {
-  document.getElementById('apikeyModal').style.display = 'none';
-}
+function closeApiKeyModal() { document.getElementById('apikeyModal').style.display = 'none'; }
 function openApiKeyModal() {
   const modal = document.getElementById('apikeyModal');
   modal.style.display = 'flex';
@@ -1956,14 +1728,11 @@ function openApiKeyModal() {
   if (existing) document.getElementById('apikeyInput').value = existing;
   setTimeout(() => document.getElementById('apikeyInput').focus(), 100);
 }
-// APIキーが未設定なら起動時にモーダル表示
 (function() {
-  if (!getApiKey()) {
-    setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800);
-  }
+  if (!getApiKey()) setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800);
 })();
 
-// ===== Notion連携 =====
+// ===== Notion設定モーダル =====
 function getNotionToken() { return localStorage.getItem('notionToken') || ''; }
 function getNotionEnvDbId() { return localStorage.getItem('notionEnvDbId') || ''; }
 
@@ -1978,9 +1747,7 @@ function openNotionModal() {
   if (j) document.getElementById('notionJnlDbInput').value = j;
   document.getElementById('notionStatus').className = 'notion-status';
 }
-function closeNotionModal() {
-  document.getElementById('notionModal').style.display = 'none';
-}
+function closeNotionModal() { document.getElementById('notionModal').style.display = 'none'; }
 function saveNotionSettings() {
   const token = document.getElementById('notionTokenInput').value.trim();
   const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
@@ -1995,7 +1762,6 @@ function saveNotionSettings() {
   st.textContent = '✅ 設定を保存しました！';
   setTimeout(() => closeNotionModal(), 1200);
 }
-
 async function testNotionConnection() {
   const token = document.getElementById('notionTokenInput').value.trim();
   const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
@@ -2004,10 +1770,7 @@ async function testNotionConnection() {
   st.className = 'notion-status loading'; st.textContent = '接続テスト中...';
   try {
     const res = await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Notion-Version': '2022-06-28'
-      }
+      headers: { 'Authorization': 'Bearer ' + token, 'Notion-Version': '2022-06-28' }
     });
     if (res.ok) {
       const data = await res.json();
@@ -2020,224 +1783,170 @@ async function testNotionConnection() {
     }
   } catch(e) {
     st.className = 'notion-status err';
-    st.textContent = `❌ 接続失敗: ${e.message}`;
+    st.textContent = `❌ 接続失敗（CORSエラーの可能性あり）: ${e.message}`;
   }
 }
 
-// ===== Notion DBプロパティ自動セットアップ =====
-// 初回保存時に必要なプロパティを自動作成する
-const notionSetupDone = {}; // セッション中は1回だけ実行
-
-async function setupNotionDb(token, dbId, type) {
-  const key = type + '_' + dbId;
-  if (notionSetupDone[key]) return; // 既に実行済み
-
-  // 必要なプロパティ定義
-  const envProps = {
-    '日付キー':    { rich_text: {} },
-    '月足バイアス': { select: { options: [{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}] } },
-    '週足バイアス': { select: { options: [{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}] } },
-    '日足バイアス': { select: { options: [{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}] } },
-    '月足足型':    { rich_text: {} },
-    '週足足型':    { rich_text: {} },
-    '日足足型':    { rich_text: {} },
-    'AS高値':      { rich_text: {} },
-    'AS安値':      { rich_text: {} },
-  };
-
-  const jnlProps = {
-    '結果':        { select: { options: [{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}] } },
-    '損益USD':     { number: { format: 'number' } },
-    '損益pips':    { number: { format: 'number' } },
-    'SL幅pips':    { number: { format: 'number' } },
-    '月足バイアス': { rich_text: {} },
-    '週足バイアス': { rich_text: {} },
-    '日足バイアス': { rich_text: {} },
-    '方向':        { rich_text: {} },
-    '心理タグ':    { rich_text: {} },
-  };
-
-  const properties = type === 'env' ? envProps : jnlProps;
-
-  try {
-    // 既存プロパティを取得
-    const res = await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Notion-Version': '2022-06-28'
-      }
-    });
-    if (!res.ok) return;
-    const db = await res.json();
-    const existing = Object.keys(db.properties || {});
-
-    // 存在しないプロパティだけ追加
-    const toAdd = {};
-    Object.entries(properties).forEach(([name, def]) => {
-      if (!existing.includes(name)) toAdd[name] = def;
-    });
-
-    if (Object.keys(toAdd).length === 0) {
-      notionSetupDone[key] = true;
-      return; // 全部あればスキップ
-    }
-
-    // プロパティを追加
-    await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json',
-        'Notion-Version': '2022-06-28'
-      },
-      body: JSON.stringify({ properties: toAdd })
-    });
-
-    notionSetupDone[key] = true;
-    console.log(`Notion DB setup complete (${type}): added ${Object.keys(toAdd).length} properties`);
-  } catch(e) {
-    console.warn('Notion DB setup failed:', e.message);
-  }
-}
+// ===== Notion連携（Claude API + MCP経由） =====
+// ブラウザからNotion APIへの直接アクセスはCORSでブロックされるため、
+// Claude APIのmcp_serversにNotionを追加してClaudeに書き込みを代行させる方式
 
 async function saveEnvMemoToNotion(memo) {
+  const apiKey = getApiKey();
   const token = getNotionToken();
   const dbId  = getNotionEnvDbId();
-  if (!token || !dbId) return null; // 未設定はスキップ
+  if (!token || !dbId) return null;
+  if (!apiKey) return null;
 
-  // プロパティ自動セットアップ
-  await setupNotionDb(token, dbId, 'env').catch(() => {});
+  const prompt = `以下の環境認識メモをNotionデータベースに保存してください。
 
-  // Notionプロパティ構築
-  const props = {
-    '名前': { title: [{ text: { content: memo.dateLabel } }] },
-    '日付キー': { rich_text: [{ text: { content: memo.dateKey } }] },
-    '月足バイアス': { select: { name: memo.monthly?.dir || '未設定' } },
-    '週足バイアス': { select: { name: memo.weekly?.dir  || '未設定' } },
-    '日足バイアス': { select: { name: memo.daily?.dir   || '未設定' } },
-    '月足足型':    { rich_text: [{ text: { content: memo.monthly?.candle || '' } }] },
-    '週足足型':    { rich_text: [{ text: { content: memo.weekly?.candle  || '' } }] },
-    '日足足型':    { rich_text: [{ text: { content: memo.daily?.candle   || '' } }] },
-    'AS高値':      { rich_text: [{ text: { content: String(memo.daily?.asiaH || '') } }] },
-    'AS安値':      { rich_text: [{ text: { content: String(memo.daily?.asiaL || '') } }] },
-  };
+データベースID: ${dbId}
 
-  // ページ本文（メモ・AI結果）
-  const children = [];
-  if (memo.monthly?.note) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'🌙 月足メモ'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.monthly.note}}] } }
-  );
-  if (memo.weekly?.note) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📅 週足メモ'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.weekly.note}}] } }
-  );
-  if (memo.daily?.note) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📆 日足メモ'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.daily.note}}] } }
-  );
-  if (memo.aiResult) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'🤖 AI分析結果'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:memo.aiResult}}] } }
-  );
+保存する内容:
+- タイトル（名前）: ${memo.dateLabel}
+- 日付キー: ${memo.dateKey}
+- 月足バイアス: ${memo.monthly?.dir || '未設定'}
+- 週足バイアス: ${memo.weekly?.dir || '未設定'}
+- 日足バイアス: ${memo.daily?.dir || '未設定'}
+- 月足足型: ${memo.monthly?.candle || ''}
+- 週足足型: ${memo.weekly?.candle || ''}
+- 日足足型: ${memo.daily?.candle || ''}
+- AS高値: ${memo.daily?.asiaH || ''}
+- AS安値: ${memo.daily?.asiaL || ''}
 
-  const res = await fetch('https://api.notion.com/v1/pages', {
+ページ本文:
+## 🌙 月足メモ
+${memo.monthly?.note || '（なし）'}
+
+## 📅 週足メモ
+${memo.weekly?.note || '（なし）'}
+
+## 📆 日足メモ
+${memo.daily?.note || '（なし）'}
+
+## 🤖 AI分析結果
+${memo.aiResult || '（なし）'}
+
+Notionのcreate_pageツールを使って保存してください。
+プロパティは以下の形式で設定してください:
+- 「名前」はtitleプロパティ
+- バイアス系はselect（ロング優位/ショート優位/レンジ/未設定）
+- それ以外はrich_text
+保存が完了したら「保存完了」とだけ返してください。`;
+
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json',
-      'Notion-Version': '2022-06-28'
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
-      parent: { database_id: dbId },
-      properties: props,
-      children
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      mcp_servers: [
+        {
+          type: 'url',
+          url: 'https://mcp.notion.com/mcp',
+          name: 'notion',
+          authorization_token: token
+        }
+      ],
+      messages: [{ role: 'user', content: prompt }]
     })
   });
 
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || 'Notion API error ' + res.status);
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'HTTP ' + res.status);
   }
-  return await res.json();
+  const data = await res.json();
+  return { id: 'mcp-ok', text: data.content?.[0]?.text || '' };
 }
 
-
 async function saveJournalToNotion(entry) {
+  const apiKey = getApiKey();
   const token = getNotionToken();
   const dbId  = localStorage.getItem('notionJnlDbId') || '';
   if (!token || !dbId) return null;
-
-  // プロパティ自動セットアップ
-  await setupNotionDb(token, dbId, 'journal').catch(() => {});
+  if (!apiKey) return null;
 
   const typeLabel = { win:'勝ち', loss:'負け', pass:'見送り成功', miss:'機会損失' };
   const title = `${entry.date} ${typeLabel[entry.type] || entry.type}`;
 
-  const props = {
-    '名前':       { title: [{ text: { content: title } }] },
-    '結果':       { select: { name: typeLabel[entry.type] || entry.type } },
-    '損益USD':    { number: entry.pnlUsd ?? null },
-    '損益pips':   { number: entry.pnlPips ?? null },
-    'SL幅pips':   { number: entry.slPips ?? null },
-    '月足バイアス': { rich_text: [{ text: { content: entry.biasMonthly || '' } }] },
-    '週足バイアス': { rich_text: [{ text: { content: entry.biasWeekly  || '' } }] },
-    '日足バイアス': { rich_text: [{ text: { content: entry.biasDaily   || '' } }] },
-    '方向':       { rich_text: [{ text: { content: entry.direction || '' } }] },
-    '心理タグ':   { rich_text: [{ text: { content: (entry.psychoTags||[]).join(', ') } }] },
-  };
+  const prompt = `以下の振り返りノートをNotionデータベースに保存してください。
 
-  // null の number プロパティを除去
-  Object.keys(props).forEach(k => {
-    if (props[k].number === null) delete props[k];
-  });
+データベースID: ${dbId}
 
-  const children = [];
-  if (entry.setup) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📌 セットアップ'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.setup}}] } }
-  );
-  if (entry.situation) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📊 トレード時の状況'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.situation}}] } }
-  );
-  if (entry.psychoNote) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'🧠 心理状態'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.psychoNote}}] } }
-  );
-  if (entry.note) children.push(
-    { object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📝 良かった点 / 反省点'}}] } },
-    { object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:entry.note}}] } }
-  );
+保存する内容:
+- タイトル（名前）: ${title}
+- 結果: ${typeLabel[entry.type] || entry.type}
+- 損益USD: ${entry.pnlUsd ?? ''}
+- 損益pips: ${entry.pnlPips ?? ''}
+- SL幅pips: ${entry.slPips ?? ''}
+- 月足バイアス: ${entry.biasMonthly || ''}
+- 週足バイアス: ${entry.biasWeekly || ''}
+- 日足バイアス: ${entry.biasDaily || ''}
+- 方向: ${entry.direction || ''}
+- 心理タグ: ${(entry.psychoTags || []).join(', ')}
 
-  const res = await fetch('https://api.notion.com/v1/pages', {
+ページ本文:
+## 📌 セットアップ
+${entry.setup || '（なし）'}
+
+## 📊 トレード時の状況
+${entry.situation || '（なし）'}
+
+## 🧠 心理状態
+${entry.psychoNote || '（なし）'}
+
+## 📝 良かった点 / 反省点
+${entry.note || '（なし）'}
+
+Notionのcreate_pageツールを使って保存してください。
+プロパティは以下の形式で設定してください:
+- 「名前」はtitleプロパティ
+- 「結果」はselect（勝ち/負け/見送り成功/機会損失）
+- 損益USD・損益pips・SL幅pipsはnumber（空欄の場合は設定しない）
+- それ以外はrich_text
+保存が完了したら「保存完了」とだけ返してください。`;
+
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json',
-      'Notion-Version': '2022-06-28'
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
-      parent: { database_id: dbId },
-      properties: props,
-      children
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      mcp_servers: [
+        {
+          type: 'url',
+          url: 'https://mcp.notion.com/mcp',
+          name: 'notion',
+          authorization_token: token
+        }
+      ],
+      messages: [{ role: 'user', content: prompt }]
     })
   });
 
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || 'Notion API error ' + res.status);
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'HTTP ' + res.status);
   }
-  return await res.json();
+  const data = await res.json();
+  return { id: 'mcp-ok', text: data.content?.[0]?.text || '' };
 }
 
 // ===== Claude API =====
 async function callClaude(userMsg, history = []) {
   const apiKey = getApiKey();
-  if (!apiKey) {
-    openApiKeyModal();
-    throw new Error('APIキーが設定されていません');
-  }
+  if (!apiKey) { openApiKeyModal(); throw new Error('APIキーが設定されていません'); }
   const messages = (history.length > 0 && history[history.length - 1].role === 'user')
     ? history : [...history, { role: 'user', content: userMsg }];
   const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -2253,11 +1962,7 @@ async function callClaude(userMsg, history = []) {
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     const msg = err.error?.message || 'HTTP ' + res.status;
-    if (res.status === 401) {
-      localStorage.removeItem('anthropicApiKey');
-      openApiKeyModal();
-      throw new Error('APIキーが無効です。再設定してください。');
-    }
+    if (res.status === 401) { localStorage.removeItem('anthropicApiKey'); openApiKeyModal(); throw new Error('APIキーが無効です。再設定してください。'); }
     throw new Error(msg);
   }
   const data = await res.json();
