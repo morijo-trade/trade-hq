@@ -319,6 +319,8 @@ select option{background:var(--bg3);}
     <input type="text" id="notionEnvDbInput" placeholder="37bd96539c7c8013a44af906b8342251" autocomplete="off" spellcheck="false">
     <label>振り返りノート データベースID</label>
     <input type="text" id="notionJnlDbInput" placeholder="データベースIDを入力" autocomplete="off" spellcheck="false">
+    <label>☁️ Cloudflare Worker URL</label>
+    <input type="text" id="notionWorkerUrlInput" placeholder="https://trade-hq-notion.あなたの名前.workers.dev" autocomplete="off" spellcheck="false">
     <div style="display:flex;gap:10px;margin-top:4px;">
       <button class="btn btn-primary" style="flex:1;" onclick="saveNotionSettings()">💾 保存</button>
       <button class="btn btn-ghost btn-sm" onclick="testNotionConnection()">接続テスト</button>
@@ -328,7 +330,7 @@ select option{background:var(--bg3);}
     <div style="font-size:11px;color:var(--muted);margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;line-height:1.7;">
       🔒 設定はブラウザのlocalStorageに保存されます<br>
       📋 トークン取得: <span style="color:var(--accent);">app.notion.com/developers/tokens</span><br>
-      🤖 保存時はClaude API経由でNotionに書き込みます（CORSエラー回避）
+      ☁️ WorkerURL: Cloudflareデプロイ後に入力
     </div>
   </div>
 </div>
@@ -1742,9 +1744,11 @@ function openNotionModal() {
   const t = getNotionToken();
   const d = getNotionEnvDbId();
   const j = localStorage.getItem('notionJnlDbId') || '';
+  const w = localStorage.getItem('notionWorkerUrl') || '';
   if (t) document.getElementById('notionTokenInput').value = t;
   if (d) document.getElementById('notionEnvDbInput').value = d;
   if (j) document.getElementById('notionJnlDbInput').value = j;
+  if (w) document.getElementById('notionWorkerUrlInput').value = w;
   document.getElementById('notionStatus').className = 'notion-status';
 }
 function closeNotionModal() { document.getElementById('notionModal').style.display = 'none'; }
@@ -1757,6 +1761,8 @@ function saveNotionSettings() {
   localStorage.setItem('notionToken', token);
   localStorage.setItem('notionEnvDbId', dbId);
   if (jnlDbId) localStorage.setItem('notionJnlDbId', jnlDbId);
+  const workerUrl = document.getElementById('notionWorkerUrlInput').value.trim().replace(/\/+$/, '');
+  if (workerUrl) localStorage.setItem('notionWorkerUrl', workerUrl);
   const st = document.getElementById('notionStatus');
   st.className = 'notion-status ok';
   st.textContent = '✅ 設定を保存しました！';
@@ -1765,43 +1771,23 @@ function saveNotionSettings() {
 async function testNotionConnection() {
   const token = document.getElementById('notionTokenInput').value.trim();
   const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
-  const apiKey = getApiKey();
+  const workerUrl = (document.getElementById('notionWorkerUrlInput').value.trim() || localStorage.getItem('notionWorkerUrl') || '').replace(/\/+$/, '');
   const st = document.getElementById('notionStatus');
   if (!token || !dbId) { alert('トークンとデータベースIDを入力してください'); return; }
-  if (!apiKey) { alert('先にAPIキーを設定してください（左下「🔑 APIキー設定」）'); return; }
-  st.className = 'notion-status loading'; st.textContent = '接続テスト中（Claude API経由）...';
+  if (!workerUrl) { alert('Cloudflare Worker URLを入力してください'); return; }
+  st.className = 'notion-status loading'; st.textContent = '接続テスト中...';
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 200,
-        mcp_servers: [
-          { type: 'url', url: 'https://mcp.notion.com/mcp', name: 'notion', authorization_token: token }
-        ],
-        messages: [{ role: 'user', content: `Notionデータベース（ID: ${dbId}）のタイトルを取得して「DB名: ○○」の形式で返してください。取得できない場合は「接続失敗」と返してください。` }]
-      })
+    const res = await fetch(`${workerUrl}/notion/databases/${dbId}`, {
+      headers: { 'X-Notion-Token': token }
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      st.className = 'notion-status err';
-      st.textContent = `❌ Claude APIエラー: ${err.error?.message || res.status}`;
-      return;
-    }
     const data = await res.json();
-    const text = data.content?.[0]?.text || '';
-    if (text.includes('接続失敗') || text.includes('エラー') || text.includes('error')) {
-      st.className = 'notion-status err';
-      st.textContent = `❌ Notion接続失敗: ${text}`;
-    } else {
+    if (res.ok) {
+      const name = data.title?.[0]?.plain_text || 'OK';
       st.className = 'notion-status ok';
-      st.textContent = `✅ 接続成功！${text}`;
+      st.textContent = `✅ 接続成功！DB名: ${name}`;
+    } else {
+      st.className = 'notion-status err';
+      st.textContent = `❌ エラー: ${data.message || data.error || res.status}`;
     }
   } catch(e) {
     st.className = 'notion-status err';
@@ -1809,160 +1795,89 @@ async function testNotionConnection() {
   }
 }
 
-// ===== Notion連携（Claude API + MCP経由） =====
-// ブラウザからNotion APIへの直接アクセスはCORSでブロックされるため、
-// Claude APIのmcp_serversにNotionを追加してClaudeに書き込みを代行させる方式
+// ===== Notion連携（Cloudflare Worker経由） =====
+function getWorkerUrl() { return (localStorage.getItem('notionWorkerUrl') || '').replace(/\/+$/, ''); }
+
+async function notionPost(path, body, token) {
+  const workerUrl = getWorkerUrl();
+  if (!workerUrl) throw new Error('Cloudflare Worker URLが未設定です（Notion設定モーダルで入力してください）');
+  const res = await fetch(`${workerUrl}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Notion-Token': token },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || err.error || 'HTTP ' + res.status);
+  }
+  return await res.json();
+}
 
 async function saveEnvMemoToNotion(memo) {
-  const apiKey = getApiKey();
   const token = getNotionToken();
   const dbId  = getNotionEnvDbId();
   if (!token || !dbId) return null;
-  if (!apiKey) return null;
 
-  const prompt = `以下の環境認識メモをNotionデータベースに保存してください。
+  const children = [];
+  const addSection = (heading, text) => {
+    if (!text) return;
+    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:heading}}] } });
+    children.push({ object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:text}}] } });
+  };
+  addSection('🌙 月足メモ', memo.monthly?.note);
+  addSection('📅 週足メモ', memo.weekly?.note);
+  addSection('📆 日足メモ', memo.daily?.note);
+  addSection('🤖 AI分析結果', memo.aiResult);
 
-データベースID: ${dbId}
+  const props = {
+    '名前':        { title: [{ text: { content: memo.dateLabel } }] },
+    '日付キー':    { rich_text: [{ text: { content: memo.dateKey } }] },
+    '月足バイアス': { select: { name: memo.monthly?.dir || '未設定' } },
+    '週足バイアス': { select: { name: memo.weekly?.dir  || '未設定' } },
+    '日足バイアス': { select: { name: memo.daily?.dir   || '未設定' } },
+    '月足足型':    { rich_text: [{ text: { content: memo.monthly?.candle || '' } }] },
+    '週足足型':    { rich_text: [{ text: { content: memo.weekly?.candle  || '' } }] },
+    '日足足型':    { rich_text: [{ text: { content: memo.daily?.candle   || '' } }] },
+    'AS高値':      { rich_text: [{ text: { content: String(memo.daily?.asiaH || '') } }] },
+    'AS安値':      { rich_text: [{ text: { content: String(memo.daily?.asiaL || '') } }] },
+  };
 
-保存する内容:
-- タイトル（名前）: ${memo.dateLabel}
-- 日付キー: ${memo.dateKey}
-- 月足バイアス: ${memo.monthly?.dir || '未設定'}
-- 週足バイアス: ${memo.weekly?.dir || '未設定'}
-- 日足バイアス: ${memo.daily?.dir || '未設定'}
-- 月足足型: ${memo.monthly?.candle || ''}
-- 週足足型: ${memo.weekly?.candle || ''}
-- 日足足型: ${memo.daily?.candle || ''}
-- AS高値: ${memo.daily?.asiaH || ''}
-- AS安値: ${memo.daily?.asiaL || ''}
-
-ページ本文:
-## 🌙 月足メモ
-${memo.monthly?.note || '（なし）'}
-
-## 📅 週足メモ
-${memo.weekly?.note || '（なし）'}
-
-## 📆 日足メモ
-${memo.daily?.note || '（なし）'}
-
-## 🤖 AI分析結果
-${memo.aiResult || '（なし）'}
-
-Notionのcreate_pageツールを使って保存してください。
-プロパティは以下の形式で設定してください:
-- 「名前」はtitleプロパティ
-- バイアス系はselect（ロング優位/ショート優位/レンジ/未設定）
-- それ以外はrich_text
-保存が完了したら「保存完了」とだけ返してください。`;
-
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1000,
-      mcp_servers: [
-        {
-          type: 'url',
-          url: 'https://mcp.notion.com/mcp',
-          name: 'notion',
-          authorization_token: token
-        }
-      ],
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || 'HTTP ' + res.status);
-  }
-  const data = await res.json();
-  return { id: 'mcp-ok', text: data.content?.[0]?.text || '' };
+  return await notionPost('/notion/pages', { parent:{ database_id: dbId }, properties: props, children }, token);
 }
 
 async function saveJournalToNotion(entry) {
-  const apiKey = getApiKey();
   const token = getNotionToken();
   const dbId  = localStorage.getItem('notionJnlDbId') || '';
   if (!token || !dbId) return null;
-  if (!apiKey) return null;
 
   const typeLabel = { win:'勝ち', loss:'負け', pass:'見送り成功', miss:'機会損失' };
   const title = `${entry.date} ${typeLabel[entry.type] || entry.type}`;
 
-  const prompt = `以下の振り返りノートをNotionデータベースに保存してください。
+  const children = [];
+  const addSection = (heading, text) => {
+    if (!text) return;
+    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:heading}}] } });
+    children.push({ object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:text}}] } });
+  };
+  addSection('📌 セットアップ', entry.setup);
+  addSection('📊 トレード時の状況', entry.situation);
+  addSection('🧠 心理状態', entry.psychoNote);
+  addSection('📝 良かった点 / 反省点', entry.note);
 
-データベースID: ${dbId}
+  const props = {
+    '名前':        { title: [{ text: { content: title } }] },
+    '結果':        { select: { name: typeLabel[entry.type] || entry.type } },
+    '月足バイアス': { rich_text: [{ text: { content: entry.biasMonthly || '' } }] },
+    '週足バイアス': { rich_text: [{ text: { content: entry.biasWeekly  || '' } }] },
+    '日足バイアス': { rich_text: [{ text: { content: entry.biasDaily   || '' } }] },
+    '方向':        { rich_text: [{ text: { content: entry.direction || '' } }] },
+    '心理タグ':    { rich_text: [{ text: { content: (entry.psychoTags||[]).join(', ') } }] },
+  };
+  if (entry.pnlUsd  != null) props['損益USD']  = { number: entry.pnlUsd };
+  if (entry.pnlPips != null) props['損益pips'] = { number: entry.pnlPips };
+  if (entry.slPips  != null) props['SL幅pips'] = { number: entry.slPips };
 
-保存する内容:
-- タイトル（名前）: ${title}
-- 結果: ${typeLabel[entry.type] || entry.type}
-- 損益USD: ${entry.pnlUsd ?? ''}
-- 損益pips: ${entry.pnlPips ?? ''}
-- SL幅pips: ${entry.slPips ?? ''}
-- 月足バイアス: ${entry.biasMonthly || ''}
-- 週足バイアス: ${entry.biasWeekly || ''}
-- 日足バイアス: ${entry.biasDaily || ''}
-- 方向: ${entry.direction || ''}
-- 心理タグ: ${(entry.psychoTags || []).join(', ')}
-
-ページ本文:
-## 📌 セットアップ
-${entry.setup || '（なし）'}
-
-## 📊 トレード時の状況
-${entry.situation || '（なし）'}
-
-## 🧠 心理状態
-${entry.psychoNote || '（なし）'}
-
-## 📝 良かった点 / 反省点
-${entry.note || '（なし）'}
-
-Notionのcreate_pageツールを使って保存してください。
-プロパティは以下の形式で設定してください:
-- 「名前」はtitleプロパティ
-- 「結果」はselect（勝ち/負け/見送り成功/機会損失）
-- 損益USD・損益pips・SL幅pipsはnumber（空欄の場合は設定しない）
-- それ以外はrich_text
-保存が完了したら「保存完了」とだけ返してください。`;
-
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1000,
-      mcp_servers: [
-        {
-          type: 'url',
-          url: 'https://mcp.notion.com/mcp',
-          name: 'notion',
-          authorization_token: token
-        }
-      ],
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || 'HTTP ' + res.status);
-  }
-  const data = await res.json();
-  return { id: 'mcp-ok', text: data.content?.[0]?.text || '' };
+  return await notionPost('/notion/pages', { parent:{ database_id: dbId }, properties: props, children }, token);
 }
 
 // ===== Claude API =====
