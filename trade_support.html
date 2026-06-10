@@ -298,6 +298,14 @@ select option{background:var(--bg3);}
 .apikey-actions{display:flex;gap:10px;margin-top:6px;}
 .apikey-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6;padding:10px;background:var(--bg3);border-radius:6px;}
 
+/* ===== QR転送モーダル ===== */
+.qr-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
+.qr-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:380px;width:100%;text-align:center;}
+.qr-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
+.qr-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.qr-canvas-wrap{background:#fff;border-radius:10px;padding:16px;display:inline-block;margin-bottom:16px;}
+.qr-note{font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:var(--bg3);border-radius:6px;text-align:left;}
+
 /* ===== Notion設定モーダル ===== */
 .notion-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .notion-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:480px;width:100%;}
@@ -313,6 +321,21 @@ select option{background:var(--bg3);}
 </style>
 </head>
 <body>
+
+<!-- QR転送モーダル -->
+<div class="qr-modal" id="qrModal" style="display:none;">
+  <div class="qr-box">
+    <h2>📱 スマホに設定を転送</h2>
+    <p>このQRコードをスマホのカメラで読み取ると、APIキー・Notion設定がそのまま引き継がれます。</p>
+    <div class="qr-canvas-wrap">
+      <canvas id="qrCanvas" width="200" height="200"></canvas>
+    </div>
+    <div class="qr-note" id="qrNote">設定を読み込み中...</div>
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="btn btn-ghost" style="flex:1;" onclick="closeQRModal()">閉じる</button>
+    </div>
+  </div>
+</div>
 
 <!-- Notion設定モーダル -->
 <div class="notion-modal" id="notionModal" style="display:none;">
@@ -381,6 +404,7 @@ select option{background:var(--bg3);}
     <div style="padding:8px;">
       <button class="nav-btn" onclick="openApiKeyModal()" style="font-size:12px;color:var(--muted);"><span class="nav-icon">🔑</span> APIキー設定</button>
       <button class="nav-btn" onclick="openNotionModal()" style="font-size:12px;color:var(--muted);"><span class="nav-icon">📓</span> Notion連携設定</button>
+      <button class="nav-btn" onclick="openQRModal()" style="font-size:12px;color:var(--teal);"><span class="nav-icon">📱</span> スマホに設定を転送</button>
     </div>
     <div class="nav-date" id="sideDate"></div>
   </div>
@@ -1900,6 +1924,104 @@ async function saveJournalToNotion(entry) {
 
   return await notionPost('/notion/pages', { parent:{ database_id: dbId }, properties: props, children }, token);
 }
+
+// ===== QRコード転送 =====
+function openQRModal() {
+  const apiKey = getApiKey();
+  const notionToken = getNotionToken();
+  const notionEnvDbId = getNotionEnvDbId();
+  const notionJnlDbId = localStorage.getItem('notionJnlDbId') || '';
+  const workerUrl = localStorage.getItem('notionWorkerUrl') || '';
+
+  if (!apiKey) {
+    alert('APIキーが設定されていません。先に「🔑 APIキー設定」で入力してください。');
+    return;
+  }
+
+  const modal = document.getElementById('qrModal');
+  modal.style.display = 'flex';
+
+  // 転送データをURLハッシュ形式に
+  const data = {
+    ak: apiKey,
+    nt: notionToken,
+    ne: notionEnvDbId,
+    nj: notionJnlDbId,
+    nw: workerUrl
+  };
+  const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
+  const url = `${location.origin}${location.pathname}#transfer=${encoded}`;
+
+  // QRノート更新
+  const note = document.getElementById('qrNote');
+  const items = [
+    apiKey ? '✅ APIキー' : '❌ APIキー（未設定）',
+    notionToken ? '✅ Notionトークン' : '⬜ Notionトークン（未設定）',
+    notionEnvDbId ? '✅ 環境認識DB ID' : '⬜ 環境認識DB ID（未設定）',
+    notionJnlDbId ? '✅ 振り返りDB ID' : '⬜ 振り返りDB ID（未設定）',
+    workerUrl ? '✅ Worker URL' : '⬜ Worker URL（未設定）',
+  ];
+  note.innerHTML = '転送される設定：<br>' + items.join('<br>');
+
+  // QRコード生成
+  generateQR(url, document.getElementById('qrCanvas'));
+}
+
+function closeQRModal() {
+  document.getElementById('qrModal').style.display = 'none';
+}
+
+function generateQR(text, canvas) {
+  // QR生成ライブラリをCDNから読み込む
+  if (typeof QRCode !== 'undefined') {
+    renderQR(text, canvas);
+    return;
+  }
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+  script.onload = () => renderQR(text, canvas);
+  script.onerror = () => {
+    // フォールバック: QR APIを使う
+    const img = document.createElement('img');
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+    img.style.width = '200px';
+    img.style.height = '200px';
+    canvas.parentNode.replaceChild(img, canvas);
+  };
+  document.head.appendChild(script);
+}
+
+function renderQR(text, canvas) {
+  canvas.width = 200;
+  canvas.height = 200;
+  new QRCode(canvas, {
+    text,
+    width: 200,
+    height: 200,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+}
+
+// ===== URL転送データの自動読み込み =====
+(function() {
+  const hash = location.hash;
+  if (!hash.startsWith('#transfer=')) return;
+  try {
+    const encoded = hash.replace('#transfer=', '');
+    const data = JSON.parse(decodeURIComponent(atob(encoded)));
+    if (data.ak) localStorage.setItem('anthropicApiKey', data.ak);
+    if (data.nt) localStorage.setItem('notionToken', data.nt);
+    if (data.ne) localStorage.setItem('notionEnvDbId', data.ne);
+    if (data.nj) localStorage.setItem('notionJnlDbId', data.nj);
+    if (data.nw) localStorage.setItem('notionWorkerUrl', data.nw);
+    history.replaceState(null, '', location.pathname); // ハッシュを消す
+    setTimeout(() => alert('✅ 設定を引き継ぎました！\nAPIキー・Notion設定がこのデバイスに保存されました。'), 500);
+  } catch(e) {
+    console.warn('Transfer data parse error:', e);
+  }
+})();
 
 // ===== Claude API =====
 async function callClaude(userMsg, history = []) {
