@@ -1946,7 +1946,7 @@ function openQRModal() {
   const data = { ak: apiKey, nt: notionToken, ne: notionEnvDbId, nj: notionJnlDbId, nw: workerUrl };
   // sessionStorageに一時保存（同一ドメイン内で共有できないためURLに含める）
   // データをgzip的に短縮: キーを短く + base64
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const encoded = btoa(JSON.stringify(data));
   // URLが長くなるのでcanvasの代わりにコピーボタン+短縮表示
   const url = `${location.origin}${location.pathname}#t=${encoded}`;
 
@@ -2017,7 +2017,7 @@ function showCopyFallback(url, wrap) {
   if (!hash.startsWith('#t=')) return;
   try {
     const encoded = hash.replace('#t=', '');
-    const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    const data = JSON.parse(atob(encoded));
     if (data.ak) localStorage.setItem('anthropicApiKey', data.ak);
     if (data.nt) localStorage.setItem('notionToken', data.nt);
     if (data.ne) localStorage.setItem('notionEnvDbId', data.ne);
