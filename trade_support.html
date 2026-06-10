@@ -1994,27 +1994,39 @@ function generateQRSVG(text, wrap) {
 }
 
 function showCopyFallback(url, wrap) {
-  wrap.innerHTML = `
-    <div style="width:200px;padding:16px;text-align:center;">
-      <div style="font-size:13px;color:#7a8099;margin-bottom:12px;">QR生成できませんでした<br>下のボタンでURLをコピーして<br>スマホのブラウザに貼り付けてください</div>
-      <button onclick="navigator.clipboard.writeText('${url.replace(/'/g,"\'")}').then(()=>this.textContent='✅ コピーしました！')" style="background:#4f8ef7;color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:13px;cursor:pointer;width:100%;">📋 URLをコピー</button>
-    </div>`;
+  wrap.innerHTML = '';
+  const div = document.createElement('div');
+  div.style.cssText = 'width:200px;padding:16px;text-align:center;';
+  const msg = document.createElement('div');
+  msg.style.cssText = 'font-size:13px;color:#7a8099;margin-bottom:12px;';
+  msg.innerHTML = 'QR生成できませんでした<br>下のボタンでURLをコピーして<br>スマホのブラウザに貼り付けてください';
+  const btn = document.createElement('button');
+  btn.style.cssText = 'background:#4f8ef7;color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:13px;cursor:pointer;width:100%;';
+  btn.textContent = '📋 URLをコピー';
+  btn.onclick = () => {
+    navigator.clipboard.writeText(url).then(() => { btn.textContent = '✅ コピーしました！'; });
+  };
+  div.appendChild(msg);
+  div.appendChild(btn);
+  wrap.appendChild(div);
 }
 
 // ===== URL転送データの自動読み込み =====
 (function() {
   const hash = location.hash;
-  if (!hash.startsWith('#transfer=')) return;
+  if (!hash.startsWith('#t=')) return;
   try {
-    const encoded = hash.replace('#transfer=', '');
-    const data = JSON.parse(decodeURIComponent(atob(encoded)));
+    const encoded = hash.replace('#t=', '');
+    const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     if (data.ak) localStorage.setItem('anthropicApiKey', data.ak);
     if (data.nt) localStorage.setItem('notionToken', data.nt);
     if (data.ne) localStorage.setItem('notionEnvDbId', data.ne);
     if (data.nj) localStorage.setItem('notionJnlDbId', data.nj);
     if (data.nw) localStorage.setItem('notionWorkerUrl', data.nw);
-    history.replaceState(null, '', location.pathname); // ハッシュを消す
-    setTimeout(() => alert('✅ 設定を引き継ぎました！\nAPIキー・Notion設定がこのデバイスに保存されました。'), 500);
+    history.replaceState(null, '', location.pathname);
+    // APIキーモーダルが出ないよう少し待ってからアラート
+    setTimeout(() => alert('✅ 設定を引き継ぎました！
+APIキー・Notion設定がこのデバイスに保存されました。'), 300);
   } catch(e) {
     console.warn('Transfer data parse error:', e);
   }
