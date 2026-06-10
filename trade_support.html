@@ -272,11 +272,17 @@ select option{background:var(--bg3);}
 .hist-note{font-size:12px;color:var(--text);line-height:1.7;background:var(--bg3);border-radius:6px;padding:10px;margin-bottom:8px;white-space:pre-wrap;}
 .hist-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;}
 .hist-thumb{width:100%;height:80px;object-fit:cover;border-radius:6px;cursor:pointer;border:1px solid var(--border);}
+.hist-charts-col{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.hist-chart-item{border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.hist-chart-label{font-size:10px;font-weight:600;letter-spacing:.5px;padding:5px 10px;display:flex;align-items:center;gap:5px;}
+.hist-chart-label.monthly{color:#a78bfa;background:rgba(167,139,250,.1);}
+.hist-chart-label.weekly{color:var(--amber);background:rgba(245,158,11,.1);}
+.hist-chart-label.daily{color:var(--teal);background:rgba(20,184,166,.1);}
+.hist-chart-img{width:100%;max-height:220px;object-fit:cover;display:block;cursor:pointer;}
 .hist-ai{font-size:12px;color:var(--text);line-height:1.7;background:linear-gradient(135deg,rgba(79,142,247,.06),rgba(124,58,237,.06));border:1px solid rgba(79,142,247,.2);border-radius:6px;padding:10px;white-space:pre-wrap;}
 .hist-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
 .hist-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;}
 @media(max-width:640px){
-  .hist-thumbs{grid-template-columns:repeat(3,1fr);}
   .hist-meta-grid{grid-template-columns:1fr;}
   .hist-card-header{padding:10px 12px;}
 }
@@ -927,8 +933,8 @@ const SYSTEM_PROMPT = `あなたはプライスアクション・オーダーフ
 【基本哲学】ローソク足は結果。勝つより負けないことが最優先。環境認識は「選別」。
 【環境認識】月足→週足→日足の順。四本値の守るか崩すかが軸。アジア高安・キリ番・ヘッドラインレートを意識。スラスト=トレンド継続、ハラミ足=レンジ入り疑い。
 【モメンタム】スラスト継続中・大陽線大陰線→逆張り不可。スラスト継続しない・逆ヒゲ実体より長い・実体縮小→モメンタム喪失サイン。
-【エントリー順序】環境認識→売り買いバランス→プライスアクション（最後のトリガー）。
-【PA】ピンバー・アウトサイドバー・ピアスライン・モーニング/イブニングスター・BOXパターン。
+【エントリー順序】環境認識→売り買いバランス→プライスアクション確認（PAの詳細判断はトレーダー本人の裁量）。
+【PA】具体的なPA名（ピンバー・アウトサイドバー等）は出力しない。「節目でプライスアクションを確認してエントリー」という表現にとどめる。PAの詳細はトレーダー自身が判断する。
 【ブレイクアウト】アジア起点のみ。前日陽線→アジア高値ブレイク、前日陰線→アジア安値ブレイク。アジアで大きく動いた後は避ける。
 日本語で簡潔かつ実践的に答えてください。`;
 
@@ -1209,7 +1215,7 @@ async function analyzeEnv() {
 上記をもとに以下を簡潔にまとめてください：
 ①マルチTFでのバイアス整合性（月足・週足・日足が揃っているか）
 ②当日バイアスと推奨方向
-③狙えるセットアップ候補
+③狙えるセットアップ候補（具体的なPA名は出さず、方向・節目・タイミングのみ）
 ④注意すべきポイント・NGシナリオ`;
 
   document.getElementById('envResult').style.display = 'block';
@@ -1362,7 +1368,7 @@ function renderEnvHistory() {
   const tfSection = (tf, data, label, cls) => {
     if (!data) return '';
     const hasContent = data.candle || data.state || data.note || data.key || data.asiaH || data.asiaL;
-    if (!hasContent && !data.img) return '';
+    if (!hasContent) return '';
     return `
       <div class="hist-tf-section">
         <div class="hist-tf-label ${cls}">${label}</div>
@@ -1374,8 +1380,22 @@ function renderEnvHistory() {
           ${data.asiaL  ? `<div class="hist-meta-item">AS安値: <strong>${data.asiaL}</strong></div>` : ''}
         </div>
         ${data.note ? `<div class="hist-note">${data.note}</div>` : ''}
-        ${data.img  ? `<div class="hist-thumbs"><img src="${data.img}" class="hist-thumb" onclick="openLightbox(this.src)" loading="lazy"></div>` : ''}
       </div>`;
+  };
+
+  const chartCol = (monthly, weekly, daily) => {
+    const hasAny = monthly?.img || weekly?.img || daily?.img;
+    if (!hasAny) return '';
+    const item = (img, label, cls) => img ? `
+      <div class="hist-chart-item">
+        <div class="hist-chart-label ${cls}">${label}</div>
+        <img src="${img}" class="hist-chart-img" onclick="openLightbox(this.src)" loading="lazy">
+      </div>` : '';
+    return `<div class="hist-charts-col">
+      ${item(monthly?.img, '🌙 月足', 'monthly')}
+      ${item(weekly?.img,  '📅 週足', 'weekly')}
+      ${item(daily?.img,   '📆 日足', 'daily')}
+    </div>`;
   };
   list.innerHTML = Object.entries(groups).map(([key, group]) => `
     <div class="month-group">
@@ -1392,6 +1412,7 @@ function renderEnvHistory() {
             <span class="hist-chevron" id="chevron-${m.id}">▼</span>
           </div>
           <div class="hist-body" id="histBody-${m.id}">
+            ${chartCol(m.monthly, m.weekly, m.daily)}
             ${tfSection('monthly', m.monthly, '🌙 月足', 'monthly')}
             ${tfSection('weekly',  m.weekly,  '📅 週足', 'weekly')}
             ${tfSection('daily',   m.daily,   '📆 日足', 'daily')}
