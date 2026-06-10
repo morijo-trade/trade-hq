@@ -142,7 +142,11 @@ select option{background:var(--bg3);}
 .upload-zone:hover{border-color:var(--accent);background:rgba(79,142,247,.04);}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .upload-zone p{font-size:13px;color:var(--muted);margin-top:6px;}
-.preview-img{width:100%;max-height:260px;object-fit:contain;border-radius:6px;margin-top:10px;display:none;}
+.preview-img{width:100%;max-height:260px;object-fit:contain;border-radius:6px;display:block;}
+.img-wrap{position:relative;margin-top:10px;display:none;}
+.img-wrap.has-img{display:block;}
+.img-clear-btn{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.7);border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:10;}
+.img-clear-btn:hover{background:var(--red);}
 
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;}
 .lightbox.open{display:flex;}
@@ -259,6 +263,29 @@ select option{background:var(--bg3);}
   /* ===== テキストエリア ===== */
   textarea{min-height:90px;}
 }
+
+/* ===== 環境認識 日付・履歴 ===== */
+.env-date-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.env-date-bar select,.env-date-bar input{width:auto;font-size:14px;padding:7px 10px;}
+.env-history-item{background:var(--bg3);border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid var(--border);cursor:pointer;transition:all .15s;}
+.env-history-item:hover{border-left-color:var(--accent);background:var(--bg4);}
+.env-history-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.env-history-date{font-size:12px;font-weight:600;color:var(--accent);font-family:var(--mono);}
+.env-history-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.env-history-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--bg4);color:var(--muted);}
+.env-imgs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;}
+.env-imgs-grid img{width:100%;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:1px solid var(--border);}
+.paste-zone{border:2px dashed var(--border);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;outline:none;}
+.paste-zone:hover,.paste-zone.drag-over{border-color:var(--accent);background:rgba(79,142,247,.06);}
+.paste-zone.paste-active{border-color:var(--accent);border-style:solid;background:rgba(79,142,247,.1);box-shadow:0 0 0 3px rgba(79,142,247,.2);}
+.paste-zone.paste-active .paste-hint{color:var(--accent) !important;}
+.paste-zone p{font-size:12px;color:var(--muted);margin:0;}
+.paste-zone .paste-hint{font-size:11px;color:var(--muted);margin-top:2px;}
+.paste-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+@media(max-width:640px){
+  .env-imgs-grid{grid-template-columns:1fr 1fr;}
+  .env-date-bar select,.env-date-bar input{font-size:16px !important;}
+}
 </style>
 </head>
 <body>
@@ -293,6 +320,41 @@ select option{background:var(--bg3);}
     <div class="page active" id="page-env">
       <div class="page-title">環境認識メモ</div>
       <div class="page-sub">月足→週足→日足で相場を整理してAIにバイアス分析してもらう</div>
+
+      <!-- 日付・週番号バー -->
+      <div class="card" style="padding:12px 14px;">
+        <div class="card-title" style="margin-bottom:10px;">📅 記録日付</div>
+        <div class="env-date-bar">
+          <div>
+            <label style="font-size:11px;">年</label>
+            <select id="envYear"></select>
+          </div>
+          <div>
+            <label style="font-size:11px;">月</label>
+            <select id="envMonth">
+              <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+              <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+              <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+              <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;">週</label>
+            <select id="envWeek">
+              <option value="1">第1週</option><option value="2">第2週</option><option value="3">第3週</option>
+              <option value="4">第4週</option><option value="5">第5週</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;">日</label>
+            <select id="envDay">
+              <option value="月">月曜</option><option value="火">火曜</option><option value="水">水曜</option>
+              <option value="木">木曜</option><option value="金">金曜</option>
+            </select>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;" id="envDateLabel"></div>
+      </div>
 
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="tv-toolbar">
@@ -343,11 +405,27 @@ select option{background:var(--bg3);}
               <label>直近月足の形</label>
               <select id="prevCandle-monthly">
                 <option value="">選択...</option>
+                <optgroup label="── トレンド継続 ──">
                 <option>陽線（スラスト）</option>
                 <option>陰線（スラスト）</option>
-                <option>陽線（逆ヒゲ）</option>
-                <option>陰線（逆ヒゲ）</option>
-                <option>コマ足・ハラミ</option>
+                </optgroup>
+                <optgroup label="── 反転・調整サイン ──">
+                <option>陽線（上ヒゲ＞実体）</option>
+                <option>陰線（上ヒゲ＞実体）</option>
+                <option>陽線（下ヒゲ＞実体）</option>
+                <option>陰線（下ヒゲ＞実体）</option>
+                <option>ピンバー（上ヒゲ）</option>
+                <option>ピンバー（下ヒゲ）</option>
+                </optgroup>
+                <optgroup label="── レンジ・迷い ──">
+                <option>コマ足（陽線）</option>
+                <option>コマ足（陰線）</option>
+                <option>ハラミ足（陽線）</option>
+                <option>ハラミ足（陰線）</option>
+                <option>逆ヒゲ陽線（下ヒゲなし）</option>
+                <option>逆ヒゲ陰線（上ヒゲなし）</option>
+                <option>十字線（ドージ）</option>
+                </optgroup>
               </select>
             </div>
             <div>
@@ -382,11 +460,27 @@ select option{background:var(--bg3);}
               <label>直近週足の形</label>
               <select id="prevCandle-weekly">
                 <option value="">選択...</option>
+                <optgroup label="── トレンド継続 ──">
                 <option>陽線（スラスト）</option>
                 <option>陰線（スラスト）</option>
-                <option>陽線（逆ヒゲ）</option>
-                <option>陰線（逆ヒゲ）</option>
-                <option>コマ足・ハラミ</option>
+                </optgroup>
+                <optgroup label="── 反転・調整サイン ──">
+                <option>陽線（上ヒゲ＞実体）</option>
+                <option>陰線（上ヒゲ＞実体）</option>
+                <option>陽線（下ヒゲ＞実体）</option>
+                <option>陰線（下ヒゲ＞実体）</option>
+                <option>ピンバー（上ヒゲ）</option>
+                <option>ピンバー（下ヒゲ）</option>
+                </optgroup>
+                <optgroup label="── レンジ・迷い ──">
+                <option>コマ足（陽線）</option>
+                <option>コマ足（陰線）</option>
+                <option>ハラミ足（陽線）</option>
+                <option>ハラミ足（陰線）</option>
+                <option>逆ヒゲ陽線（下ヒゲなし）</option>
+                <option>逆ヒゲ陰線（上ヒゲなし）</option>
+                <option>十字線（ドージ）</option>
+                </optgroup>
               </select>
             </div>
             <div>
@@ -421,11 +515,27 @@ select option{background:var(--bg3);}
               <label>前日足の形</label>
               <select id="prevCandle-daily">
                 <option value="">選択...</option>
+                <optgroup label="── トレンド継続 ──">
                 <option>陽線（スラスト）</option>
                 <option>陰線（スラスト）</option>
-                <option>陽線（逆ヒゲ）</option>
-                <option>陰線（逆ヒゲ）</option>
-                <option>コマ足・ハラミ</option>
+                </optgroup>
+                <optgroup label="── 反転・調整サイン ──">
+                <option>陽線（上ヒゲ＞実体）</option>
+                <option>陰線（上ヒゲ＞実体）</option>
+                <option>陽線（下ヒゲ＞実体）</option>
+                <option>陰線（下ヒゲ＞実体）</option>
+                <option>ピンバー（上ヒゲ）</option>
+                <option>ピンバー（下ヒゲ）</option>
+                </optgroup>
+                <optgroup label="── レンジ・迷い ──">
+                <option>コマ足（陽線）</option>
+                <option>コマ足（陰線）</option>
+                <option>ハラミ足（陽線）</option>
+                <option>ハラミ足（陰線）</option>
+                <option>逆ヒゲ陽線（下ヒゲなし）</option>
+                <option>逆ヒゲ陰線（上ヒゲなし）</option>
+                <option>十字線（ドージ）</option>
+                </optgroup>
               </select>
             </div>
             <div>
@@ -449,23 +559,64 @@ select option{background:var(--bg3);}
         </div>
       </div>
 
+      <!-- スクショ: 月足・週足・日足 別々に貼れる -->
       <div class="card">
-        <div class="card-title">チャートスクショ（任意）</div>
-        <div class="upload-zone">
-          <input type="file" accept="image/*" onchange="handleUpload(event,'envPreview')">
-          <div style="font-size:22px;margin-bottom:4px;">📷</div>
-          <p>タップしてスクショを添付</p>
+        <div class="card-title">📷 チャートスクショ</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">画像を貼り付け(Ctrl+V / 長押しペースト) またはタップして添付</div>
+
+        <!-- 月足スクショ -->
+        <div style="margin-bottom:12px;">
+          <div class="tf-label monthly" style="margin-bottom:6px;">🌙 月足チャート</div>
+          <div class="paste-zone" id="pasteZone-monthly" tabindex="0">
+            <input type="file" id="fileEnv-monthly" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-monthly')">
+            <div style="font-size:18px;">📋</div>
+            <p>クリックして選択 → Ctrl+V で貼り付け</p>
+            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
+          </div>
+          <div class="img-wrap" id="imgWrap-monthly"><button class="img-clear-btn" onclick="clearPreview('monthly')" title="削除">✕</button><img id="envPreview-monthly" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
-        <img id="envPreview" class="preview-img" onclick="openLightbox(this.src)">
+
+        <!-- 週足スクショ -->
+        <div style="margin-bottom:12px;">
+          <div class="tf-label weekly" style="margin-bottom:6px;">📅 週足チャート</div>
+          <div class="paste-zone" id="pasteZone-weekly" tabindex="0">
+            <input type="file" id="fileEnv-weekly" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-weekly')">
+            <div style="font-size:18px;">📋</div>
+            <p>クリックして選択 → Ctrl+V で貼り付け</p>
+            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
+          </div>
+          <div class="img-wrap" id="imgWrap-weekly"><button class="img-clear-btn" onclick="clearPreview('weekly')" title="削除">✕</button><img id="envPreview-weekly" class="preview-img" onclick="openLightbox(this.src)"></div>
+        </div>
+
+        <!-- 日足スクショ -->
+        <div>
+          <div class="tf-label daily" style="margin-bottom:6px;">📆 日足チャート</div>
+          <div class="paste-zone" id="pasteZone-daily" tabindex="0">
+            <input type="file" id="fileEnv-daily" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-daily')">
+            <div style="font-size:18px;">📋</div>
+            <p>クリックして選択 → Ctrl+V で貼り付け</p>
+            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
+          </div>
+          <div class="img-wrap" id="imgWrap-daily"><button class="img-clear-btn" onclick="clearPreview('daily')" title="削除">✕</button><img id="envPreview-daily" class="preview-img" onclick="openLightbox(this.src)"></div>
+        </div>
       </div>
 
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
         <button class="btn btn-primary" onclick="analyzeEnv()">🤖 AIに分析してもらう</button>
-        <button class="btn btn-ghost" onclick="saveEnvMemo()">保存</button>
+        <button class="btn btn-primary" style="background:var(--green);" onclick="saveEnvMemo()">💾 保存して記録</button>
       </div>
       <div id="envResult" style="display:none;margin-bottom:20px;">
         <div class="card-title" style="margin-bottom:8px;">AI 分析結果</div>
         <div class="ai-summary" id="envResultText"></div>
+      </div>
+
+      <!-- 過去の環境認識履歴 -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="card-title" style="margin:0;">🗂 過去の環境認識メモ</div>
+          <button class="btn btn-ghost btn-sm" onclick="toggleEnvHistory()">履歴を見る</button>
+        </div>
+        <div id="envHistoryList" style="display:none;"></div>
       </div>
     </div>
 
@@ -693,11 +844,13 @@ select option{background:var(--bg3);}
 
         <div style="margin-bottom:14px;">
           <label>チャートスクショ（任意）</label>
-          <div class="upload-zone" style="padding:14px;">
-            <input type="file" accept="image/*" onchange="handleUpload(event,'jnlPreview')">
-            <p>📷 タップして添付</p>
+          <div class="paste-zone" id="pasteZone-jnl" tabindex="0">
+            <input type="file" id="fileJnl" accept="image/*" style="display:none" onchange="handleUpload(event,'jnlPreview')">
+            <div style="font-size:18px;">📋</div>
+            <p>クリックして選択 → Ctrl+V で貼り付け</p>
+            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
           </div>
-          <img id="jnlPreview" class="preview-img" onclick="openLightbox(this.src)">
+          <div class="img-wrap" id="imgWrap-jnl"><button class="img-clear-btn" onclick="clearPreview('jnl')" title="削除">✕</button><img id="jnlPreview" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
         <button class="btn btn-primary btn-sm" onclick="addJournal()">記録する</button>
       </div>
@@ -770,6 +923,8 @@ select option{background:var(--bg3);}
 
 <script>
 let journals = JSON.parse(localStorage.getItem('tradeJournals') || '[]');
+let envMemos = JSON.parse(localStorage.getItem('envMemos') || '[]');
+let envImgs = { monthly: null, weekly: null, daily: null }; // セッション中のみ保持
 let selectedDirByTF = { monthly: '', weekly: '', daily: '' };
 let jnlUploadDataUrl = null;
 let selectedPsychoTags = [];
@@ -864,13 +1019,190 @@ function openTVTab(id) {
 // ===== 画像 =====
 function handleUpload(event, previewId) {
   const file = event.target.files[0]; if (!file) return;
+  setPreviewFromFile(file, previewId);
+}
+function setPreviewFromFile(file, previewId) {
   const reader = new FileReader();
   reader.onload = e => {
-    const img = document.getElementById(previewId);
-    img.src = e.target.result; img.style.display = 'block';
-    if (previewId === 'jnlPreview') jnlUploadDataUrl = e.target.result;
+    setPreviewSrc(previewId, e.target.result);
   };
   reader.readAsDataURL(file);
+}
+function setPreviewSrc(previewId, src) {
+  const img = document.getElementById(previewId);
+  if (img) { img.src = src; }
+  // ラッパーを表示
+  const wrapMap = {
+    'envPreview-monthly': 'imgWrap-monthly',
+    'envPreview-weekly':  'imgWrap-weekly',
+    'envPreview-daily':   'imgWrap-daily',
+    'jnlPreview':         'imgWrap-jnl'
+  };
+  const wrap = document.getElementById(wrapMap[previewId]);
+  if (wrap) wrap.classList.add('has-img');
+  if (previewId === 'jnlPreview') jnlUploadDataUrl = src;
+  if (previewId === 'envPreview-monthly') envImgs.monthly = src;
+  if (previewId === 'envPreview-weekly')  envImgs.weekly  = src;
+  if (previewId === 'envPreview-daily')   envImgs.daily   = src;
+}
+
+function clearPreview(key) {
+  const previewMap = {
+    'monthly': 'envPreview-monthly',
+    'weekly':  'envPreview-weekly',
+    'daily':   'envPreview-daily',
+    'jnl':     'jnlPreview'
+  };
+  const wrapMap = {
+    'monthly': 'imgWrap-monthly',
+    'weekly':  'imgWrap-weekly',
+    'daily':   'imgWrap-daily',
+    'jnl':     'imgWrap-jnl'
+  };
+  const img = document.getElementById(previewMap[key]);
+  if (img) { img.src = ''; }
+  const wrap = document.getElementById(wrapMap[key]);
+  if (wrap) wrap.classList.remove('has-img');
+  if (key === 'jnl') jnlUploadDataUrl = null;
+  if (key === 'monthly') envImgs.monthly = null;
+  if (key === 'weekly')  envImgs.weekly  = null;
+  if (key === 'daily')   envImgs.daily   = null;
+}
+
+// ===== クリップボード画像ペースト =====
+// ペーストゾーンIDとプレビューIDのマッピング
+const PASTE_MAP = {
+  'pasteZone-monthly': 'envPreview-monthly',
+  'pasteZone-weekly':  'envPreview-weekly',
+  'pasteZone-daily':   'envPreview-daily',
+  'pasteZone-jnl':     'jnlPreview'
+};
+// ファイル選択ダイアログとのマッピング
+const FILE_MAP = {
+  'pasteZone-monthly': 'fileEnv-monthly',
+  'pasteZone-weekly':  'fileEnv-weekly',
+  'pasteZone-daily':   'fileEnv-daily',
+  'pasteZone-jnl':     'fileJnl'
+};
+
+let activePasteZoneId = null; // 現在選択中のゾーン
+
+function setActivePasteZone(zoneId) {
+  // 全ゾーンのアクティブ解除
+  document.querySelectorAll('.paste-zone').forEach(z => z.classList.remove('paste-active'));
+  activePasteZoneId = zoneId;
+  if (zoneId) {
+    const zone = document.getElementById(zoneId);
+    if (zone) zone.classList.add('paste-active');
+  }
+}
+
+function initPasteZones() {
+  document.querySelectorAll('.paste-zone').forEach(zone => {
+    const zoneId = zone.id;
+
+    // クリック: アクティブ化 or ファイル選択
+    zone.addEventListener('click', e => {
+      // 既にアクティブなら → ファイル選択ダイアログを開く
+      if (activePasteZoneId === zoneId) {
+        const fileInput = document.getElementById(FILE_MAP[zoneId]);
+        if (fileInput) fileInput.click();
+        return;
+      }
+      // 初回クリック: アクティブ化してCtrl+V待ち
+      setActivePasteZone(zoneId);
+      zone.focus();
+    });
+
+    // キーボード: Enter/Space でファイル選択
+    zone.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const fileInput = document.getElementById(FILE_MAP[zoneId]);
+        if (fileInput) fileInput.click();
+      }
+    });
+
+    // フォーカス離れ: アクティブ解除（ただし200ms後。ファイルダイアログ等の考慮）
+    zone.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (document.activeElement !== zone) {
+          zone.classList.remove('paste-active');
+          if (activePasteZoneId === zoneId) activePasteZoneId = null;
+        }
+      }, 200);
+    });
+
+    // ドラッグ&ドロップ
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        setPreviewFromFile(file, PASTE_MAP[zoneId] || 'jnlPreview');
+        setActivePasteZone(null);
+      }
+    });
+  });
+
+  // ===== グローバル Ctrl+V / ペーストイベント =====
+  document.addEventListener('paste', e => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (!item.type.startsWith('image/')) continue;
+      const file = item.getAsFile();
+      if (!file) continue;
+
+      let targetPreviewId = null;
+
+      // 1) アクティブなペーストゾーンがあればそこへ
+      if (activePasteZoneId && PASTE_MAP[activePasteZoneId]) {
+        targetPreviewId = PASTE_MAP[activePasteZoneId];
+      }
+      // 2) フォーカスがペーストゾーン上にある場合
+      else if (document.activeElement?.classList.contains('paste-zone')) {
+        targetPreviewId = PASTE_MAP[document.activeElement.id];
+      }
+      // 3) フォールバック: 現在のページとTFパネルから推定
+      else {
+        if (document.getElementById('page-env')?.classList.contains('active')) {
+          const activeTF = document.querySelector('.tf-panel.active');
+          if (activeTF?.id === 'tf-monthly')     targetPreviewId = 'envPreview-monthly';
+          else if (activeTF?.id === 'tf-weekly') targetPreviewId = 'envPreview-weekly';
+          else                                    targetPreviewId = 'envPreview-daily';
+        } else if (document.getElementById('page-journal')?.classList.contains('active')) {
+          targetPreviewId = 'jnlPreview';
+        }
+      }
+
+      if (targetPreviewId) {
+        setPreviewFromFile(file, targetPreviewId);
+        setActivePasteZone(null); // 貼り付け後はアクティブ解除
+        e.preventDefault();
+
+        // 成功フィードバック: ゾーンを一瞬光らせる
+        const zoneId = Object.keys(PASTE_MAP).find(k => PASTE_MAP[k] === targetPreviewId);
+        if (zoneId) {
+          const zone = document.getElementById(zoneId);
+          if (zone) {
+            zone.style.borderColor = 'var(--green)';
+            zone.style.background = 'rgba(34,197,94,.1)';
+            setTimeout(() => { zone.style.borderColor = ''; zone.style.background = ''; }, 800);
+          }
+        }
+        break;
+      }
+    }
+  });
+
+  // ページ外クリックでアクティブ解除
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.paste-zone')) {
+      setActivePasteZone(null);
+    }
+  });
 }
 function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('open'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
@@ -941,15 +1273,173 @@ async function analyzeEnv() {
   }
 }
 
+// ===== 日付バー初期化 =====
+function initEnvDateBar() {
+  const now = new Date();
+  const yearSel = document.getElementById('envYear');
+  for (let y = now.getFullYear(); y >= now.getFullYear() - 2; y--) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y + '年';
+    if (y === now.getFullYear()) o.selected = true;
+    yearSel.appendChild(o);
+  }
+  document.getElementById('envMonth').value = now.getMonth() + 1;
+  // 第何週か自動計算
+  const weekNum = Math.ceil(now.getDate() / 7);
+  document.getElementById('envWeek').value = weekNum;
+  const days = ['日','月','火','水','木','金','土'];
+  const dayOfWeek = days[now.getDay()];
+  document.getElementById('envDay').value = ['月','火','水','木','金'].includes(dayOfWeek) ? dayOfWeek : '月';
+  updateEnvDateLabel();
+  ['envYear','envMonth','envWeek','envDay'].forEach(id =>
+    document.getElementById(id).addEventListener('change', updateEnvDateLabel)
+  );
+}
+function updateEnvDateLabel() {
+  const y = document.getElementById('envYear').value;
+  const m = document.getElementById('envMonth').value;
+  const w = document.getElementById('envWeek').value;
+  const d = document.getElementById('envDay').value;
+  document.getElementById('envDateLabel').textContent = `📌 ${y}年${m}月 第${w}週 ${d}曜日の環境認識`;
+}
+function getEnvDateKey() {
+  const y = document.getElementById('envYear').value;
+  const m = document.getElementById('envMonth').value;
+  const w = document.getElementById('envWeek').value;
+  const d = document.getElementById('envDay').value;
+  return `${y}-${String(m).padStart(2,'0')}-W${w}-${d}`;
+}
+function getEnvDateLabel() {
+  const y = document.getElementById('envYear').value;
+  const m = document.getElementById('envMonth').value;
+  const w = document.getElementById('envWeek').value;
+  const d = document.getElementById('envDay').value;
+  return `${y}年${m}月 第${w}週 ${d}曜`;
+}
+
 function saveEnvMemo() {
-  const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '';
-  localStorage.setItem('lastEnvMemo', JSON.stringify({
-    date: new Date().toLocaleDateString('ja-JP'),
-    monthly: { dir: dirLabel(selectedDirByTF.monthly), note: document.getElementById('envNote-monthly').value },
-    weekly: { dir: dirLabel(selectedDirByTF.weekly), note: document.getElementById('envNote-weekly').value },
-    daily: { dir: dirLabel(selectedDirByTF.daily), note: document.getElementById('envNote-daily').value }
+  const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '未設定';
+  const memo = {
+    id: Date.now(),
+    dateKey: getEnvDateKey(),
+    dateLabel: getEnvDateLabel(),
+    monthly: {
+      dir: dirLabel(selectedDirByTF.monthly),
+      candle: document.getElementById('prevCandle-monthly').value,
+      state: document.getElementById('marketState-monthly').value,
+      key: document.getElementById('keyLevel-monthly').value,
+      note: document.getElementById('envNote-monthly').value,
+      img: envImgs.monthly
+    },
+    weekly: {
+      dir: dirLabel(selectedDirByTF.weekly),
+      candle: document.getElementById('prevCandle-weekly').value,
+      state: document.getElementById('marketState-weekly').value,
+      key: document.getElementById('keyLevel-weekly').value,
+      note: document.getElementById('envNote-weekly').value,
+      img: envImgs.weekly
+    },
+    daily: {
+      dir: dirLabel(selectedDirByTF.daily),
+      candle: document.getElementById('prevCandle-daily').value,
+      state: document.getElementById('marketState-daily').value,
+      key: document.getElementById('keyLevel').value,
+      asiaH: document.getElementById('asiaH').value,
+      asiaL: document.getElementById('asiaL').value,
+      note: document.getElementById('envNote-daily').value,
+      img: envImgs.daily
+    },
+    aiResult: document.getElementById('envResultText').textContent || ''
+  };
+  // 同じdateKeyがあれば上書き
+  const idx = envMemos.findIndex(m => m.dateKey === memo.dateKey);
+  if (idx >= 0) envMemos[idx] = memo; else envMemos.unshift(memo);
+  // 画像なしで保存(容量節約)
+  const toSave = envMemos.map(m => ({
+    ...m,
+    monthly: {...m.monthly, img: null},
+    weekly:  {...m.weekly,  img: null},
+    daily:   {...m.daily,   img: null}
   }));
-  alert('保存しました');
+  localStorage.setItem('envMemos', JSON.stringify(toSave));
+  alert(`💾 ${memo.dateLabel}の環境認識を保存しました`);
+  renderEnvHistory();
+}
+
+function toggleEnvHistory() {
+  const el = document.getElementById('envHistoryList');
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    renderEnvHistory();
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function renderEnvHistory() {
+  const list = document.getElementById('envHistoryList');
+  if (!envMemos.length) {
+    list.innerHTML = '<p style="font-size:13px;color:var(--muted);">まだ保存されたメモはありません</p>';
+    return;
+  }
+  const dirColor = d => d === 'ロング優位' ? 'var(--green)' : d === 'ショート優位' ? 'var(--red)' : d === 'レンジ' ? 'var(--amber)' : 'var(--muted)';
+  list.innerHTML = envMemos.slice(0, 30).map(m => `
+    <div class="env-history-item" onclick="loadEnvMemo('${m.id}')">
+      <div class="env-history-header">
+        <span class="env-history-date">📅 ${m.dateLabel}</span>
+        <span style="font-size:11px;color:var(--muted);">タップで読込</span>
+      </div>
+      <div class="env-history-tags">
+        <span class="env-history-tag" style="color:${dirColor(m.monthly?.dir)}">月:${m.monthly?.dir||'-'}</span>
+        <span class="env-history-tag" style="color:${dirColor(m.weekly?.dir)}">週:${m.weekly?.dir||'-'}</span>
+        <span class="env-history-tag" style="color:${dirColor(m.daily?.dir)}">日:${m.daily?.dir||'-'}</span>
+        ${m.daily?.asiaH ? `<span class="env-history-tag">AS高:${m.daily.asiaH}</span>` : ''}
+        ${m.daily?.asiaL ? `<span class="env-history-tag">AS安:${m.daily.asiaL}</span>` : ''}
+      </div>
+      ${m.aiResult ? `<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;">${m.aiResult.slice(0,120)}…</div>` : ''}
+    </div>`).join('');
+}
+
+function loadEnvMemo(id) {
+  const m = envMemos.find(x => String(x.id) === String(id));
+  if (!m) return;
+  // 日付セット
+  const [y, mo, w, d] = [m.dateKey.split('-')[0], m.dateKey.split('-')[1], m.dateKey.split('-W')[1]?.split('-')[0], m.dateKey.split('-').pop()];
+  if(document.getElementById('envYear')) document.getElementById('envYear').value = y;
+  if(document.getElementById('envMonth')) document.getElementById('envMonth').value = parseInt(mo);
+  if(document.getElementById('envWeek')) document.getElementById('envWeek').value = w;
+  if(document.getElementById('envDay')) document.getElementById('envDay').value = d;
+  updateEnvDateLabel();
+  // 月足
+  const setTF = (tf, data) => {
+    if(!data) return;
+    document.getElementById(`prevCandle-${tf}`).value = data.candle || '';
+    document.getElementById(`marketState-${tf}`).value = data.state || '';
+    if(document.getElementById(`keyLevel-${tf}`)) document.getElementById(`keyLevel-${tf}`).value = data.key || '';
+    document.getElementById(`envNote-${tf}`).value = data.note || '';
+    // dir
+    const dirMap = {'ロング優位':'long','ショート優位':'short','レンジ':'range'};
+    const dir = dirMap[data.dir];
+    if(dir){
+      document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b => b.className='env-tag');
+      const btn = document.querySelector(`#dirRow-${tf} .env-tag[onclick*="${dir}"]`);
+      if(btn){ btn.classList.add('selected-'+dir); selectedDirByTF[tf]=dir; }
+    }
+  };
+  setTF('monthly', m.monthly);
+  setTF('weekly',  m.weekly);
+  setTF('daily',   m.daily);
+  if(m.daily){
+    if(document.getElementById('asiaH')) document.getElementById('asiaH').value = m.daily.asiaH || '';
+    if(document.getElementById('asiaL')) document.getElementById('asiaL').value = m.daily.asiaL || '';
+  }
+  if(m.aiResult){
+    document.getElementById('envResult').style.display='block';
+    document.getElementById('envResultText').textContent = m.aiResult;
+  }
+  document.getElementById('envHistoryList').style.display = 'none';
+  document.querySelector('.main').scrollTop = 0;
+  alert(`📋 ${m.dateLabel}のメモを読み込みました`);
 }
 
 // ===== チェックリスト =====
@@ -1002,6 +1492,8 @@ function updateCheckProgress() {
 }
 function resetChecks() { document.querySelectorAll('.check-box').forEach(b => b.classList.remove('checked')); updateCheckProgress(); }
 initChecks();
+initEnvDateBar();
+initPasteZones();
 
 // ===== ATR（海外口座） =====
 // Gold海外口座: 1ロット = 100oz
@@ -1226,11 +1718,20 @@ function removeTyping(id) { const el = document.getElementById(id); if (el) el.r
 
 // ===== Claude API =====
 async function callClaude(userMsg, history = []) {
-  const messages = (history.length > 0 && history[history.length - 1].role === 'user') ? history : [...history, { role: 'user', content: userMsg }];
+  const messages = (history.length > 0 && history[history.length - 1].role === 'user')
+    ? history : [...history, { role: 'user', content: userMsg }];
   const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
     body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages })
   });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'HTTP ' + res.status);
+  }
   const data = await res.json();
   return data.content?.[0]?.text || 'レスポンスが空でした';
 }
