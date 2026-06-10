@@ -1689,8 +1689,19 @@ function renderJournals() {
       ${e.psychoNote ? `<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>` : ''}
       <div class="entry-body">${e.note}</div>
       ${e.img ? `<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">` : ''}
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+        <button class="btn btn-ghost btn-sm" onclick="deleteJournal('${e.id}')" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red);">🗑 削除</button>
+      </div>
     </div>`;
   }).join('');
+}
+
+function deleteJournal(id) {
+  if (!confirm('この記録を削除しますか？')) return;
+  journals = journals.filter(j => String(j.id) !== String(id));
+  localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
+  renderJournals();
+  updateStats();
 }
 renderJournals();
 
