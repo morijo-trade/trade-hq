@@ -308,13 +308,13 @@ select option{background:var(--bg3);}
 
 /* ===== Notion設定モーダル ===== */
 .notion-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
-.notion-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:480px;width:100%;}
+.notion-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;}
 .notion-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
 .notion-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
 .notion-box label{font-size:12px;color:var(--muted);margin-bottom:4px;display:block;}
 .notion-box input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:11px 14px;color:var(--text);font-size:13px;font-family:var(--mono);outline:none;margin-bottom:12px;}
 .notion-box input:focus{border-color:var(--accent);}
-.notion-status{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:6px;display:none;}
+.notion-status{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:6px;display:none;line-height:1.7;}
 .notion-status.ok{background:rgba(34,197,94,.15);color:var(--green);display:block;}
 .notion-status.err{background:rgba(239,68,68,.15);color:var(--red);display:block;}
 .notion-status.loading{background:var(--bg3);color:var(--muted);display:block;}
@@ -356,10 +356,14 @@ select option{background:var(--bg3);}
     <input type="text" id="notionJnlDbInput" placeholder="データベースIDを入力" autocomplete="off" spellcheck="false">
     <label>☁️ Cloudflare Worker URL</label>
     <input type="text" id="notionWorkerUrlInput" placeholder="https://trade-hq-notion.あなたの名前.workers.dev" autocomplete="off" spellcheck="false">
-    <div style="display:flex;gap:10px;margin-top:4px;">
+    <div style="display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;">
       <button class="btn btn-primary" style="flex:1;" onclick="saveNotionSettings()">💾 保存</button>
       <button class="btn btn-ghost btn-sm" onclick="testNotionConnection()">接続テスト</button>
       <button class="btn btn-ghost" onclick="closeNotionModal()">閉じる</button>
+    </div>
+    <div style="margin-top:8px;">
+      <button class="btn btn-teal" style="width:100%;" onclick="setupNotionDatabases()">🔧 DBセットアップ（プロパティ自動作成）</button>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;">⚠️ 初回のみ実行。Notionに必要なプロパティを自動で追加します。</div>
     </div>
     <div class="notion-status" id="notionStatus"></div>
     <div style="font-size:11px;color:var(--muted);margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;line-height:1.7;">
@@ -1346,7 +1350,6 @@ async function saveEnvMemo() {
   }));
   localStorage.setItem('envMemos', JSON.stringify(toSave));
 
-  // Notion連携（Claude API + MCP経由）
   const notionResult = await saveEnvMemoToNotion(memo).catch(e => ({ error: e.message }));
   if (notionResult?.error) {
     alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`);
@@ -1625,7 +1628,6 @@ async function addJournal() {
   journals.unshift(entry);
   localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
 
-  // Notion連携（Claude API + MCP経由）
   const notionResult = await saveJournalToNotion(entry).catch(e => ({ error: e.message }));
   if (notionResult?.error) {
     alert(`✅ 記録しました\n⚠️ Notion保存失敗: ${notionResult.error}`);
@@ -1782,7 +1784,6 @@ function openApiKeyModal() {
   setTimeout(() => document.getElementById('apikeyInput').focus(), 100);
 }
 (function() {
-  // QR転送データがURLにある場合はモーダルを出さない
   if (location.hash.startsWith('#t=')) return;
   if (!getApiKey()) setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800);
 })();
@@ -1846,6 +1847,95 @@ async function testNotionConnection() {
     st.className = 'notion-status err';
     st.textContent = `❌ 接続失敗: ${e.message}`;
   }
+}
+
+// ===== Notion DB セットアップ =====
+async function setupNotionDatabases() {
+  const token = document.getElementById('notionTokenInput').value.trim();
+  const envDbId = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
+  const jnlDbId = document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,'');
+  const workerUrl = (document.getElementById('notionWorkerUrlInput').value.trim() || localStorage.getItem('notionWorkerUrl') || '').replace(/\/+$/,'');
+  const st = document.getElementById('notionStatus');
+
+  if (!token || !workerUrl) {
+    alert('トークンとWorker URLを入力してください');
+    return;
+  }
+
+  st.className = 'notion-status loading';
+  st.textContent = 'DBセットアップ中...';
+
+  const envProps = {
+    '日付キー':    { rich_text: {} },
+    '月足バイアス': { select: { options: [
+      { name: 'ロング優位', color: 'green' },
+      { name: 'ショート優位', color: 'red' },
+      { name: 'レンジ', color: 'yellow' },
+      { name: '未設定', color: 'gray' }
+    ]}},
+    '週足バイアス': { select: { options: [
+      { name: 'ロング優位', color: 'green' },
+      { name: 'ショート優位', color: 'red' },
+      { name: 'レンジ', color: 'yellow' },
+      { name: '未設定', color: 'gray' }
+    ]}},
+    '日足バイアス': { select: { options: [
+      { name: 'ロング優位', color: 'green' },
+      { name: 'ショート優位', color: 'red' },
+      { name: 'レンジ', color: 'yellow' },
+      { name: '未設定', color: 'gray' }
+    ]}},
+    '月足足型': { rich_text: {} },
+    '週足足型': { rich_text: {} },
+    '日足足型': { rich_text: {} },
+    'AS高値':   { rich_text: {} },
+    'AS安値':   { rich_text: {} }
+  };
+
+  const jnlProps = {
+    '結果': { select: { options: [
+      { name: '勝ち', color: 'green' },
+      { name: '負け', color: 'red' },
+      { name: '見送り成功', color: 'blue' },
+      { name: '機会損失', color: 'yellow' }
+    ]}},
+    '損益USD':     { number: { format: 'dollar' } },
+    '損益pips':    { number: {} },
+    'SL幅pips':    { number: {} },
+    '月足バイアス': { rich_text: {} },
+    '週足バイアス': { rich_text: {} },
+    '日足バイアス': { rich_text: {} },
+    '方向':        { rich_text: {} },
+    '心理タグ':    { rich_text: {} }
+  };
+
+  const results = [];
+
+  const patchDb = async (dbId, props, label) => {
+    if (!dbId) { results.push('⬜ ' + label + ': DB ID未設定（スキップ）'); return; }
+    try {
+      const res = await fetch(workerUrl + '/notion/databases/' + dbId, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'X-Notion-Token': token },
+        body: JSON.stringify({ properties: props })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        results.push('✅ ' + label + ': セットアップ完了');
+      } else {
+        results.push('❌ ' + label + ': ' + (data.message || data.error || res.status));
+      }
+    } catch(e) {
+      results.push('❌ ' + label + ': ' + e.message);
+    }
+  };
+
+  await patchDb(envDbId, envProps, '環境認識DB');
+  if (jnlDbId) await patchDb(jnlDbId, jnlProps, '振り返りDB');
+
+  const allOk = results.every(r => r.startsWith('✅') || r.startsWith('⬜'));
+  st.className = 'notion-status ' + (allOk ? 'ok' : 'err');
+  st.innerHTML = results.join('<br>') + (allOk ? '<br><span style="font-size:11px;">この後「保存」を押してから通常どおり保存をお試しください</span>' : '');
 }
 
 // ===== Notion連携（Cloudflare Worker経由） =====
@@ -1949,16 +2039,10 @@ function openQRModal() {
   const modal = document.getElementById('qrModal');
   modal.style.display = 'flex';
 
-  // 転送データをセッションキーで保存
-  const sessionKey = Math.random().toString(36).slice(2, 10);
   const data = { ak: apiKey, nt: notionToken, ne: notionEnvDbId, nj: notionJnlDbId, nw: workerUrl };
-  // sessionStorageに一時保存（同一ドメイン内で共有できないためURLに含める）
-  // データをgzip的に短縮: キーを短く + base64
   const encoded = btoa(JSON.stringify(data));
-  // URLが長くなるのでcanvasの代わりにコピーボタン+短縮表示
   const url = `${location.origin}${location.pathname}#t=${encoded}`;
 
-  // QRノート更新
   const note = document.getElementById('qrNote');
   const items = [
     apiKey ? '✅ APIキー' : '❌ APIキー（未設定）',
@@ -1969,7 +2053,6 @@ function openQRModal() {
   ];
   note.innerHTML = '転送される設定：<br>' + items.join('<br>');
 
-  // QRコード生成（ライブラリ直接埋め込み）
   const wrap = document.getElementById('qrCanvas').parentNode;
   generateQRSVG(url, wrap);
 }
@@ -1990,13 +2073,11 @@ function copyBookmarkUrl() {
   navigator.clipboard.writeText(url).then(() => {
     document.getElementById('bookmarkNote').style.display = 'block';
   }).catch(() => {
-    // clipboardが使えない場合はpromptで表示
     prompt('このURLをコピーしてSafariで開いてください:', url);
   });
 }
 
 function generateQRSVG(text, wrap) {
-  // qrcode-generator ライブラリを使用
   const script = document.createElement('script');
   script.src = 'https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
   script.onload = () => {
@@ -2010,7 +2091,6 @@ function generateQRSVG(text, wrap) {
       wrap.innerHTML = svgTag;
       wrap.querySelector('svg').style.cssText = 'width:200px;height:200px;';
     } catch(e) {
-      // データが長すぎる場合はコピーボタンで対応
       showCopyFallback(text, wrap);
     }
   };
@@ -2037,7 +2117,6 @@ function showCopyFallback(url, wrap) {
 }
 
 // ===== URL転送データの自動読み込み =====
-// ホーム画面追加用: URLにハッシュがある限り毎回読み込む（削除しない）
 (function() {
   const hash = location.hash;
   if (!hash.startsWith('#t=')) return;
@@ -2049,7 +2128,6 @@ function showCopyFallback(url, wrap) {
     if (data.ne) localStorage.setItem('notionEnvDbId', data.ne);
     if (data.nj) localStorage.setItem('notionJnlDbId', data.nj);
     if (data.nw) localStorage.setItem('notionWorkerUrl', data.nw);
-    // URLは消さない → ホーム画面から開くたびに自動設定される
     document.getElementById('apikeyModal').style.display = 'none';
   } catch(e) {
     console.warn('Transfer data parse error:', e);
