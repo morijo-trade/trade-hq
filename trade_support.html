@@ -286,6 +286,46 @@ select option{background:var(--bg3);}
   .env-imgs-grid{grid-template-columns:1fr 1fr;}
   .env-date-bar select,.env-date-bar input{font-size:16px !important;}
 }
+
+/* ===== 環境認識ログ 一覧 ===== */
+.month-group{margin-bottom:28px;}
+.month-group-label{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.month-group-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.hist-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden;transition:border-color .15s;}
+.hist-card:hover{border-color:var(--accent);}
+.hist-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;gap:8px;}
+.hist-card-header:hover{background:var(--bg3);}
+.hist-date-badge{font-size:12px;font-weight:700;color:var(--accent);font-family:var(--mono);white-space:nowrap;}
+.hist-bias-row{display:flex;gap:6px;flex-wrap:wrap;flex:1;}
+.hist-bias-chip{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;white-space:nowrap;}
+.hist-bias-long{background:rgba(34,197,94,.15);color:var(--green);}
+.hist-bias-short{background:rgba(239,68,68,.15);color:var(--red);}
+.hist-bias-range{background:rgba(245,158,11,.15);color:var(--amber);}
+.hist-bias-none{background:var(--bg3);color:var(--muted);}
+.hist-chevron{font-size:12px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.hist-chevron.open{transform:rotate(180deg);}
+.hist-body{display:none;border-top:1px solid var(--border);padding:14px;}
+.hist-body.open{display:block;}
+.hist-tf-section{margin-bottom:14px;}
+.hist-tf-section:last-child{margin-bottom:0;}
+.hist-tf-label{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.hist-tf-label.monthly{color:#a78bfa;}
+.hist-tf-label.weekly{color:var(--amber);}
+.hist-tf-label.daily{color:var(--teal);}
+.hist-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.hist-meta-item{font-size:11px;color:var(--muted);}
+.hist-meta-item strong{color:var(--text);font-weight:500;}
+.hist-note{font-size:12px;color:var(--text);line-height:1.7;background:var(--bg3);border-radius:6px;padding:10px;margin-bottom:8px;white-space:pre-wrap;}
+.hist-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;}
+.hist-thumb{width:100%;height:80px;object-fit:cover;border-radius:6px;cursor:pointer;border:1px solid var(--border);}
+.hist-ai{font-size:12px;color:var(--text);line-height:1.7;background:linear-gradient(135deg,rgba(79,142,247,.06),rgba(124,58,237,.06));border:1px solid rgba(79,142,247,.2);border-radius:6px;padding:10px;white-space:pre-wrap;}
+.hist-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.hist-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;}
+@media(max-width:640px){
+  .hist-thumbs{grid-template-columns:repeat(3,1fr);}
+  .hist-meta-grid{grid-template-columns:1fr;}
+  .hist-card-header{padding:10px 12px;}
+}
 </style>
 </head>
 <body>
@@ -610,13 +650,27 @@ select option{background:var(--bg3);}
         <div class="ai-summary" id="envResultText"></div>
       </div>
 
-      <!-- 過去の環境認識履歴 -->
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div class="card-title" style="margin:0;">🗂 過去の環境認識メモ</div>
-          <button class="btn btn-ghost btn-sm" onclick="toggleEnvHistory()">履歴を見る</button>
+      <!-- ===== 履歴一覧 ===== -->
+      <div style="border-top:2px solid var(--border);margin-top:8px;padding-top:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+          <div>
+            <div class="page-title" style="font-size:17px;">🗂 環境認識ログ</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;">保存した記録の一覧 — 月ごとにまとめて表示</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <select id="histFilterYear" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;">
+              <option value="">全年</option>
+            </select>
+            <select id="histFilterMonth" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;">
+              <option value="">全月</option>
+              <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+              <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+              <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+              <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+            </select>
+          </div>
         </div>
-        <div id="envHistoryList" style="display:none;"></div>
+        <div id="envHistoryList"></div>
       </div>
     </div>
 
@@ -1294,6 +1348,8 @@ function initEnvDateBar() {
   ['envYear','envMonth','envWeek','envDay'].forEach(id =>
     document.getElementById(id).addEventListener('change', updateEnvDateLabel)
   );
+  // 初回レンダリング
+  renderEnvHistory();
 }
 function updateEnvDateLabel() {
   const y = document.getElementById('envYear').value;
@@ -1366,38 +1422,111 @@ function saveEnvMemo() {
   renderEnvHistory();
 }
 
-function toggleEnvHistory() {
-  const el = document.getElementById('envHistoryList');
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-    renderEnvHistory();
-  } else {
-    el.style.display = 'none';
-  }
-}
-
 function renderEnvHistory() {
   const list = document.getElementById('envHistoryList');
-  if (!envMemos.length) {
-    list.innerHTML = '<p style="font-size:13px;color:var(--muted);">まだ保存されたメモはありません</p>';
+  if (!list) return;
+
+  // フィルタ年プルダウン初期化
+  const yearSel = document.getElementById('histFilterYear');
+  if (yearSel && yearSel.options.length <= 1) {
+    const years = [...new Set(envMemos.map(m => m.dateKey?.split('-')[0]).filter(Boolean))].sort().reverse();
+    years.forEach(y => {
+      const o = document.createElement('option'); o.value = y; o.textContent = y + '年';
+      yearSel.appendChild(o);
+    });
+  }
+
+  // フィルタ適用
+  const filterYear  = document.getElementById('histFilterYear')?.value  || '';
+  const filterMonth = document.getElementById('histFilterMonth')?.value || '';
+  let memos = [...envMemos];
+  if (filterYear)  memos = memos.filter(m => m.dateKey?.startsWith(filterYear));
+  if (filterMonth) memos = memos.filter(m => {
+    const mo = m.dateKey?.split('-')[1];
+    return mo && parseInt(mo) === parseInt(filterMonth);
+  });
+
+  if (!memos.length) {
+    list.innerHTML = '<div class="hist-empty">📭 保存された環境認識メモはありません<br><span style="font-size:11px;margin-top:6px;display:block;">記録入力後「💾 保存して記録」で保存されます</span></div>';
     return;
   }
-  const dirColor = d => d === 'ロング優位' ? 'var(--green)' : d === 'ショート優位' ? 'var(--red)' : d === 'レンジ' ? 'var(--amber)' : 'var(--muted)';
-  list.innerHTML = envMemos.slice(0, 30).map(m => `
-    <div class="env-history-item" onclick="loadEnvMemo('${m.id}')">
-      <div class="env-history-header">
-        <span class="env-history-date">📅 ${m.dateLabel}</span>
-        <span style="font-size:11px;color:var(--muted);">タップで読込</span>
-      </div>
-      <div class="env-history-tags">
-        <span class="env-history-tag" style="color:${dirColor(m.monthly?.dir)}">月:${m.monthly?.dir||'-'}</span>
-        <span class="env-history-tag" style="color:${dirColor(m.weekly?.dir)}">週:${m.weekly?.dir||'-'}</span>
-        <span class="env-history-tag" style="color:${dirColor(m.daily?.dir)}">日:${m.daily?.dir||'-'}</span>
-        ${m.daily?.asiaH ? `<span class="env-history-tag">AS高:${m.daily.asiaH}</span>` : ''}
-        ${m.daily?.asiaL ? `<span class="env-history-tag">AS安:${m.daily.asiaL}</span>` : ''}
-      </div>
-      ${m.aiResult ? `<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;">${m.aiResult.slice(0,120)}…</div>` : ''}
+
+  // 月ごとにグループ化
+  const groups = {};
+  memos.forEach(m => {
+    const y = m.dateKey?.split('-')[0] || '?';
+    const mo = m.dateKey?.split('-')[1] || '?';
+    const key = `${y}-${mo}`;
+    if (!groups[key]) groups[key] = { label: `${y}年 ${parseInt(mo)}月`, items: [] };
+    groups[key].items.push(m);
+  });
+
+  const biasChip = dir => {
+    if (dir === 'ロング優位') return `<span class="hist-bias-chip hist-bias-long">↑ ロング</span>`;
+    if (dir === 'ショート優位') return `<span class="hist-bias-chip hist-bias-short">↓ ショート</span>`;
+    if (dir === 'レンジ') return `<span class="hist-bias-chip hist-bias-range">↔ レンジ</span>`;
+    return `<span class="hist-bias-chip hist-bias-none">未設定</span>`;
+  };
+
+  const tfSection = (tf, data, label, cls) => {
+    if (!data) return '';
+    const hasContent = data.candle || data.state || data.note || data.key || data.asiaH || data.asiaL;
+    if (!hasContent && !data.img) return '';
+    return `
+      <div class="hist-tf-section">
+        <div class="hist-tf-label ${cls}">${label}</div>
+        <div class="hist-meta-grid">
+          ${data.candle ? `<div class="hist-meta-item">足型: <strong>${data.candle}</strong></div>` : ''}
+          ${data.state  ? `<div class="hist-meta-item">状態: <strong>${data.state}</strong></div>` : ''}
+          ${data.key    ? `<div class="hist-meta-item">節目: <strong>${data.key}</strong></div>` : ''}
+          ${data.asiaH  ? `<div class="hist-meta-item">AS高値: <strong>${data.asiaH}</strong></div>` : ''}
+          ${data.asiaL  ? `<div class="hist-meta-item">AS安値: <strong>${data.asiaL}</strong></div>` : ''}
+        </div>
+        ${data.note ? `<div class="hist-note">${data.note}</div>` : ''}
+        ${data.img  ? `<div class="hist-thumbs"><img src="${data.img}" class="hist-thumb" onclick="openLightbox(this.src)" loading="lazy"></div>` : ''}
+      </div>`;
+  };
+
+  list.innerHTML = Object.entries(groups).map(([key, group]) => `
+    <div class="month-group">
+      <div class="month-group-label">📅 ${group.label} (${group.items.length}件)</div>
+      ${group.items.map(m => `
+        <div class="hist-card" id="histCard-${m.id}">
+          <div class="hist-card-header" onclick="toggleHistCard('${m.id}')">
+            <span class="hist-date-badge">${m.dateLabel}</span>
+            <div class="hist-bias-row">
+              ${biasChip(m.monthly?.dir)}
+              ${biasChip(m.weekly?.dir)}
+              ${biasChip(m.daily?.dir)}
+            </div>
+            <span class="hist-chevron" id="chevron-${m.id}">▼</span>
+          </div>
+          <div class="hist-body" id="histBody-${m.id}">
+            ${tfSection('monthly', m.monthly, '🌙 月足', 'monthly')}
+            ${tfSection('weekly',  m.weekly,  '📅 週足', 'weekly')}
+            ${tfSection('daily',   m.daily,   '📆 日足', 'daily')}
+            ${m.aiResult ? `<div style="margin-top:12px;"><div class="hist-tf-label" style="color:var(--accent);margin-bottom:6px;">🤖 AI分析結果</div><div class="hist-ai">${m.aiResult}</div></div>` : ''}
+            <div class="hist-actions">
+              <button class="btn btn-ghost btn-sm" onclick="deleteEnvMemo('${m.id}')">🗑 削除</button>
+            </div>
+          </div>
+        </div>`).join('')}
     </div>`).join('');
+}
+
+function toggleHistCard(id) {
+  const body = document.getElementById('histBody-' + id);
+  const chevron = document.getElementById('chevron-' + id);
+  if (!body) return;
+  const isOpen = body.classList.toggle('open');
+  if (chevron) chevron.classList.toggle('open', isOpen);
+}
+
+function deleteEnvMemo(id) {
+  if (!confirm('このメモを削除しますか？')) return;
+  envMemos = envMemos.filter(m => String(m.id) !== String(id));
+  localStorage.setItem('envMemos', JSON.stringify(envMemos));
+  renderEnvHistory();
 }
 
 function loadEnvMemo(id) {
