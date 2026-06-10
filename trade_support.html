@@ -2025,8 +2025,7 @@ function showCopyFallback(url, wrap) {
     if (data.nw) localStorage.setItem('notionWorkerUrl', data.nw);
     history.replaceState(null, '', location.pathname);
     // APIキーモーダルが出ないよう少し待ってからアラート
-    setTimeout(() => alert('✅ 設定を引き継ぎました！
-APIキー・Notion設定がこのデバイスに保存されました。'), 300);
+    setTimeout(() => alert('✅ 設定を引き継ぎました！\nAPIキー・Notion設定がこのデバイスに保存されました。'), 300);
   } catch(e) {
     console.warn('Transfer data parse error:', e);
   }
