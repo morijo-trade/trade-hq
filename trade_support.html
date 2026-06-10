@@ -326,9 +326,38 @@ select option{background:var(--bg3);}
   .hist-meta-grid{grid-template-columns:1fr;}
   .hist-card-header{padding:10px 12px;}
 }
+
+/* ===== APIキー設定モーダル ===== */
+.apikey-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
+.apikey-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:440px;width:100%;}
+.apikey-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
+.apikey-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.apikey-box input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:11px 14px;color:var(--text);font-size:14px;font-family:var(--mono);outline:none;margin-bottom:10px;}
+.apikey-box input:focus{border-color:var(--accent);}
+.apikey-box input::placeholder{color:var(--muted);font-size:12px;}
+.apikey-actions{display:flex;gap:10px;margin-top:6px;}
+.apikey-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6;padding:10px;background:var(--bg3);border-radius:6px;}
 </style>
 </head>
 <body>
+
+
+<!-- APIキー設定モーダル -->
+<div class="apikey-modal" id="apikeyModal" style="display:none;">
+  <div class="apikey-box">
+    <h2>🔑 APIキーを設定</h2>
+    <p>AI分析・AIチャット機能を使うにはAnthropicのAPIキーが必要です。キーはこのブラウザにのみ保存され、外部には送信されません。</p>
+    <input type="password" id="apikeyInput" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false">
+    <div class="apikey-actions">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveApiKey()">💾 保存して使う</button>
+      <button class="btn btn-ghost" onclick="closeApiKeyModal()">あとで</button>
+    </div>
+    <div class="apikey-note">
+      🔒 キーはブラウザのlocalStorageに保存されます。ファイルには書き込まれません。<br>
+      📋 取得先: <span style="color:var(--accent);">console.anthropic.com</span> → APIキー
+    </div>
+  </div>
+</div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close">✕</span>
@@ -350,6 +379,9 @@ select option{background:var(--bg3);}
       <button class="nav-btn" onclick="showPage('stats',this)"><span class="nav-icon">📊</span> パフォーマンス</button>
       <button class="nav-btn" onclick="showPage('chat',this)"><span class="nav-icon">🤖</span> AIチャット</button>
     </nav>
+    <div style="padding:8px;">
+      <button class="nav-btn" onclick="openApiKeyModal()" style="font-size:12px;color:var(--muted);"><span class="nav-icon">🔑</span> APIキー設定</button>
+    </div>
     <div class="nav-date" id="sideDate"></div>
   </div>
 
@@ -1845,22 +1877,64 @@ function appendTyping() {
 }
 function removeTyping(id) { const el = document.getElementById(id); if (el) el.remove(); }
 
+// ===== APIキー管理 =====
+function getApiKey() {
+  return localStorage.getItem('anthropicApiKey') || '';
+}
+function saveApiKey() {
+  const key = document.getElementById('apikeyInput').value.trim();
+  if (!key.startsWith('sk-ant-')) {
+    alert('APIキーは sk-ant- で始まる文字列です。確認してください。');
+    return;
+  }
+  localStorage.setItem('anthropicApiKey', key);
+  document.getElementById('apikeyModal').style.display = 'none';
+  alert('✅ APIキーを保存しました！AI機能が使えるようになりました。');
+}
+function closeApiKeyModal() {
+  document.getElementById('apikeyModal').style.display = 'none';
+}
+function openApiKeyModal() {
+  const modal = document.getElementById('apikeyModal');
+  modal.style.display = 'flex';
+  const existing = getApiKey();
+  if (existing) document.getElementById('apikeyInput').value = existing;
+  setTimeout(() => document.getElementById('apikeyInput').focus(), 100);
+}
+// APIキーが未設定なら起動時にモーダル表示
+(function() {
+  if (!getApiKey()) {
+    setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800);
+  }
+})();
+
 // ===== Claude API =====
 async function callClaude(userMsg, history = []) {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    openApiKeyModal();
+    throw new Error('APIキーが設定されていません');
+  }
   const messages = (history.length > 0 && history[history.length - 1].role === 'user')
     ? history : [...history, { role: 'user', content: userMsg }];
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': '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',
+      'x-api-key': apiKey,
       'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages })
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || 'HTTP ' + res.status);
+    const msg = err.error?.message || 'HTTP ' + res.status;
+    if (res.status === 401) {
+      localStorage.removeItem('anthropicApiKey');
+      openApiKeyModal();
+      throw new Error('APIキーが無効です。再設定してください。');
+    }
+    throw new Error(msg);
   }
   const data = await res.json();
   return data.content?.[0]?.text || 'レスポンスが空でした';
