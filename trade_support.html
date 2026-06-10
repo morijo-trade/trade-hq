@@ -1956,10 +1956,41 @@ async function notionPost(path, body, token) {
   return await res.json();
 }
 
+// ===== R2画像アップロード =====
+async function uploadImageToR2(base64DataUrl, prefix) {
+  const workerUrl = getWorkerUrl();
+  if (!workerUrl || !base64DataUrl) return null;
+  try {
+    const parts = base64DataUrl.split(',');
+    const meta = parts[0];
+    const data = parts[1];
+    const contentType = meta.match(/:(.*?);/)?.[1] || 'image/png';
+    const ext = contentType.split('/')[1] || 'png';
+    const filename = prefix + '-' + Date.now() + '.' + ext;
+    const res = await fetch(workerUrl + '/r2/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, contentType, data })
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Upload failed');
+    return result.url;
+  } catch(e) {
+    console.warn('R2 upload failed:', e.message);
+    return null;
+  }
+}
+
 async function saveEnvMemoToNotion(memo) {
   const token = getNotionToken();
   const dbId  = getNotionEnvDbId();
   if (!token || !dbId) return null;
+
+  const [monthlyUrl, weeklyUrl, dailyUrl] = await Promise.all([
+    uploadImageToR2(memo.monthly?.img, 'monthly'),
+    uploadImageToR2(memo.weekly?.img,  'weekly'),
+    uploadImageToR2(memo.daily?.img,   'daily'),
+  ]);
 
   const children = [];
   const addSection = (heading, text) => {
@@ -1967,9 +1998,17 @@ async function saveEnvMemoToNotion(memo) {
     children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:heading}}] } });
     children.push({ object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:text}}] } });
   };
+  const addImage = (label, url) => {
+    if (!url) return;
+    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:label}}] } });
+    children.push({ object:'block', type:'image', image:{ type:'external', external:{ url } } });
+  };
   addSection('🌙 月足メモ', memo.monthly?.note);
+  addImage('🌙 月足チャート', monthlyUrl);
   addSection('📅 週足メモ', memo.weekly?.note);
+  addImage('📅 週足チャート', weeklyUrl);
   addSection('📆 日足メモ', memo.daily?.note);
+  addImage('📆 日足チャート', dailyUrl);
   addSection('🤖 AI分析結果', memo.aiResult);
 
   const props = {
@@ -1993,6 +2032,8 @@ async function saveJournalToNotion(entry) {
   const dbId  = localStorage.getItem('notionJnlDbId') || '';
   if (!token || !dbId) return null;
 
+  const chartUrl = await uploadImageToR2(entry.img, 'journal');
+
   const typeLabel = { win:'勝ち', loss:'負け', pass:'見送り成功', miss:'機会損失' };
   const title = `${entry.date} ${typeLabel[entry.type] || entry.type}`;
 
@@ -2006,6 +2047,10 @@ async function saveJournalToNotion(entry) {
   addSection('📊 トレード時の状況', entry.situation);
   addSection('🧠 心理状態', entry.psychoNote);
   addSection('📝 良かった点 / 反省点', entry.note);
+  if (chartUrl) {
+    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📈 チャート'}}] } });
+    children.push({ object:'block', type:'image', image:{ type:'external', external:{ url: chartUrl } } });
+  }
 
   const props = {
     '名前':        { title: [{ text: { content: title } }] },
