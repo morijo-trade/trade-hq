@@ -1350,7 +1350,14 @@ async function saveEnvMemo() {
   }));
   localStorage.setItem('envMemos', JSON.stringify(toSave));
 
-  const notionResult = await saveEnvMemoToNotion(memo).catch(e => ({ error: e.message }));
+  // 画像データを直接渡す（localStorageには保存しないがNotionには送る）
+  const memoWithImgs = {
+    ...memo,
+    monthly: { ...memo.monthly, img: envImgs.monthly },
+    weekly:  { ...memo.weekly,  img: envImgs.weekly },
+    daily:   { ...memo.daily,   img: envImgs.daily }
+  };
+  const notionResult = await saveEnvMemoToNotion(memoWithImgs).catch(e => ({ error: e.message }));
   if (notionResult?.error) {
     alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`);
   } else if (notionResult?.id) {
