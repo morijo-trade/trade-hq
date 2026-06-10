@@ -1972,36 +1972,17 @@ function closeQRModal() {
 }
 
 function generateQR(text, canvas) {
-  // QR生成ライブラリをCDNから読み込む
-  if (typeof QRCode !== 'undefined') {
-    renderQR(text, canvas);
-    return;
-  }
-  const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-  script.onload = () => renderQR(text, canvas);
-  script.onerror = () => {
-    // フォールバック: QR APIを使う
-    const img = document.createElement('img');
-    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
-    img.style.width = '200px';
-    img.style.height = '200px';
-    canvas.parentNode.replaceChild(img, canvas);
+  // QR生成: Google Charts APIを使用（最もシンプルで確実）
+  const wrap = canvas.parentNode;
+  const img = document.createElement('img');
+  img.src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(text)}&choe=UTF-8`;
+  img.style.cssText = 'width:200px;height:200px;display:block;';
+  img.alt = 'QRコード';
+  img.onerror = () => {
+    wrap.innerHTML = '<div style="width:200px;height:200px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;text-align:center;">QR生成失敗<br>URLをコピーしてください</div>';
   };
-  document.head.appendChild(script);
-}
-
-function renderQR(text, canvas) {
-  canvas.width = 200;
-  canvas.height = 200;
-  new QRCode(canvas, {
-    text,
-    width: 200,
-    height: 200,
-    colorDark: '#000000',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.M
-  });
+  wrap.innerHTML = '';
+  wrap.appendChild(img);
 }
 
 // ===== URL転送データの自動読み込み =====
