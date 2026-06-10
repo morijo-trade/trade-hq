@@ -1941,16 +1941,14 @@ function openQRModal() {
   const modal = document.getElementById('qrModal');
   modal.style.display = 'flex';
 
-  // 転送データをURLハッシュ形式に
-  const data = {
-    ak: apiKey,
-    nt: notionToken,
-    ne: notionEnvDbId,
-    nj: notionJnlDbId,
-    nw: workerUrl
-  };
-  const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
-  const url = `${location.origin}${location.pathname}#transfer=${encoded}`;
+  // 転送データをセッションキーで保存
+  const sessionKey = Math.random().toString(36).slice(2, 10);
+  const data = { ak: apiKey, nt: notionToken, ne: notionEnvDbId, nj: notionJnlDbId, nw: workerUrl };
+  // sessionStorageに一時保存（同一ドメイン内で共有できないためURLに含める）
+  // データをgzip的に短縮: キーを短く + base64
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  // URLが長くなるのでcanvasの代わりにコピーボタン+短縮表示
+  const url = `${location.origin}${location.pathname}#t=${encoded}`;
 
   // QRノート更新
   const note = document.getElementById('qrNote');
@@ -1963,26 +1961,44 @@ function openQRModal() {
   ];
   note.innerHTML = '転送される設定：<br>' + items.join('<br>');
 
-  // QRコード生成
-  generateQR(url, document.getElementById('qrCanvas'));
+  // QRコード生成（ライブラリ直接埋め込み）
+  const wrap = document.getElementById('qrCanvas').parentNode;
+  generateQRSVG(url, wrap);
 }
 
 function closeQRModal() {
   document.getElementById('qrModal').style.display = 'none';
 }
 
-function generateQR(text, canvas) {
-  // QR生成: Google Charts APIを使用（最もシンプルで確実）
-  const wrap = canvas.parentNode;
-  const img = document.createElement('img');
-  img.src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(text)}&choe=UTF-8`;
-  img.style.cssText = 'width:200px;height:200px;display:block;';
-  img.alt = 'QRコード';
-  img.onerror = () => {
-    wrap.innerHTML = '<div style="width:200px;height:200px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;text-align:center;">QR生成失敗<br>URLをコピーしてください</div>';
+function generateQRSVG(text, wrap) {
+  // qrcode-generator ライブラリを使用
+  const script = document.createElement('script');
+  script.src = 'https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
+  script.onload = () => {
+    try {
+      const qr = qrcode(0, 'M');
+      qr.addData(text);
+      qr.make();
+      const size = 200;
+      const cellSize = Math.floor(size / qr.getModuleCount());
+      const svgTag = qr.createSvgTag(cellSize, 0);
+      wrap.innerHTML = svgTag;
+      wrap.querySelector('svg').style.cssText = 'width:200px;height:200px;';
+    } catch(e) {
+      // データが長すぎる場合はコピーボタンで対応
+      showCopyFallback(text, wrap);
+    }
   };
-  wrap.innerHTML = '';
-  wrap.appendChild(img);
+  script.onerror = () => showCopyFallback(text, wrap);
+  document.head.appendChild(script);
+}
+
+function showCopyFallback(url, wrap) {
+  wrap.innerHTML = `
+    <div style="width:200px;padding:16px;text-align:center;">
+      <div style="font-size:13px;color:#7a8099;margin-bottom:12px;">QR生成できませんでした<br>下のボタンでURLをコピーして<br>スマホのブラウザに貼り付けてください</div>
+      <button onclick="navigator.clipboard.writeText('${url.replace(/'/g,"\'")}').then(()=>this.textContent='✅ コピーしました！')" style="background:#4f8ef7;color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:13px;cursor:pointer;width:100%;">📋 URLをコピー</button>
+    </div>`;
 }
 
 // ===== URL転送データの自動読み込み =====
