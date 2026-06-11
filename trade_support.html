@@ -15,7 +15,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);}
-
 .shell{display:flex;height:100vh;overflow:hidden;}
 .sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;}
 .logo{padding:18px 16px 12px;border-bottom:1px solid var(--border);}
@@ -28,39 +27,32 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
 .nav-date{padding:10px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);font-family:var(--mono);}
 .main{flex:1;overflow-y:auto;}
-
 .bottom-nav{display:none;}
-
 .page{display:none;padding:24px 28px;max-width:960px;}
 .page.active{display:block;}
 .page-title{font-size:20px;font-weight:700;margin-bottom:4px;}
 .page-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
-
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
 .card-title{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:12px;letter-spacing:.5px;text-transform:uppercase;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
-
 label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px;}
 input,select,textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;transition:border .15s;-webkit-appearance:none;}
 input:focus,select:focus,textarea:focus{border-color:var(--accent);}
 textarea{resize:vertical;min-height:80px;}
 select option{background:var(--bg3);}
-
 .btn{padding:9px 18px;border-radius:7px;border:none;cursor:pointer;font-size:13px;font-family:var(--font);font-weight:500;transition:all .15s;white-space:nowrap;}
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-sm{padding:7px 13px;font-size:12px;}
 .btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border);}
 .btn-teal{background:rgba(20,184,166,.15);color:var(--teal);border:1px solid rgba(20,184,166,.3);}
 .btn-tv{background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.3);}
-
 .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;}
 .badge-green{background:rgba(34,197,94,.15);color:var(--green);}
 .badge-red{background:rgba(239,68,68,.15);color:var(--red);}
 .badge-amber{background:rgba(245,158,11,.15);color:var(--amber);}
 .badge-blue{background:rgba(79,142,247,.15);color:var(--accent);}
 .badge-teal{background:rgba(20,184,166,.15);color:var(--teal);}
-
 .check-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
 .check-item:last-child{border-bottom:none;}
 .check-box{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
@@ -70,12 +62,10 @@ select option{background:var(--bg3);}
 .check-sub{font-size:11px;color:var(--muted);margin-top:3px;}
 .progress-bar{background:var(--bg3);border-radius:20px;height:6px;overflow:hidden;margin-top:12px;}
 .progress-fill{height:100%;border-radius:20px;background:var(--accent);transition:width .4s;}
-
 .calc-result{background:var(--bg3);border-radius:8px;padding:14px;margin-top:12px;}
 .calc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
 .calc-row:last-child{border-bottom:none;}
 .calc-val{font-family:var(--mono);font-size:14px;font-weight:600;}
-
 /* ===== 環境認識タイムフレームタブ ===== */
 .tf-tabs{display:flex;gap:0;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
 .tf-tab{flex:1;padding:9px;border:none;background:var(--bg3);color:var(--muted);font-size:12px;font-family:var(--font);font-weight:500;cursor:pointer;transition:all .15s;border-right:1px solid var(--border);}
@@ -88,7 +78,9 @@ select option{background:var(--bg3);}
 .tf-label.monthly{color:#a78bfa;background:rgba(167,139,250,.1);}
 .tf-label.weekly{color:var(--amber);background:rgba(245,158,11,.1);}
 .tf-label.daily{color:var(--teal);background:rgba(20,184,166,.1);}
-
+/* ===== 引き継ぎバナー ===== */
+.autofill-banner{display:flex;align-items:center;gap:8px;padding:7px 12px;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.25);border-radius:7px;margin-bottom:12px;font-size:12px;color:var(--accent);}
+.autofill-banner.weekly{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:var(--amber);}
 /* ===== ジャーナル ===== */
 .journal-entry{background:var(--bg3);border-radius:8px;padding:14px;margin-bottom:10px;border-left:3px solid transparent;}
 .journal-entry.win{border-left-color:var(--green);}
@@ -101,17 +93,13 @@ select option{background:var(--bg3);}
 .entry-meta{font-size:11px;color:var(--muted);margin-top:6px;display:flex;flex-wrap:wrap;gap:8px;}
 .entry-meta span{background:var(--bg4);padding:2px 8px;border-radius:4px;}
 .entry-img{width:100%;max-height:220px;object-fit:cover;border-radius:6px;margin-top:10px;cursor:pointer;}
-
-/* ===== pips入力グループ ===== */
 .pnl-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .pnl-group .input-unit{position:relative;}
 .pnl-group .input-unit input{padding-right:44px;}
 .pnl-group .unit-label{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);font-family:var(--mono);pointer-events:none;}
-
 .stat-card{background:var(--bg3);border-radius:8px;padding:14px;text-align:center;}
 .stat-num{font-size:26px;font-weight:700;font-family:var(--mono);}
 .stat-label{font-size:11px;color:var(--muted);margin-top:4px;}
-
 .chat-area{background:var(--bg3);border-radius:8px;padding:14px;min-height:260px;max-height:380px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:10px;}
 .chat-msg{max-width:85%;}
 .chat-msg.user{align-self:flex-end;}
@@ -126,18 +114,15 @@ select option{background:var(--bg3);}
 .dot:nth-child(2){animation-delay:.2s;}
 .dot:nth-child(3){animation-delay:.4s;}
 @keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
-
 .env-tag{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:none;color:var(--muted);font-size:13px;font-family:var(--font);cursor:pointer;transition:all .15s;}
 .env-tag.selected-long{border-color:var(--green);color:var(--green);background:rgba(34,197,94,.08);}
 .env-tag.selected-short{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08);}
 .env-tag.selected-range{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.08);}
 .env-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 .ai-summary{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(124,58,237,.08));border:1px solid rgba(79,142,247,.25);border-radius:8px;padding:14px;font-size:13px;line-height:1.8;color:var(--text);}
-
 .tv-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
 .tv-toolbar select,.tv-toolbar input{width:auto;padding:6px 10px;font-size:13px;}
 .tv-toolbar input{width:120px;}
-
 .upload-zone{border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;position:relative;}
 .upload-zone:hover{border-color:var(--accent);background:rgba(79,142,247,.04);}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -147,32 +132,18 @@ select option{background:var(--bg3);}
 .img-wrap.has-img{display:block;}
 .img-clear-btn{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.7);border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:10;}
 .img-clear-btn:hover{background:var(--red);}
-
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;}
 .lightbox.open{display:flex;}
 .lightbox img{max-width:94vw;max-height:88vh;border-radius:8px;object-fit:contain;}
 .lightbox-close{position:fixed;top:16px;right:18px;font-size:30px;color:#fff;cursor:pointer;line-height:1;z-index:10000;}
-
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-
-/* ===== モバイル ===== */
 @media(max-width:640px){
   .shell{flex-direction:column;height:100dvh;}
   .sidebar{display:none;}
-  .bottom-nav{
-    display:flex;position:fixed;bottom:0;left:0;right:0;
-    background:var(--bg2);border-top:1px solid var(--border);
-    z-index:100;padding-bottom:env(safe-area-inset-bottom);
-    height:calc(56px + env(safe-area-inset-bottom));
-  }
-  .bnav-btn{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:6px 2px;border:none;background:none;color:var(--muted);
-    font-size:9px;font-family:var(--font);cursor:pointer;gap:2px;transition:color .15s;
-    min-width:0;
-  }
+  .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:100;padding-bottom:env(safe-area-inset-bottom);height:calc(56px + env(safe-area-inset-bottom));}
+  .bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 2px;border:none;background:none;color:var(--muted);font-size:9px;font-family:var(--font);cursor:pointer;gap:2px;transition:color .15s;min-width:0;}
   .bnav-btn.active{color:var(--accent);}
   .bnav-icon{font-size:18px;line-height:1;}
   .main{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(60px + env(safe-area-inset-bottom));}
@@ -217,7 +188,6 @@ select option{background:var(--bg3);}
   .entry-img{max-height:180px;}
   textarea{min-height:90px;}
 }
-
 /* ===== 環境認識 日付・履歴 ===== */
 .env-date-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 .env-date-bar select,.env-date-bar input{width:auto;font-size:14px;padding:7px 10px;}
@@ -240,7 +210,6 @@ select option{background:var(--bg3);}
   .env-imgs-grid{grid-template-columns:1fr 1fr;}
   .env-date-bar select,.env-date-bar input{font-size:16px !important;}
 }
-
 /* ===== 環境認識ログ 一覧 ===== */
 .month-group{margin-bottom:28px;}
 .month-group-label{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
@@ -286,7 +255,6 @@ select option{background:var(--bg3);}
   .hist-meta-grid{grid-template-columns:1fr;}
   .hist-card-header{padding:10px 12px;}
 }
-
 /* ===== APIキー設定モーダル ===== */
 .apikey-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .apikey-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:440px;width:100%;}
@@ -297,7 +265,6 @@ select option{background:var(--bg3);}
 .apikey-box input::placeholder{color:var(--muted);font-size:12px;}
 .apikey-actions{display:flex;gap:10px;margin-top:6px;}
 .apikey-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6;padding:10px;background:var(--bg3);border-radius:6px;}
-
 /* ===== QR転送モーダル ===== */
 .qr-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .qr-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:380px;width:100%;text-align:center;}
@@ -305,7 +272,6 @@ select option{background:var(--bg3);}
 .qr-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
 .qr-canvas-wrap{background:#fff;border-radius:10px;padding:16px;display:inline-block;margin-bottom:16px;}
 .qr-note{font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:var(--bg3);border-radius:6px;text-align:left;}
-
 /* ===== Notion設定モーダル ===== */
 .notion-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .notion-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;}
@@ -321,23 +287,16 @@ select option{background:var(--bg3);}
 </style>
 </head>
 <body>
-
 <!-- QR転送モーダル -->
 <div class="qr-modal" id="qrModal" style="display:none;">
   <div class="qr-box">
     <h2>📱 スマホに設定を転送</h2>
     <p>このQRコードをスマホのカメラで読み取ると、APIキー・Notion設定がそのまま引き継がれます。</p>
-    <div class="qr-canvas-wrap">
-      <canvas id="qrCanvas" width="200" height="200"></canvas>
-    </div>
+    <div class="qr-canvas-wrap"><canvas id="qrCanvas" width="200" height="200"></canvas></div>
     <div class="qr-note" id="qrNote">設定を読み込み中...</div>
     <div style="margin-top:12px;">
       <button class="btn btn-primary" style="width:100%;margin-bottom:8px;" onclick="copyBookmarkUrl()">📎 ホーム画面用URLをコピー</button>
-      <div id="bookmarkNote" style="display:none;font-size:11px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:8px 10px;color:#22c55e;line-height:1.6;margin-bottom:8px;">
-        ✅ コピーしました！<br>
-        Safariで新しいタブを開き、このURLを貼り付けて開く<br>
-        → 下の「共有」→「ホーム画面に追加」で完了
-      </div>
+      <div id="bookmarkNote" style="display:none;font-size:11px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:8px 10px;color:#22c55e;line-height:1.6;margin-bottom:8px;">✅ コピーしました！<br>Safariで新しいタブを開き、このURLを貼り付けて開く<br>→ 下の「共有」→「ホーム画面に追加」で完了</div>
       <button class="btn btn-ghost" style="width:100%;" onclick="closeQRModal()">閉じる</button>
     </div>
   </div>
@@ -366,11 +325,7 @@ select option{background:var(--bg3);}
       <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;">⚠️ 初回のみ実行。Notionに必要なプロパティを自動で追加します。</div>
     </div>
     <div class="notion-status" id="notionStatus"></div>
-    <div style="font-size:11px;color:var(--muted);margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;line-height:1.7;">
-      🔒 設定はブラウザのlocalStorageに保存されます<br>
-      📋 トークン取得: <span style="color:var(--accent);">app.notion.com/developers/tokens</span><br>
-      ☁️ WorkerURL: Cloudflareデプロイ後に入力
-    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;line-height:1.7;">🔒 設定はブラウザのlocalStorageに保存されます<br>📋 トークン取得: <span style="color:var(--accent);">app.notion.com/developers/tokens</span><br>☁️ WorkerURL: Cloudflareデプロイ後に入力</div>
   </div>
 </div>
 
@@ -384,10 +339,7 @@ select option{background:var(--bg3);}
       <button class="btn btn-primary" style="flex:1;" onclick="saveApiKey()">💾 保存して使う</button>
       <button class="btn btn-ghost" onclick="closeApiKeyModal()">あとで</button>
     </div>
-    <div class="apikey-note">
-      🔒 キーはブラウザのlocalStorageに保存されます。ファイルには書き込まれません。<br>
-      📋 取得先: <span style="color:var(--accent);">console.anthropic.com</span> → APIキー
-    </div>
+    <div class="apikey-note">🔒 キーはブラウザのlocalStorageに保存されます。ファイルには書き込まれません。<br>📋 取得先: <span style="color:var(--accent);">console.anthropic.com</span> → APIキー</div>
   </div>
 </div>
 
@@ -397,12 +349,8 @@ select option{background:var(--bg3);}
 </div>
 
 <div class="shell">
-  <!-- PC サイドバー -->
   <div class="sidebar">
-    <div class="logo">
-      <h1>TRADE HQ</h1>
-      <p>トレードサポートツール</p>
-    </div>
+    <div class="logo"><h1>TRADE HQ</h1><p>トレードサポートツール</p></div>
     <nav>
       <button class="nav-btn active" onclick="showPage('env',this)"><span class="nav-icon">📋</span> 環境認識メモ</button>
       <button class="nav-btn" onclick="showPage('check',this)"><span class="nav-icon">✅</span> エントリーチェック</button>
@@ -419,87 +367,42 @@ select option{background:var(--bg3);}
     <div class="nav-date" id="sideDate"></div>
   </div>
 
-  <!-- メインコンテンツ -->
   <div class="main">
-
     <!-- ===== 環境認識 ===== -->
     <div class="page active" id="page-env">
       <div class="page-title">環境認識メモ</div>
       <div class="page-sub">月足→週足→日足で相場を整理してAIにバイアス分析してもらう</div>
-
-      <!-- 日付・週番号バー -->
       <div class="card" style="padding:12px 14px;">
         <div class="card-title" style="margin-bottom:10px;">📅 記録日付</div>
         <div class="env-date-bar">
-          <div>
-            <label style="font-size:11px;">年</label>
-            <select id="envYear"></select>
-          </div>
-          <div>
-            <label style="font-size:11px;">月</label>
-            <select id="envMonth">
-              <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
-              <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
-              <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
-              <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:11px;">週</label>
-            <select id="envWeek">
-              <option value="1">第1週</option><option value="2">第2週</option><option value="3">第3週</option>
-              <option value="4">第4週</option><option value="5">第5週</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:11px;">日</label>
-            <select id="envDay">
-              <option value="月">月曜</option><option value="火">火曜</option><option value="水">水曜</option>
-              <option value="木">木曜</option><option value="金">金曜</option>
-            </select>
-          </div>
+          <div><label style="font-size:11px;">年</label><select id="envYear"></select></div>
+          <div><label style="font-size:11px;">月</label><select id="envMonth"><option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option><option value="5">5月</option><option value="6">6月</option><option value="7">7月</option><option value="8">8月</option><option value="9">9月</option><option value="10">10月</option><option value="11">11月</option><option value="12">12月</option></select></div>
+          <div><label style="font-size:11px;">週</label><select id="envWeek"><option value="1">第1週</option><option value="2">第2週</option><option value="3">第3週</option><option value="4">第4週</option><option value="5">第5週</option></select></div>
+          <div><label style="font-size:11px;">日</label><select id="envDay"><option value="月">月曜</option><option value="火">火曜</option><option value="水">水曜</option><option value="木">木曜</option><option value="金">金曜</option></select></div>
         </div>
         <div style="font-size:12px;color:var(--muted);margin-top:6px;" id="envDateLabel"></div>
       </div>
-
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="tv-toolbar">
           <span style="font-size:11px;color:var(--muted);font-weight:500;">TradingView</span>
           <input id="tvSymbolEnv" type="text" placeholder="" autocapitalize="characters" autocorrect="off" spellcheck="false">
-          <select id="tvIntervalEnv">
-            <option value="M">月足</option>
-            <option value="W">週足</option>
-            <option value="D" selected>日足</option>
-            <option value="240">4H</option>
-            <option value="60">1H</option>
-            <option value="15">15m</option>
-          </select>
+          <select id="tvIntervalEnv"><option value="M">月足</option><option value="W">週足</option><option value="D" selected>日足</option><option value="240">4H</option><option value="60">1H</option><option value="15">15m</option></select>
           <button class="btn btn-sm btn-ghost" onclick="loadTVWidget('env')">表示</button>
           <button class="btn btn-sm btn-teal" onclick="toggleTVWidget('env')">開閉</button>
           <button class="btn btn-sm btn-tv" onclick="openTVTab('env')">↗ TV</button>
         </div>
-        <div id="tvWrap-env" style="display:none;">
-          <div id="tv-widget-env" style="height:400px;"></div>
-        </div>
+        <div id="tvWrap-env" style="display:none;"><div id="tv-widget-env" style="height:400px;"></div></div>
       </div>
-
-      <!-- 月足・週足・日足 タブ -->
       <div class="card">
         <div class="card-title">タイムフレーム別 環境認識</div>
         <div class="tf-tabs">
-          <button class="tf-tab active" onclick="switchTF('monthly',this)">
-            <span class="tf-icon">🌙</span>月足
-          </button>
-          <button class="tf-tab" onclick="switchTF('weekly',this)">
-            <span class="tf-icon">📅</span>週足
-          </button>
-          <button class="tf-tab" onclick="switchTF('daily',this)">
-            <span class="tf-icon">📆</span>日足
-          </button>
+          <button class="tf-tab active" onclick="switchTF('monthly',this)"><span class="tf-icon">🌙</span>月足</button>
+          <button class="tf-tab" onclick="switchTF('weekly',this)"><span class="tf-icon">📅</span>週足</button>
+          <button class="tf-tab" onclick="switchTF('daily',this)"><span class="tf-icon">📆</span>日足</button>
         </div>
-
         <!-- 月足パネル -->
         <div class="tf-panel active" id="tf-monthly">
+          <div id="autofill-banner-monthly"></div>
           <div class="tf-label monthly">🌙 月足</div>
           <div class="env-row" id="dirRow-monthly">
             <button class="env-tag" onclick="selectDirTF(this,'long','monthly')">↑ ロング優位</button>
@@ -507,45 +410,15 @@ select option{background:var(--bg3);}
             <button class="env-tag" onclick="selectDirTF(this,'range','monthly')">↔ レンジ</button>
           </div>
           <div class="grid2" style="margin-bottom:10px;">
-            <div>
-              <label>直近月足の形</label>
-              <select id="prevCandle-monthly">
-                <option value="">選択...</option>
-                <optgroup label="── トレンド継続 ──">
-                <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
-                </optgroup>
-                <optgroup label="── 反転・調整サイン ──">
-                <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
-                <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
-                <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
-                </optgroup>
-                <optgroup label="── レンジ・迷い ──">
-                <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
-                <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
-                <option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option>
-                <option>十字線（ドージ）</option>
-                </optgroup>
-              </select>
-            </div>
-            <div>
-              <label>トレンド / レンジ</label>
-              <select id="marketState-monthly">
-                <option value="">選択...</option>
-                <option>トレンド継続</option><option>レンジ中</option>
-                <option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option>
-              </select>
-            </div>
+            <div><label>直近月足の形</label><select id="prevCandle-monthly"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
+            <div><label>トレンド / レンジ</label><select id="marketState-monthly"><option value="">選択...</option><option>トレンド継続</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
           </div>
-          <div style="margin-bottom:8px;">
-            <label>月足の主要節目・意識ライン</label>
-            <input id="keyLevel-monthly" type="text" placeholder="例: 3000, 3200（心理的節目）">
-          </div>
-          <label>月足メモ</label>
-          <textarea id="envNote-monthly" placeholder="月足で見えるトレンド・大局観など"></textarea>
+          <div style="margin-bottom:8px;"><label>月足の主要節目・意識ライン</label><input id="keyLevel-monthly" type="text" placeholder="例: 3000, 3200（心理的節目）"></div>
+          <label>月足メモ</label><textarea id="envNote-monthly" placeholder="月足で見えるトレンド・大局観など"></textarea>
         </div>
-
         <!-- 週足パネル -->
         <div class="tf-panel" id="tf-weekly">
+          <div id="autofill-banner-weekly"></div>
           <div class="tf-label weekly">📅 週足</div>
           <div class="env-row" id="dirRow-weekly">
             <button class="env-tag" onclick="selectDirTF(this,'long','weekly')">↑ ロング優位</button>
@@ -553,43 +426,12 @@ select option{background:var(--bg3);}
             <button class="env-tag" onclick="selectDirTF(this,'range','weekly')">↔ レンジ</button>
           </div>
           <div class="grid2" style="margin-bottom:10px;">
-            <div>
-              <label>直近週足の形</label>
-              <select id="prevCandle-weekly">
-                <option value="">選択...</option>
-                <optgroup label="── トレンド継続 ──">
-                <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
-                </optgroup>
-                <optgroup label="── 反転・調整サイン ──">
-                <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
-                <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
-                <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
-                </optgroup>
-                <optgroup label="── レンジ・迷い ──">
-                <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
-                <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
-                <option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option>
-                <option>十字線（ドージ）</option>
-                </optgroup>
-              </select>
-            </div>
-            <div>
-              <label>トレンド / レンジ</label>
-              <select id="marketState-weekly">
-                <option value="">選択...</option>
-                <option>トレンド継続</option><option>レンジ中</option>
-                <option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option>
-              </select>
-            </div>
+            <div><label>直近週足の形</label><select id="prevCandle-weekly"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
+            <div><label>トレンド / レンジ</label><select id="marketState-weekly"><option value="">選択...</option><option>トレンド継続</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
           </div>
-          <div style="margin-bottom:8px;">
-            <label>週足の主要節目・意識ライン</label>
-            <input id="keyLevel-weekly" type="text" placeholder="例: 3280（先週安値）, 3320（先々週高値）">
-          </div>
-          <label>週足メモ</label>
-          <textarea id="envNote-weekly" placeholder="週足で見えるトレンド・節目・週ボラ残余など"></textarea>
+          <div style="margin-bottom:8px;"><label>週足の主要節目・意識ライン</label><input id="keyLevel-weekly" type="text" placeholder="例: 3280（先週安値）, 3320（先々週高値）"></div>
+          <label>週足メモ</label><textarea id="envNote-weekly" placeholder="週足で見えるトレンド・節目・週ボラ残余など"></textarea>
         </div>
-
         <!-- 日足パネル -->
         <div class="tf-panel" id="tf-daily">
           <div class="tf-label daily">📆 日足</div>
@@ -599,81 +441,37 @@ select option{background:var(--bg3);}
             <button class="env-tag" onclick="selectDirTF(this,'range','daily')">↔ レンジ</button>
           </div>
           <div class="grid2" style="margin-bottom:10px;">
-            <div>
-              <label>前日足の形</label>
-              <select id="prevCandle-daily">
-                <option value="">選択...</option>
-                <optgroup label="── トレンド継続 ──">
-                <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
-                </optgroup>
-                <optgroup label="── 反転・調整サイン ──">
-                <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
-                <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
-                <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
-                </optgroup>
-                <optgroup label="── レンジ・迷い ──">
-                <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
-                <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
-                <option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option>
-                <option>十字線（ドージ）</option>
-                </optgroup>
-              </select>
-            </div>
-            <div>
-              <label>トレンド / レンジ</label>
-              <select id="marketState-daily">
-                <option value="">選択...</option>
-                <option>トレンド継続</option><option>レンジ中</option>
-                <option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option>
-              </select>
-            </div>
+            <div><label>前日足の形</label><select id="prevCandle-daily"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
+            <div><label>トレンド / レンジ</label><select id="marketState-daily"><option value="">選択...</option><option>トレンド継続</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
           </div>
           <div class="grid3" style="margin-bottom:10px;">
             <div><label>アジア高値</label><input id="asiaH" type="number" placeholder="例: 3310.5"></div>
             <div><label>アジア安値</label><input id="asiaL" type="number" placeholder="例: 3295.0"></div>
             <div><label>キリ番・節目</label><input id="keyLevel" type="text" placeholder="例: 3300"></div>
           </div>
-          <label>日足メモ</label>
-          <textarea id="envNote-daily" placeholder="ヘッドラインレート・アジア高安・当日バイアスなど"></textarea>
+          <label>日足メモ</label><textarea id="envNote-daily" placeholder="ヘッドラインレート・アジア高安・当日バイアスなど"></textarea>
         </div>
       </div>
-
       <!-- スクショ -->
       <div class="card">
         <div class="card-title">📷 チャートスクショ</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">画像を貼り付け(Ctrl+V / 長押しペースト) またはタップして添付</div>
         <div style="margin-bottom:12px;">
           <div class="tf-label monthly" style="margin-bottom:6px;">🌙 月足チャート</div>
-          <div class="paste-zone" id="pasteZone-monthly" tabindex="0">
-            <input type="file" id="fileEnv-monthly" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-monthly')">
-            <div style="font-size:18px;">📋</div>
-            <p>クリックして選択 → Ctrl+V で貼り付け</p>
-            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
-          </div>
+          <div class="paste-zone" id="pasteZone-monthly" tabindex="0"><input type="file" id="fileEnv-monthly" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-monthly')"><div style="font-size:18px;">📋</div><p>クリックして選択 → Ctrl+V で貼り付け</p><span class="paste-hint">またはタップしてファイル選択 / ドラッグ&amp;ドロップ</span></div>
           <div class="img-wrap" id="imgWrap-monthly"><button class="img-clear-btn" onclick="clearPreview('monthly')" title="削除">✕</button><img id="envPreview-monthly" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
         <div style="margin-bottom:12px;">
           <div class="tf-label weekly" style="margin-bottom:6px;">📅 週足チャート</div>
-          <div class="paste-zone" id="pasteZone-weekly" tabindex="0">
-            <input type="file" id="fileEnv-weekly" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-weekly')">
-            <div style="font-size:18px;">📋</div>
-            <p>クリックして選択 → Ctrl+V で貼り付け</p>
-            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
-          </div>
+          <div class="paste-zone" id="pasteZone-weekly" tabindex="0"><input type="file" id="fileEnv-weekly" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-weekly')"><div style="font-size:18px;">📋</div><p>クリックして選択 → Ctrl+V で貼り付け</p><span class="paste-hint">またはタップしてファイル選択 / ドラッグ&amp;ドロップ</span></div>
           <div class="img-wrap" id="imgWrap-weekly"><button class="img-clear-btn" onclick="clearPreview('weekly')" title="削除">✕</button><img id="envPreview-weekly" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
         <div>
           <div class="tf-label daily" style="margin-bottom:6px;">📆 日足チャート</div>
-          <div class="paste-zone" id="pasteZone-daily" tabindex="0">
-            <input type="file" id="fileEnv-daily" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-daily')">
-            <div style="font-size:18px;">📋</div>
-            <p>クリックして選択 → Ctrl+V で貼り付け</p>
-            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
-          </div>
+          <div class="paste-zone" id="pasteZone-daily" tabindex="0"><input type="file" id="fileEnv-daily" accept="image/*" style="display:none" onchange="handleUpload(event,'envPreview-daily')"><div style="font-size:18px;">📋</div><p>クリックして選択 → Ctrl+V で貼り付け</p><span class="paste-hint">またはタップしてファイル選択 / ドラッグ&amp;ドロップ</span></div>
           <div class="img-wrap" id="imgWrap-daily"><button class="img-clear-btn" onclick="clearPreview('daily')" title="削除">✕</button><img id="envPreview-daily" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
       </div>
-
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
         <button class="btn btn-primary" onclick="analyzeEnv()">🤖 AIに分析してもらう</button>
         <button class="btn btn-primary" style="background:var(--green);" onclick="saveEnvMemo()">💾 保存して記録</button>
@@ -682,25 +480,12 @@ select option{background:var(--bg3);}
         <div class="card-title" style="margin-bottom:8px;">AI 分析結果</div>
         <div class="ai-summary" id="envResultText"></div>
       </div>
-
-      <!-- 履歴一覧 -->
       <div style="border-top:2px solid var(--border);margin-top:8px;padding-top:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
-          <div>
-            <div class="page-title" style="font-size:17px;">🗂 環境認識ログ</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:2px;">保存した記録の一覧 — 月ごとにまとめて表示</div>
-          </div>
+          <div><div class="page-title" style="font-size:17px;">🗂 環境認識ログ</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">保存した記録の一覧 — 月ごとにまとめて表示</div></div>
           <div style="display:flex;gap:8px;align-items:center;">
-            <select id="histFilterYear" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;">
-              <option value="">全年</option>
-            </select>
-            <select id="histFilterMonth" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;">
-              <option value="">全月</option>
-              <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
-              <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
-              <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
-              <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
-            </select>
+            <select id="histFilterYear" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;"><option value="">全年</option></select>
+            <select id="histFilterMonth" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;"><option value="">全月</option><option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option><option value="5">5月</option><option value="6">6月</option><option value="7">7月</option><option value="8">8月</option><option value="9">9月</option><option value="10">10月</option><option value="11">11月</option><option value="12">12月</option></select>
           </div>
         </div>
         <div id="envHistoryList"></div>
@@ -717,10 +502,7 @@ select option{background:var(--bg3);}
       <div class="card"><div class="card-title">④ リスク管理</div><div id="checks-risk"></div></div>
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <div style="font-size:15px;font-weight:500;" id="checkSummary">0 / 12 完了</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:3px;" id="checkJudge">チェックを進めてください</div>
-          </div>
+          <div><div style="font-size:15px;font-weight:500;" id="checkSummary">0 / 12 完了</div><div style="font-size:12px;color:var(--muted);margin-top:3px;" id="checkJudge">チェックを進めてください</div></div>
           <button class="btn btn-ghost btn-sm" onclick="resetChecks()">リセット</button>
         </div>
         <div class="progress-bar"><div class="progress-fill" id="checkProgress" style="width:0%"></div></div>
@@ -731,125 +513,44 @@ select option{background:var(--bg3);}
     <div class="page" id="page-atr">
       <div class="page-title">ATR・ポジション計算機</div>
       <div class="page-sub">海外口座（1ロット = 100oz）でのロット計算　※国内100枚 = 海外1ロット相当</div>
-      <div class="card">
-        <div class="card-title">市場・ボラティリティ</div>
-        <div class="grid2">
-          <div><label>ATR（日足5期間）</label><input id="atrVal" type="number" placeholder="例: 28.5" oninput="calcATR()"></div>
-          <div><label>アジア消費値幅</label><input id="asiaRange" type="number" placeholder="例: 12.0" oninput="calcATR()"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">口座・リスク設定</div>
-        <div class="grid2">
-          <div><label>口座残高（USD）</label><input id="balance" type="number" placeholder="例: 5000" oninput="calcATR()"></div>
-          <div><label>許容損失（%）</label><input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">トレード設定</div>
-        <div class="grid2">
-          <div><label>損切り幅（ドル / oz）</label><input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()"></div>
-          <div>
-            <label>RR比率</label>
-            <select id="rrRatio" onchange="calcATR()">
-              <option value="1.5">1:1.5</option>
-              <option value="2" selected>1:2</option>
-              <option value="2.5">1:2.5</option>
-              <option value="3">1:3</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      <div class="card"><div class="card-title">市場・ボラティリティ</div><div class="grid2"><div><label>ATR（日足5期間）</label><input id="atrVal" type="number" placeholder="例: 28.5" oninput="calcATR()"></div><div><label>アジア消費値幅</label><input id="asiaRange" type="number" placeholder="例: 12.0" oninput="calcATR()"></div></div></div>
+      <div class="card"><div class="card-title">口座・リスク設定</div><div class="grid2"><div><label>口座残高（USD）</label><input id="balance" type="number" placeholder="例: 5000" oninput="calcATR()"></div><div><label>許容損失（%）</label><input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()"></div></div></div>
+      <div class="card"><div class="card-title">トレード設定</div><div class="grid2"><div><label>損切り幅（ドル / oz）</label><input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()"></div><div><label>RR比率</label><select id="rrRatio" onchange="calcATR()"><option value="1.5">1:1.5</option><option value="2" selected>1:2</option><option value="2.5">1:2.5</option><option value="3">1:3</option></select></div></div></div>
       <div class="calc-result" id="atrResult" style="display:none;">
         <div class="card-title" style="margin-bottom:10px;">計算結果</div>
         <div class="calc-row"><span>ATR残余力</span><span class="calc-val" id="r_remain" style="color:var(--teal)">-</span></div>
         <div class="calc-row"><span>利確目標（RR基準）</span><span class="calc-val" id="r_tp" style="color:var(--green)">-</span></div>
         <div class="calc-row"><span>許容損失額（USD）</span><span class="calc-val" id="r_riskAmt" style="color:var(--red)">-</span></div>
-        <div class="calc-row">
-          <div>
-            <div>推奨ロット（海外口座）</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px;">1ロット = 100oz　※国内換算も表示</div>
-          </div>
-          <div style="text-align:right;">
-            <div class="calc-val" id="r_lot" style="color:var(--accent)">-</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="r_lot_domestic">-</div>
-          </div>
-        </div>
+        <div class="calc-row"><div><div>推奨ロット（海外口座）</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">1ロット = 100oz　※国内換算も表示</div></div><div style="text-align:right;"><div class="calc-val" id="r_lot" style="color:var(--accent)">-</div><div style="font-size:11px;color:var(--muted);margin-top:2px;" id="r_lot_domestic">-</div></div></div>
         <div class="calc-row"><span>リスク金額（損切り時）</span><span class="calc-val" id="r_actual_risk" style="color:var(--amber)">-</span></div>
         <div class="calc-row"><span>判定</span><span id="r_judge">-</span></div>
       </div>
-      <div class="card" style="margin-top:4px;padding:12px 16px;">
-        <div class="card-title">換算メモ</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.9;">
-          🌍 海外口座: 1ロット = 100oz（Gold 100オンス）<br>
-          🇯🇵 国内口座: 1枚 = 1oz → 国内100枚 = 海外1ロット<br>
-          💰 損益計算: ロット × 100 × 値幅($/oz) = 損益(USD)
-        </div>
-      </div>
+      <div class="card" style="margin-top:4px;padding:12px 16px;"><div class="card-title">換算メモ</div><div style="font-size:12px;color:var(--muted);line-height:1.9;">🌍 海外口座: 1ロット = 100oz（Gold 100オンス）<br>🇯🇵 国内口座: 1枚 = 1oz → 国内100枚 = 海外1ロット<br>💰 損益計算: ロット × 100 × 値幅($/oz) = 損益(USD)</div></div>
     </div>
 
     <!-- ===== 振り返りノート ===== -->
     <div class="page" id="page-journal">
       <div class="page-title">振り返りノート</div>
       <div class="page-sub">勝ち・負け・見送り成功・機会損失を記録する</div>
-
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="tv-toolbar">
           <span style="font-size:11px;color:var(--muted);font-weight:500;">TradingView</span>
           <input id="tvSymbolJnl" type="text" placeholder="" autocapitalize="characters" autocorrect="off" spellcheck="false">
-          <select id="tvIntervalJnl">
-            <option value="D">日足</option>
-            <option value="60">1H</option>
-            <option value="15">15m</option>
-            <option value="5">5m</option>
-            <option value="1">1m</option>
-          </select>
+          <select id="tvIntervalJnl"><option value="D">日足</option><option value="60">1H</option><option value="15">15m</option><option value="5">5m</option><option value="1">1m</option></select>
           <button class="btn btn-sm btn-ghost" onclick="loadTVWidget('jnl')">表示</button>
           <button class="btn btn-sm btn-teal" onclick="toggleTVWidget('jnl')">開閉</button>
           <button class="btn btn-sm btn-tv" onclick="openTVTab('jnl')">↗ TV</button>
         </div>
-        <div id="tvWrap-jnl" style="display:none;">
-          <div id="tv-widget-jnl" style="height:400px;"></div>
-        </div>
+        <div id="tvWrap-jnl" style="display:none;"><div id="tv-widget-jnl" style="height:400px;"></div></div>
       </div>
-
       <div class="card">
         <div class="card-title">新規記録</div>
         <div class="grid2" style="margin-bottom:12px;">
-          <div>
-            <label>結果タイプ</label>
-            <select id="jType">
-              <option value="win">✅ 勝ち</option>
-              <option value="loss">❌ 負け</option>
-              <option value="pass">⭕ 見送り成功</option>
-              <option value="miss">⚠️ 機会損失</option>
-            </select>
-          </div>
-          <div>
-            <label>損切り幅（pips / oz）</label>
-            <div class="input-unit" style="position:relative;">
-              <input id="jSlPips" type="number" placeholder="例: 8.0" style="padding-right:44px;">
-              <span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span>
-            </div>
-          </div>
+          <div><label>結果タイプ</label><select id="jType"><option value="win">✅ 勝ち</option><option value="loss">❌ 負け</option><option value="pass">⭕ 見送り成功</option><option value="miss">⚠️ 機会損失</option></select></div>
+          <div><label>損切り幅（pips / oz）</label><div class="input-unit" style="position:relative;"><input id="jSlPips" type="number" placeholder="例: 8.0" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span></div></div>
         </div>
-        <div style="margin-bottom:12px;">
-          <label>損益</label>
-          <div class="pnl-group">
-            <div class="input-unit" style="position:relative;">
-              <input id="jPnlUsd" type="number" placeholder="+500 / -200" style="padding-right:44px;">
-              <span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">USD</span>
-            </div>
-            <div class="input-unit" style="position:relative;">
-              <input id="jPnlPips" type="number" placeholder="+15.0 / -8.0" style="padding-right:44px;">
-              <span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span>
-            </div>
-          </div>
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>セットアップ・環境</label>
-          <input id="jSetup" type="text" placeholder="日足スラスト陽線、アジア安値でピンバー確認後ロング">
-        </div>
+        <div style="margin-bottom:12px;"><label>損益</label><div class="pnl-group"><div class="input-unit" style="position:relative;"><input id="jPnlUsd" type="number" placeholder="+500 / -200" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">USD</span></div><div class="input-unit" style="position:relative;"><input id="jPnlPips" type="number" placeholder="+15.0 / -8.0" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span></div></div></div>
+        <div style="margin-bottom:12px;"><label>セットアップ・環境</label><input id="jSetup" type="text" placeholder="日足スラスト陽線、アジア安値でピンバー確認後ロング"></div>
         <div style="margin-bottom:12px;">
           <label>トレード時の状況</label>
           <div class="grid2" style="margin-bottom:8px;">
@@ -872,18 +573,10 @@ select option{background:var(--bg3);}
           </div>
           <textarea id="jPsycho" placeholder="エントリー時は冷静だったが、含み損が出た瞬間に焦りが生じた。損切りラインは守れた。"></textarea>
         </div>
-        <div style="margin-bottom:14px;">
-          <label>良かった点 / 反省点</label>
-          <textarea id="jNote" placeholder="根拠明確だったが利確を引っ張りすぎた。次回は節目利確を徹底する。"></textarea>
-        </div>
+        <div style="margin-bottom:14px;"><label>良かった点 / 反省点</label><textarea id="jNote" placeholder="根拠明確だったが利確を引っ張りすぎた。次回は節目利確を徹底する。"></textarea></div>
         <div style="margin-bottom:14px;">
           <label>チャートスクショ（任意）</label>
-          <div class="paste-zone" id="pasteZone-jnl" tabindex="0">
-            <input type="file" id="fileJnl" accept="image/*" style="display:none" onchange="handleUpload(event,'jnlPreview')">
-            <div style="font-size:18px;">📋</div>
-            <p>クリックして選択 → Ctrl+V で貼り付け</p>
-            <span class="paste-hint">またはタップしてファイル選択 / ドラッグ&ドロップ</span>
-          </div>
+          <div class="paste-zone" id="pasteZone-jnl" tabindex="0"><input type="file" id="fileJnl" accept="image/*" style="display:none" onchange="handleUpload(event,'jnlPreview')"><div style="font-size:18px;">📋</div><p>クリックして選択 → Ctrl+V で貼り付け</p><span class="paste-hint">またはタップしてファイル選択 / ドラッグ&amp;ドロップ</span></div>
           <div class="img-wrap" id="imgWrap-jnl"><button class="img-clear-btn" onclick="clearPreview('jnl')" title="削除">✕</button><img id="jnlPreview" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
         <button class="btn btn-primary btn-sm" onclick="addJournal()">記録する</button>
@@ -905,10 +598,7 @@ select option{background:var(--bg3);}
         <div class="stat-card"><div class="stat-num" id="s_pass" style="color:var(--teal)">0</div><div class="stat-label">見送り成功</div></div>
         <div class="stat-card"><div class="stat-num" id="s_miss" style="color:var(--amber)">0</div><div class="stat-label">機会損失</div></div>
       </div>
-      <div class="card">
-        <div class="card-title">パターン分析</div>
-        <div id="statsDetail" style="font-size:13px;color:var(--muted);line-height:1.8;">記録が増えると分析が表示されます。</div>
-      </div>
+      <div class="card"><div class="card-title">パターン分析</div><div id="statsDetail" style="font-size:13px;color:var(--muted);line-height:1.8;">記録が増えると分析が表示されます。</div></div>
       <button class="btn btn-ghost btn-sm" onclick="analyzeStats()" style="margin-top:4px;">🤖 AIに傾向を分析してもらう</button>
       <div id="statsAI" style="display:none;margin-top:12px;" class="ai-summary"></div>
     </div>
@@ -919,10 +609,7 @@ select option{background:var(--bg3);}
       <div class="page-sub">プライスアクション・オーダーフローをベースに答えます</div>
       <div class="card">
         <div class="chat-area" id="chatArea">
-          <div class="chat-msg ai">
-            <div class="chat-sender">Trade AI</div>
-            <div class="chat-bubble">こんにちは。環境認識・モメンタム・エントリー判断について何でも聞いてください。</div>
-          </div>
+          <div class="chat-msg ai"><div class="chat-sender">Trade AI</div><div class="chat-bubble">こんにちは。環境認識・モメンタム・エントリー判断について何でも聞いてください。</div></div>
         </div>
         <div class="chat-input-row">
           <input id="chatInput" type="text" placeholder="例：アジア安値をヒゲで抜けて戻ってきてる。入るべき？" onkeydown="if(event.key==='Enter')sendChat()">
@@ -941,11 +628,9 @@ select option{background:var(--bg3);}
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-  </div><!-- /main -->
-</div><!-- /shell -->
-
-<!-- モバイル ボトムナビ -->
 <div class="bottom-nav">
   <button class="bnav-btn active" onclick="showPageMobile('env',this)"><span class="bnav-icon">📋</span>環境認識</button>
   <button class="bnav-btn" onclick="showPageMobile('check',this)"><span class="bnav-icon">✅</span>チェック</button>
@@ -972,7 +657,6 @@ const SYSTEM_PROMPT = `あなたはプライスアクション・オーダーフ
 【ブレイクアウト】アジア起点のみ。前日陽線→アジア高値ブレイク、前日陰線→アジア安値ブレイク。アジアで大きく動いた後は避ける。
 日本語で簡潔かつ実践的に答えてください。`;
 
-// ===== ナビ =====
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -988,23 +672,17 @@ function showPageMobile(id, btn) {
   document.querySelector('.main').scrollTop = 0;
   if (id === 'stats') updateStats();
 }
-
-// ===== 日付 =====
 (function () {
   const now = new Date();
   const el = document.getElementById('sideDate');
   if (el) el.textContent = now.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
 })();
-
-// ===== GC 限月自動計算 =====
 function getNextGCSymbol() {
   const majors = [{ month: 2, code: 'G' }, { month: 4, code: 'J' }, { month: 6, code: 'M' }, { month: 8, code: 'Q' }, { month: 10, code: 'V' }, { month: 12, code: 'Z' }];
   const now = new Date(); const m = now.getMonth() + 1; const y = now.getFullYear();
   for (const mj of majors) { if (mj.month > m) return `GC${mj.code}${y}`; }
   return `GCG${y + 1}`;
 }
-
-// ===== TradingView =====
 function loadTVWidget(id) {
   const suffix = id === 'env' ? 'Env' : 'Jnl';
   const inputEl = document.getElementById('tvSymbol' + suffix);
@@ -1012,28 +690,13 @@ function loadTVWidget(id) {
   const interval = document.getElementById('tvInterval' + suffix).value;
   const wrap = document.getElementById('tvWrap-' + id);
   const container = document.getElementById('tv-widget-' + id);
-  wrap.style.display = 'block';
-  container.innerHTML = '';
+  wrap.style.display = 'block'; container.innerHTML = '';
   function create() {
-    new TradingView.widget({
-      container_id: 'tv-widget-' + id, width: '100%', height: 400,
-      symbol, interval, timezone: 'Asia/Tokyo', theme: 'dark', style: '1', locale: 'ja',
-      toolbar_bg: '#141720', enable_publishing: false, hide_side_toolbar: false,
-      allow_symbol_change: true, save_image: true, studies: []
-    });
+    new TradingView.widget({ container_id: 'tv-widget-' + id, width: '100%', height: 400, symbol, interval, timezone: 'Asia/Tokyo', theme: 'dark', style: '1', locale: 'ja', toolbar_bg: '#141720', enable_publishing: false, hide_side_toolbar: false, allow_symbol_change: true, save_image: true, studies: [] });
   }
-  if (typeof TradingView !== 'undefined') { create(); }
-  else {
-    const s = document.createElement('script');
-    s.src = 'https://s3.tradingview.com/tv.js';
-    s.onload = create;
-    document.head.appendChild(s);
-  }
+  if (typeof TradingView !== 'undefined') { create(); } else { const s = document.createElement('script'); s.src = 'https://s3.tradingview.com/tv.js'; s.onload = create; document.head.appendChild(s); }
 }
-function toggleTVWidget(id) {
-  const wrap = document.getElementById('tvWrap-' + id);
-  if (wrap.style.display === 'none') { loadTVWidget(id); } else { wrap.style.display = 'none'; }
-}
+function toggleTVWidget(id) { const wrap = document.getElementById('tvWrap-' + id); if (wrap.style.display === 'none') { loadTVWidget(id); } else { wrap.style.display = 'none'; } }
 function openTVTab(id) {
   const suffix = id === 'env' ? 'Env' : 'Jnl';
   const symbol = (document.getElementById('tvSymbol' + suffix).value.trim() || getNextGCSymbol()).toUpperCase();
@@ -1041,36 +704,14 @@ function openTVTab(id) {
   const map = { 'D': '1D', 'W': '1W', 'M': '1M', '240': '240', '60': '60', '15': '15', '5': '5', '1': '1' };
   window.open(`https://www.tradingview.com/chart/?symbol=${encodeURIComponent(symbol)}&interval=${map[interval] || interval}`, '_blank');
 }
+(function () { const sym = getNextGCSymbol(); ['tvSymbolEnv', 'tvSymbolJnl'].forEach(id => { const el = document.getElementById(id); if (el) el.placeholder = sym; }); })();
 
-(function () {
-  const sym = getNextGCSymbol();
-  ['tvSymbolEnv', 'tvSymbolJnl'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.placeholder = sym;
-  });
-})();
-
-// ===== 画像 =====
-function handleUpload(event, previewId) {
-  const file = event.target.files[0]; if (!file) return;
-  setPreviewFromFile(file, previewId);
-}
-function setPreviewFromFile(file, previewId) {
-  const reader = new FileReader();
-  reader.onload = e => { setPreviewSrc(previewId, e.target.result); };
-  reader.readAsDataURL(file);
-}
+function handleUpload(event, previewId) { const file = event.target.files[0]; if (!file) return; setPreviewFromFile(file, previewId); }
+function setPreviewFromFile(file, previewId) { const reader = new FileReader(); reader.onload = e => { setPreviewSrc(previewId, e.target.result); }; reader.readAsDataURL(file); }
 function setPreviewSrc(previewId, src) {
-  const img = document.getElementById(previewId);
-  if (img) { img.src = src; }
-  const wrapMap = {
-    'envPreview-monthly': 'imgWrap-monthly',
-    'envPreview-weekly':  'imgWrap-weekly',
-    'envPreview-daily':   'imgWrap-daily',
-    'jnlPreview':         'imgWrap-jnl'
-  };
-  const wrap = document.getElementById(wrapMap[previewId]);
-  if (wrap) wrap.classList.add('has-img');
+  const img = document.getElementById(previewId); if (img) { img.src = src; }
+  const wrapMap = { 'envPreview-monthly': 'imgWrap-monthly', 'envPreview-weekly': 'imgWrap-weekly', 'envPreview-daily': 'imgWrap-daily', 'jnlPreview': 'imgWrap-jnl' };
+  const wrap = document.getElementById(wrapMap[previewId]); if (wrap) wrap.classList.add('has-img');
   if (previewId === 'jnlPreview') jnlUploadDataUrl = src;
   if (previewId === 'envPreview-monthly') envImgs.monthly = src;
   if (previewId === 'envPreview-weekly')  envImgs.weekly  = src;
@@ -1079,187 +720,171 @@ function setPreviewSrc(previewId, src) {
 function clearPreview(key) {
   const previewMap = { 'monthly': 'envPreview-monthly', 'weekly': 'envPreview-weekly', 'daily': 'envPreview-daily', 'jnl': 'jnlPreview' };
   const wrapMap = { 'monthly': 'imgWrap-monthly', 'weekly': 'imgWrap-weekly', 'daily': 'imgWrap-daily', 'jnl': 'imgWrap-jnl' };
-  const img = document.getElementById(previewMap[key]);
-  if (img) { img.src = ''; }
-  const wrap = document.getElementById(wrapMap[key]);
-  if (wrap) wrap.classList.remove('has-img');
+  const img = document.getElementById(previewMap[key]); if (img) { img.src = ''; }
+  const wrap = document.getElementById(wrapMap[key]); if (wrap) wrap.classList.remove('has-img');
   if (key === 'jnl') jnlUploadDataUrl = null;
   if (key === 'monthly') envImgs.monthly = null;
   if (key === 'weekly')  envImgs.weekly  = null;
   if (key === 'daily')   envImgs.daily   = null;
 }
 
-// ===== ペーストゾーン =====
-const PASTE_MAP = {
-  'pasteZone-monthly': 'envPreview-monthly',
-  'pasteZone-weekly':  'envPreview-weekly',
-  'pasteZone-daily':   'envPreview-daily',
-  'pasteZone-jnl':     'jnlPreview'
-};
-const FILE_MAP = {
-  'pasteZone-monthly': 'fileEnv-monthly',
-  'pasteZone-weekly':  'fileEnv-weekly',
-  'pasteZone-daily':   'fileEnv-daily',
-  'pasteZone-jnl':     'fileJnl'
-};
+const PASTE_MAP = { 'pasteZone-monthly': 'envPreview-monthly', 'pasteZone-weekly': 'envPreview-weekly', 'pasteZone-daily': 'envPreview-daily', 'pasteZone-jnl': 'jnlPreview' };
+const FILE_MAP = { 'pasteZone-monthly': 'fileEnv-monthly', 'pasteZone-weekly': 'fileEnv-weekly', 'pasteZone-daily': 'fileEnv-daily', 'pasteZone-jnl': 'fileJnl' };
 let activePasteZoneId = null;
-
 function setActivePasteZone(zoneId) {
   document.querySelectorAll('.paste-zone').forEach(z => z.classList.remove('paste-active'));
   activePasteZoneId = zoneId;
-  if (zoneId) {
-    const zone = document.getElementById(zoneId);
-    if (zone) zone.classList.add('paste-active');
-  }
+  if (zoneId) { const zone = document.getElementById(zoneId); if (zone) zone.classList.add('paste-active'); }
 }
-
 function initPasteZones() {
   document.querySelectorAll('.paste-zone').forEach(zone => {
     const zoneId = zone.id;
     zone.addEventListener('click', e => {
-      if (activePasteZoneId === zoneId) {
-        const fileInput = document.getElementById(FILE_MAP[zoneId]);
-        if (fileInput) fileInput.click();
-        return;
-      }
-      setActivePasteZone(zoneId);
-      zone.focus();
+      if (activePasteZoneId === zoneId) { const fileInput = document.getElementById(FILE_MAP[zoneId]); if (fileInput) fileInput.click(); return; }
+      setActivePasteZone(zoneId); zone.focus();
     });
-    zone.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const fileInput = document.getElementById(FILE_MAP[zoneId]);
-        if (fileInput) fileInput.click();
-      }
-    });
-    zone.addEventListener('blur', () => {
-      setTimeout(() => {
-        if (document.activeElement !== zone) {
-          zone.classList.remove('paste-active');
-          if (activePasteZoneId === zoneId) activePasteZoneId = null;
-        }
-      }, 200);
-    });
+    zone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const fileInput = document.getElementById(FILE_MAP[zoneId]); if (fileInput) fileInput.click(); } });
+    zone.addEventListener('blur', () => { setTimeout(() => { if (document.activeElement !== zone) { zone.classList.remove('paste-active'); if (activePasteZoneId === zoneId) activePasteZoneId = null; } }, 200); });
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-    zone.addEventListener('drop', e => {
-      e.preventDefault(); zone.classList.remove('drag-over');
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith('image/')) {
-        setPreviewFromFile(file, PASTE_MAP[zoneId] || 'jnlPreview');
-        setActivePasteZone(null);
-      }
-    });
+    zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); const file = e.dataTransfer.files[0]; if (file && file.type.startsWith('image/')) { setPreviewFromFile(file, PASTE_MAP[zoneId] || 'jnlPreview'); setActivePasteZone(null); } });
   });
-
   document.addEventListener('paste', e => {
-    const items = e.clipboardData?.items;
-    if (!items) return;
+    const items = e.clipboardData?.items; if (!items) return;
     for (const item of items) {
       if (!item.type.startsWith('image/')) continue;
-      const file = item.getAsFile();
-      if (!file) continue;
+      const file = item.getAsFile(); if (!file) continue;
       let targetPreviewId = null;
-      if (activePasteZoneId && PASTE_MAP[activePasteZoneId]) {
-        targetPreviewId = PASTE_MAP[activePasteZoneId];
-      } else if (document.activeElement?.classList.contains('paste-zone')) {
-        targetPreviewId = PASTE_MAP[document.activeElement.id];
-      } else {
+      if (activePasteZoneId && PASTE_MAP[activePasteZoneId]) { targetPreviewId = PASTE_MAP[activePasteZoneId]; }
+      else if (document.activeElement?.classList.contains('paste-zone')) { targetPreviewId = PASTE_MAP[document.activeElement.id]; }
+      else {
         if (document.getElementById('page-env')?.classList.contains('active')) {
           const activeTF = document.querySelector('.tf-panel.active');
-          if (activeTF?.id === 'tf-monthly')     targetPreviewId = 'envPreview-monthly';
+          if (activeTF?.id === 'tf-monthly') targetPreviewId = 'envPreview-monthly';
           else if (activeTF?.id === 'tf-weekly') targetPreviewId = 'envPreview-weekly';
-          else                                    targetPreviewId = 'envPreview-daily';
-        } else if (document.getElementById('page-journal')?.classList.contains('active')) {
-          targetPreviewId = 'jnlPreview';
-        }
+          else targetPreviewId = 'envPreview-daily';
+        } else if (document.getElementById('page-journal')?.classList.contains('active')) { targetPreviewId = 'jnlPreview'; }
       }
       if (targetPreviewId) {
-        setPreviewFromFile(file, targetPreviewId);
-        setActivePasteZone(null);
-        e.preventDefault();
+        setPreviewFromFile(file, targetPreviewId); setActivePasteZone(null); e.preventDefault();
         const zoneId = Object.keys(PASTE_MAP).find(k => PASTE_MAP[k] === targetPreviewId);
-        if (zoneId) {
-          const zone = document.getElementById(zoneId);
-          if (zone) {
-            zone.style.borderColor = 'var(--green)';
-            zone.style.background = 'rgba(34,197,94,.1)';
-            setTimeout(() => { zone.style.borderColor = ''; zone.style.background = ''; }, 800);
-          }
-        }
+        if (zoneId) { const zone = document.getElementById(zoneId); if (zone) { zone.style.borderColor = 'var(--green)'; zone.style.background = 'rgba(34,197,94,.1)'; setTimeout(() => { zone.style.borderColor = ''; zone.style.background = ''; }, 800); } }
         break;
       }
     }
   });
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.paste-zone')) setActivePasteZone(null);
-  });
+  document.addEventListener('click', e => { if (!e.target.closest('.paste-zone')) setActivePasteZone(null); });
 }
-
 function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('open'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
 
-// ===== タイムフレームタブ =====
 function switchTF(tf, btn) {
   document.querySelectorAll('.tf-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tf-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tf-' + tf).classList.add('active');
+  btn.classList.add('active'); document.getElementById('tf-' + tf).classList.add('active');
 }
 function selectDirTF(el, dir, tf) {
   document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b => b.className = 'env-tag');
-  selectedDirByTF[tf] = dir;
-  el.classList.add('selected-' + dir);
+  selectedDirByTF[tf] = dir; el.classList.add('selected-' + dir);
 }
 let selectedDir = '';
 function selectDir(el, dir) { selectDirTF(el, dir, 'daily'); selectedDir = dir; }
 
+// ===== 月足・週足 自動引き継ぎ =====
+function compressImageForStorage(dataUrl, maxKB) {
+  return new Promise(resolve => {
+    if (!dataUrl) { resolve(null); return; }
+    if (dataUrl.length * 0.75 / 1024 <= maxKB) { resolve(dataUrl); return; }
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      const maxDim = 800;
+      if (w > maxDim || h > maxDim) {
+        if (w >= h) { h = Math.round(h * maxDim / w); w = maxDim; }
+        else        { w = Math.round(w * maxDim / h); h = maxDim; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      let q = 0.8, out = canvas.toDataURL('image/jpeg', q);
+      while (out.length * 0.75 / 1024 > maxKB && q > 0.2) { q -= 0.1; out = canvas.toDataURL('image/jpeg', q); }
+      resolve(out);
+    };
+    img.onerror = () => resolve(null);
+    img.src = dataUrl;
+  });
+}
+async function saveAutoFillCache(year, month, week, monthlyData, weeklyData) {
+  try {
+    const mKey = 'envCache_monthly_' + year + '_' + month;
+    localStorage.setItem(mKey + '_text', JSON.stringify({ dir: monthlyData.dir, candle: monthlyData.candle, state: monthlyData.state, key: monthlyData.key, note: monthlyData.note }));
+    if (monthlyData.img) { const c = await compressImageForStorage(monthlyData.img, 300); if (c) { try { localStorage.setItem(mKey + '_img', c); } catch(e) { console.warn('月足画像キャッシュ失敗'); } } }
+    const wKey = 'envCache_weekly_' + year + '_' + month + '_' + week;
+    localStorage.setItem(wKey + '_text', JSON.stringify({ dir: weeklyData.dir, candle: weeklyData.candle, state: weeklyData.state, key: weeklyData.key, note: weeklyData.note }));
+    if (weeklyData.img) { const c = await compressImageForStorage(weeklyData.img, 300); if (c) { try { localStorage.setItem(wKey + '_img', c); } catch(e) { console.warn('週足画像キャッシュ失敗'); } } }
+  } catch(e) { console.warn('AutoFill cache error:', e); }
+}
+function applyAutoFillCache(year, month, week) {
+  const mKey = 'envCache_monthly_' + year + '_' + month;
+  const mText = localStorage.getItem(mKey + '_text');
+  const mImg  = localStorage.getItem(mKey + '_img');
+  const bannerM = document.getElementById('autofill-banner-monthly');
+  if (mText) {
+    try {
+      setTFFields('monthly', JSON.parse(mText));
+      if (mImg) setPreviewSrc('envPreview-monthly', mImg);
+      if (bannerM) bannerM.innerHTML = '<div class="autofill-banner">↩ 月足データを前回（' + year + '年' + month + '月）から引き継ぎました' + (mImg ? '（画像含む）' : '') + ' <button onclick="clearAutoFill(\'monthly\',\'' + year + '\',\'' + month + '\',\'' + week + '\')" style="margin-left:auto;background:none;border:none;color:var(--accent);cursor:pointer;font-size:11px;text-decoration:underline;">クリア</button></div>';
+    } catch(e) {}
+  } else { if (bannerM) bannerM.innerHTML = ''; }
+  const wKey = 'envCache_weekly_' + year + '_' + month + '_' + week;
+  const wText = localStorage.getItem(wKey + '_text');
+  const wImg  = localStorage.getItem(wKey + '_img');
+  const bannerW = document.getElementById('autofill-banner-weekly');
+  if (wText) {
+    try {
+      setTFFields('weekly', JSON.parse(wText));
+      if (wImg) setPreviewSrc('envPreview-weekly', wImg);
+      if (bannerW) bannerW.innerHTML = '<div class="autofill-banner weekly">↩ 週足データを前回（' + year + '年' + month + '月 第' + week + '週）から引き継ぎました' + (wImg ? '（画像含む）' : '') + ' <button onclick="clearAutoFill(\'weekly\',\'' + year + '\',\'' + month + '\',\'' + week + '\')" style="margin-left:auto;background:none;border:none;color:var(--amber);cursor:pointer;font-size:11px;text-decoration:underline;">クリア</button></div>';
+    } catch(e) {}
+  } else { if (bannerW) bannerW.innerHTML = ''; }
+}
+function setTFFields(tf, data) {
+  if (!data) return;
+  const ce = document.getElementById('prevCandle-' + tf); if (ce) ce.value = data.candle || '';
+  const se = document.getElementById('marketState-' + tf); if (se) se.value = data.state  || '';
+  const ke = document.getElementById('keyLevel-' + tf);   if (ke) ke.value = data.key    || '';
+  const ne = document.getElementById('envNote-' + tf);    if (ne) ne.value = data.note   || '';
+  const dm = {'ロング優位':'long','ショート優位':'short','レンジ':'range'};
+  const dir = dm[data.dir];
+  if (dir) {
+    document.querySelectorAll('#dirRow-' + tf + ' .env-tag').forEach(b => b.className = 'env-tag');
+    const btn = document.querySelector('#dirRow-' + tf + ' .env-tag[onclick*="' + dir + '"]');
+    if (btn) { btn.classList.add('selected-' + dir); selectedDirByTF[tf] = dir; }
+  }
+}
+function clearAutoFill(tf, year, month, week) {
+  const isM = tf === 'monthly';
+  const key = isM ? ('envCache_monthly_' + year + '_' + month) : ('envCache_weekly_' + year + '_' + month + '_' + week);
+  localStorage.removeItem(key + '_text'); localStorage.removeItem(key + '_img');
+  const px = isM ? 'monthly' : 'weekly';
+  ['prevCandle', 'marketState'].forEach(id => { const el = document.getElementById(id + '-' + px); if (el) el.value = ''; });
+  ['keyLevel-' + px, 'envNote-' + px].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.querySelectorAll('#dirRow-' + px + ' .env-tag').forEach(b => b.className = 'env-tag');
+  selectedDirByTF[px] = ''; clearPreview(px);
+  const banner = document.getElementById('autofill-banner-' + px); if (banner) banner.innerHTML = '';
+}
+
 // ===== 環境認識 AI分析 =====
 async function analyzeEnv() {
   const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '未設定';
-  const monthly = {
-    dir: dirLabel(selectedDirByTF.monthly),
-    candle: document.getElementById('prevCandle-monthly').value || '未入力',
-    state: document.getElementById('marketState-monthly').value || '未入力',
-    key: document.getElementById('keyLevel-monthly').value || '',
-    note: document.getElementById('envNote-monthly').value || ''
-  };
-  const weekly = {
-    dir: dirLabel(selectedDirByTF.weekly),
-    candle: document.getElementById('prevCandle-weekly').value || '未入力',
-    state: document.getElementById('marketState-weekly').value || '未入力',
-    key: document.getElementById('keyLevel-weekly').value || '',
-    note: document.getElementById('envNote-weekly').value || ''
-  };
-  const daily = {
-    dir: dirLabel(selectedDirByTF.daily),
-    candle: document.getElementById('prevCandle-daily').value || '未入力',
-    state: document.getElementById('marketState-daily').value || '未入力',
-    key: document.getElementById('keyLevel').value || '',
-    note: document.getElementById('envNote-daily').value || '',
-    asiaH: document.getElementById('asiaH').value || '未入力',
-    asiaL: document.getElementById('asiaL').value || '未入力'
-  };
-  const prompt = `【環境認識 マルチタイムフレーム分析】
-■月足: 方向感:${monthly.dir} | 足型:${monthly.candle} | 状態:${monthly.state} | 節目:${monthly.key || 'なし'} | メモ:${monthly.note || 'なし'}
-■週足: 方向感:${weekly.dir} | 足型:${weekly.candle} | 状態:${weekly.state} | 節目:${weekly.key || 'なし'} | メモ:${weekly.note || 'なし'}
-■日足: 方向感:${daily.dir} | 前日足:${daily.candle} | 状態:${daily.state} | アジア高値:${daily.asiaH} | アジア安値:${daily.asiaL} | 節目:${daily.key || 'なし'} | メモ:${daily.note || 'なし'}
-
-上記をもとに以下を簡潔にまとめてください：
-①マルチTFでのバイアス整合性（月足・週足・日足が揃っているか）
-②当日バイアスと推奨方向
-③狙えるセットアップ候補（具体的なPA名は出さず、方向・節目・タイミングのみ）
-④注意すべきポイント・NGシナリオ`;
-
+  const monthly = { dir: dirLabel(selectedDirByTF.monthly), candle: document.getElementById('prevCandle-monthly').value || '未入力', state: document.getElementById('marketState-monthly').value || '未入力', key: document.getElementById('keyLevel-monthly').value || '', note: document.getElementById('envNote-monthly').value || '' };
+  const weekly  = { dir: dirLabel(selectedDirByTF.weekly),  candle: document.getElementById('prevCandle-weekly').value  || '未入力', state: document.getElementById('marketState-weekly').value  || '未入力', key: document.getElementById('keyLevel-weekly').value  || '', note: document.getElementById('envNote-weekly').value  || '' };
+  const daily   = { dir: dirLabel(selectedDirByTF.daily),   candle: document.getElementById('prevCandle-daily').value   || '未入力', state: document.getElementById('marketState-daily').value   || '未入力', key: document.getElementById('keyLevel').value || '', note: document.getElementById('envNote-daily').value || '', asiaH: document.getElementById('asiaH').value || '未入力', asiaL: document.getElementById('asiaL').value || '未入力' };
+  const prompt = `【環境認識 マルチタイムフレーム分析】\n■月足: 方向感:${monthly.dir} | 足型:${monthly.candle} | 状態:${monthly.state} | 節目:${monthly.key||'なし'} | メモ:${monthly.note||'なし'}\n■週足: 方向感:${weekly.dir} | 足型:${weekly.candle} | 状態:${weekly.state} | 節目:${weekly.key||'なし'} | メモ:${weekly.note||'なし'}\n■日足: 方向感:${daily.dir} | 前日足:${daily.candle} | 状態:${daily.state} | アジア高値:${daily.asiaH} | アジア安値:${daily.asiaL} | 節目:${daily.key||'なし'} | メモ:${daily.note||'なし'}\n\n上記をもとに以下を簡潔にまとめてください：\n①マルチTFでのバイアス整合性（月足・週足・日足が揃っているか）\n②当日バイアスと推奨方向\n③狙えるセットアップ候補（具体的なPA名は出さず、方向・節目・タイミングのみ）\n④注意すべきポイント・NGシナリオ`;
   document.getElementById('envResult').style.display = 'block';
   document.getElementById('envResultText').textContent = '分析中...';
-  try {
-    const res = await callClaude(prompt);
-    document.getElementById('envResultText').textContent = res;
-  } catch (e) {
-    document.getElementById('envResultText').textContent = 'エラーが発生しました。';
-  }
+  try { const res = await callClaude(prompt); document.getElementById('envResultText').textContent = res; }
+  catch (e) { document.getElementById('envResultText').textContent = 'エラーが発生しました。'; }
 }
 
 // ===== 日付バー =====
@@ -1267,257 +892,111 @@ function initEnvDateBar() {
   const now = new Date();
   const yearSel = document.getElementById('envYear');
   for (let y = now.getFullYear(); y >= now.getFullYear() - 2; y--) {
-    const o = document.createElement('option');
-    o.value = y; o.textContent = y + '年';
-    if (y === now.getFullYear()) o.selected = true;
-    yearSel.appendChild(o);
+    const o = document.createElement('option'); o.value = y; o.textContent = y + '年';
+    if (y === now.getFullYear()) o.selected = true; yearSel.appendChild(o);
   }
   document.getElementById('envMonth').value = now.getMonth() + 1;
-  const weekNum = Math.ceil(now.getDate() / 7);
-  document.getElementById('envWeek').value = weekNum;
+  document.getElementById('envWeek').value = Math.ceil(now.getDate() / 7);
   const days = ['日','月','火','水','木','金','土'];
   const dayOfWeek = days[now.getDay()];
   document.getElementById('envDay').value = ['月','火','水','木','金'].includes(dayOfWeek) ? dayOfWeek : '月';
   updateEnvDateLabel();
   ['envYear','envMonth','envWeek','envDay'].forEach(id =>
-    document.getElementById(id).addEventListener('change', updateEnvDateLabel)
+    document.getElementById(id).addEventListener('change', () => {
+      updateEnvDateLabel();
+      if (id !== 'envDay') {
+        const y = document.getElementById('envYear').value;
+        const m = document.getElementById('envMonth').value;
+        const w = document.getElementById('envWeek').value;
+        applyAutoFillCache(y, m, w);
+      }
+    })
   );
   renderEnvHistory();
+  // 初期表示時に自動引き継ぎ
+  const _afy = document.getElementById('envYear').value;
+  const _afm = document.getElementById('envMonth').value;
+  const _afw = document.getElementById('envWeek').value;
+  applyAutoFillCache(_afy, _afm, _afw);
 }
 function updateEnvDateLabel() {
-  const y = document.getElementById('envYear').value;
-  const m = document.getElementById('envMonth').value;
-  const w = document.getElementById('envWeek').value;
-  const d = document.getElementById('envDay').value;
+  const y = document.getElementById('envYear').value, m = document.getElementById('envMonth').value, w = document.getElementById('envWeek').value, d = document.getElementById('envDay').value;
   document.getElementById('envDateLabel').textContent = `📌 ${y}年${m}月 第${w}週 ${d}曜日の環境認識`;
 }
 function getEnvDateKey() {
-  const y = document.getElementById('envYear').value;
-  const m = document.getElementById('envMonth').value;
-  const w = document.getElementById('envWeek').value;
-  const d = document.getElementById('envDay').value;
+  const y = document.getElementById('envYear').value, m = document.getElementById('envMonth').value, w = document.getElementById('envWeek').value, d = document.getElementById('envDay').value;
   return `${y}-${String(m).padStart(2,'0')}-W${w}-${d}`;
 }
 function getEnvDateLabel() {
-  const y = document.getElementById('envYear').value;
-  const m = document.getElementById('envMonth').value;
-  const w = document.getElementById('envWeek').value;
-  const d = document.getElementById('envDay').value;
+  const y = document.getElementById('envYear').value, m = document.getElementById('envMonth').value, w = document.getElementById('envWeek').value, d = document.getElementById('envDay').value;
   return `${y}年${m}月 第${w}週 ${d}曜`;
 }
 
 async function saveEnvMemo() {
   const dirLabel = d => d === 'long' ? 'ロング優位' : d === 'short' ? 'ショート優位' : d === 'range' ? 'レンジ' : '未設定';
   const memo = {
-    id: Date.now(),
-    dateKey: getEnvDateKey(),
-    dateLabel: getEnvDateLabel(),
-    monthly: {
-      dir: dirLabel(selectedDirByTF.monthly),
-      candle: document.getElementById('prevCandle-monthly').value,
-      state: document.getElementById('marketState-monthly').value,
-      key: document.getElementById('keyLevel-monthly').value,
-      note: document.getElementById('envNote-monthly').value,
-      img: envImgs.monthly
-    },
-    weekly: {
-      dir: dirLabel(selectedDirByTF.weekly),
-      candle: document.getElementById('prevCandle-weekly').value,
-      state: document.getElementById('marketState-weekly').value,
-      key: document.getElementById('keyLevel-weekly').value,
-      note: document.getElementById('envNote-weekly').value,
-      img: envImgs.weekly
-    },
-    daily: {
-      dir: dirLabel(selectedDirByTF.daily),
-      candle: document.getElementById('prevCandle-daily').value,
-      state: document.getElementById('marketState-daily').value,
-      key: document.getElementById('keyLevel').value,
-      asiaH: document.getElementById('asiaH').value,
-      asiaL: document.getElementById('asiaL').value,
-      note: document.getElementById('envNote-daily').value,
-      img: envImgs.daily
-    },
+    id: Date.now(), dateKey: getEnvDateKey(), dateLabel: getEnvDateLabel(),
+    monthly: { dir: dirLabel(selectedDirByTF.monthly), candle: document.getElementById('prevCandle-monthly').value, state: document.getElementById('marketState-monthly').value, key: document.getElementById('keyLevel-monthly').value, note: document.getElementById('envNote-monthly').value, img: envImgs.monthly },
+    weekly:  { dir: dirLabel(selectedDirByTF.weekly),  candle: document.getElementById('prevCandle-weekly').value,  state: document.getElementById('marketState-weekly').value,  key: document.getElementById('keyLevel-weekly').value,  note: document.getElementById('envNote-weekly').value,  img: envImgs.weekly  },
+    daily:   { dir: dirLabel(selectedDirByTF.daily),   candle: document.getElementById('prevCandle-daily').value,   state: document.getElementById('marketState-daily').value,   key: document.getElementById('keyLevel').value, asiaH: document.getElementById('asiaH').value, asiaL: document.getElementById('asiaL').value, note: document.getElementById('envNote-daily').value, img: envImgs.daily },
     aiResult: document.getElementById('envResultText').textContent || ''
   };
   const idx = envMemos.findIndex(m => m.dateKey === memo.dateKey);
   if (idx >= 0) envMemos[idx] = memo; else envMemos.unshift(memo);
-  const toSave = envMemos.map(m => ({
-    ...m,
-    monthly: {...m.monthly, img: null},
-    weekly:  {...m.weekly,  img: null},
-    daily:   {...m.daily,   img: null}
-  }));
+  const toSave = envMemos.map(m => ({ ...m, monthly: {...m.monthly, img: null}, weekly: {...m.weekly, img: null}, daily: {...m.daily, img: null} }));
   localStorage.setItem('envMemos', JSON.stringify(toSave));
 
-  // 画像データを直接渡す（localStorageには保存しないがNotionには送る）
-  const memoWithImgs = {
-    ...memo,
-    monthly: { ...memo.monthly, img: envImgs.monthly },
-    weekly:  { ...memo.weekly,  img: envImgs.weekly },
-    daily:   { ...memo.daily,   img: envImgs.daily }
-  };
+  // ★ 月足・週足キャッシュ保存（テキスト＋画像）
+  const _cy = document.getElementById('envYear').value;
+  const _cm = document.getElementById('envMonth').value;
+  const _cw = document.getElementById('envWeek').value;
+  await saveAutoFillCache(_cy, _cm, _cw, memo.monthly, memo.weekly);
+
+  const memoWithImgs = { ...memo, monthly: { ...memo.monthly, img: envImgs.monthly }, weekly: { ...memo.weekly, img: envImgs.weekly }, daily: { ...memo.daily, img: envImgs.daily } };
   const notionResult = await saveEnvMemoToNotion(memoWithImgs).catch(e => ({ error: e.message }));
-  if (notionResult?.error) {
-    alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`);
-  } else if (notionResult?.id) {
-    alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n✅ Notionにも同期しました！`);
-  } else {
-    alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n（Notion未設定のためローカルのみ）`);
-  }
+  if (notionResult?.error) { alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`); }
+  else if (notionResult?.id) { alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n✅ Notionにも同期しました！`); }
+  else { alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n（Notion未設定のためローカルのみ）`); }
   renderEnvHistory();
 }
 
 function renderEnvHistory() {
-  const list = document.getElementById('envHistoryList');
-  if (!list) return;
+  const list = document.getElementById('envHistoryList'); if (!list) return;
   const yearSel = document.getElementById('histFilterYear');
   if (yearSel && yearSel.options.length <= 1) {
     const years = [...new Set(envMemos.map(m => m.dateKey?.split('-')[0]).filter(Boolean))].sort().reverse();
-    years.forEach(y => {
-      const o = document.createElement('option'); o.value = y; o.textContent = y + '年';
-      yearSel.appendChild(o);
-    });
+    years.forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y + '年'; yearSel.appendChild(o); });
   }
-  const filterYear  = document.getElementById('histFilterYear')?.value  || '';
+  const filterYear = document.getElementById('histFilterYear')?.value || '';
   const filterMonth = document.getElementById('histFilterMonth')?.value || '';
   let memos = [...envMemos];
-  if (filterYear)  memos = memos.filter(m => m.dateKey?.startsWith(filterYear));
-  if (filterMonth) memos = memos.filter(m => {
-    const mo = m.dateKey?.split('-')[1];
-    return mo && parseInt(mo) === parseInt(filterMonth);
-  });
-  if (!memos.length) {
-    list.innerHTML = '<div class="hist-empty">📭 保存された環境認識メモはありません<br><span style="font-size:11px;margin-top:6px;display:block;">記録入力後「💾 保存して記録」で保存されます</span></div>';
-    return;
-  }
+  if (filterYear) memos = memos.filter(m => m.dateKey?.startsWith(filterYear));
+  if (filterMonth) memos = memos.filter(m => { const mo = m.dateKey?.split('-')[1]; return mo && parseInt(mo) === parseInt(filterMonth); });
+  if (!memos.length) { list.innerHTML = '<div class="hist-empty">📭 保存された環境認識メモはありません<br><span style="font-size:11px;margin-top:6px;display:block;">記録入力後「💾 保存して記録」で保存されます</span></div>'; return; }
   const groups = {};
-  memos.forEach(m => {
-    const y = m.dateKey?.split('-')[0] || '?';
-    const mo = m.dateKey?.split('-')[1] || '?';
-    const key = `${y}-${mo}`;
-    if (!groups[key]) groups[key] = { label: `${y}年 ${parseInt(mo)}月`, items: [] };
-    groups[key].items.push(m);
-  });
-  const biasChip = dir => {
-    if (dir === 'ロング優位') return `<span class="hist-bias-chip hist-bias-long">↑ ロング</span>`;
-    if (dir === 'ショート優位') return `<span class="hist-bias-chip hist-bias-short">↓ ショート</span>`;
-    if (dir === 'レンジ') return `<span class="hist-bias-chip hist-bias-range">↔ レンジ</span>`;
-    return `<span class="hist-bias-chip hist-bias-none">未設定</span>`;
-  };
-  const tfSection = (tf, data, label, cls) => {
-    if (!data) return '';
-    const hasContent = data.candle || data.state || data.note || data.key || data.asiaH || data.asiaL;
-    if (!hasContent) return '';
-    return `
-      <div class="hist-tf-section">
-        <div class="hist-tf-label ${cls}">${label}</div>
-        <div class="hist-meta-grid">
-          ${data.candle ? `<div class="hist-meta-item">足型: <strong>${data.candle}</strong></div>` : ''}
-          ${data.state  ? `<div class="hist-meta-item">状態: <strong>${data.state}</strong></div>` : ''}
-          ${data.key    ? `<div class="hist-meta-item">節目: <strong>${data.key}</strong></div>` : ''}
-          ${data.asiaH  ? `<div class="hist-meta-item">AS高値: <strong>${data.asiaH}</strong></div>` : ''}
-          ${data.asiaL  ? `<div class="hist-meta-item">AS安値: <strong>${data.asiaL}</strong></div>` : ''}
-        </div>
-        ${data.note ? `<div class="hist-note">${data.note}</div>` : ''}
-      </div>`;
-  };
-
-  const chartCol = (monthly, weekly, daily) => {
-    const hasAny = monthly?.img || weekly?.img || daily?.img;
-    if (!hasAny) return '';
-    const item = (img, label, cls) => img ? `
-      <div class="hist-chart-item">
-        <div class="hist-chart-label ${cls}">${label}</div>
-        <img src="${img}" class="hist-chart-img" onclick="openLightbox(this.src)" loading="lazy">
-      </div>` : '';
-    return `<div class="hist-charts-col">
-      ${item(monthly?.img, '🌙 月足', 'monthly')}
-      ${item(weekly?.img,  '📅 週足', 'weekly')}
-      ${item(daily?.img,   '📆 日足', 'daily')}
-    </div>`;
-  };
-  list.innerHTML = Object.entries(groups).map(([key, group]) => `
-    <div class="month-group">
-      <div class="month-group-label">📅 ${group.label} (${group.items.length}件)</div>
-      ${group.items.map(m => `
-        <div class="hist-card" id="histCard-${m.id}">
-          <div class="hist-card-header" onclick="toggleHistCard('${m.id}')">
-            <span class="hist-date-badge">${m.dateLabel}</span>
-            <div class="hist-bias-row">
-              ${biasChip(m.monthly?.dir)}
-              ${biasChip(m.weekly?.dir)}
-              ${biasChip(m.daily?.dir)}
-            </div>
-            <span class="hist-chevron" id="chevron-${m.id}">▼</span>
-          </div>
-          <div class="hist-body" id="histBody-${m.id}">
-            ${chartCol(m.monthly, m.weekly, m.daily)}
-            ${tfSection('monthly', m.monthly, '🌙 月足', 'monthly')}
-            ${tfSection('weekly',  m.weekly,  '📅 週足', 'weekly')}
-            ${tfSection('daily',   m.daily,   '📆 日足', 'daily')}
-            ${m.aiResult ? `<div style="margin-top:12px;"><div class="hist-tf-label" style="color:var(--accent);margin-bottom:6px;">🤖 AI分析結果</div><div class="hist-ai">${m.aiResult}</div></div>` : ''}
-            <div class="hist-actions">
-              <button class="btn btn-ghost btn-sm" onclick="deleteEnvMemo('${m.id}')">🗑 削除</button>
-            </div>
-          </div>
-        </div>`).join('')}
-    </div>`).join('');
+  memos.forEach(m => { const y = m.dateKey?.split('-')[0]||'?'; const mo = m.dateKey?.split('-')[1]||'?'; const key = `${y}-${mo}`; if (!groups[key]) groups[key] = { label: `${y}年 ${parseInt(mo)}月`, items: [] }; groups[key].items.push(m); });
+  const biasChip = dir => { if (dir==='ロング優位') return `<span class="hist-bias-chip hist-bias-long">↑ ロング</span>`; if (dir==='ショート優位') return `<span class="hist-bias-chip hist-bias-short">↓ ショート</span>`; if (dir==='レンジ') return `<span class="hist-bias-chip hist-bias-range">↔ レンジ</span>`; return `<span class="hist-bias-chip hist-bias-none">未設定</span>`; };
+  const tfSection = (tf, data, label, cls) => { if (!data) return ''; const hasContent = data.candle||data.state||data.note||data.key||data.asiaH||data.asiaL; if (!hasContent) return ''; return `<div class="hist-tf-section"><div class="hist-tf-label ${cls}">${label}</div><div class="hist-meta-grid">${data.candle?`<div class="hist-meta-item">足型: <strong>${data.candle}</strong></div>`:''} ${data.state?`<div class="hist-meta-item">状態: <strong>${data.state}</strong></div>`:''} ${data.key?`<div class="hist-meta-item">節目: <strong>${data.key}</strong></div>`:''} ${data.asiaH?`<div class="hist-meta-item">AS高値: <strong>${data.asiaH}</strong></div>`:''} ${data.asiaL?`<div class="hist-meta-item">AS安値: <strong>${data.asiaL}</strong></div>`:''}</div>${data.note?`<div class="hist-note">${data.note}</div>`:''}</div>`; };
+  const chartCol = (monthly, weekly, daily) => { const hasAny = monthly?.img||weekly?.img||daily?.img; if (!hasAny) return ''; const item = (img, label, cls) => img?`<div class="hist-chart-item"><div class="hist-chart-label ${cls}">${label}</div><img src="${img}" class="hist-chart-img" onclick="openLightbox(this.src)" loading="lazy"></div>` : ''; return `<div class="hist-charts-col">${item(monthly?.img,'🌙 月足','monthly')}${item(weekly?.img,'📅 週足','weekly')}${item(daily?.img,'📆 日足','daily')}</div>`; };
+  list.innerHTML = Object.entries(groups).map(([key, group]) => `<div class="month-group"><div class="month-group-label">📅 ${group.label} (${group.items.length}件)</div>${group.items.map(m => `<div class="hist-card" id="histCard-${m.id}"><div class="hist-card-header" onclick="toggleHistCard('${m.id}')"><span class="hist-date-badge">${m.dateLabel}</span><div class="hist-bias-row">${biasChip(m.monthly?.dir)}${biasChip(m.weekly?.dir)}${biasChip(m.daily?.dir)}</div><span class="hist-chevron" id="chevron-${m.id}">▼</span></div><div class="hist-body" id="histBody-${m.id}">${chartCol(m.monthly,m.weekly,m.daily)}${tfSection('monthly',m.monthly,'🌙 月足','monthly')}${tfSection('weekly',m.weekly,'📅 週足','weekly')}${tfSection('daily',m.daily,'📆 日足','daily')}${m.aiResult?`<div style="margin-top:12px;"><div class="hist-tf-label" style="color:var(--accent);margin-bottom:6px;">🤖 AI分析結果</div><div class="hist-ai">${m.aiResult}</div></div>`:''}<div class="hist-actions"><button class="btn btn-ghost btn-sm" onclick="deleteEnvMemo('${m.id}')">🗑 削除</button></div></div></div>`).join('')}</div>`).join('');
 }
-
-function toggleHistCard(id) {
-  const body = document.getElementById('histBody-' + id);
-  const chevron = document.getElementById('chevron-' + id);
-  if (!body) return;
-  const isOpen = body.classList.toggle('open');
-  if (chevron) chevron.classList.toggle('open', isOpen);
-}
-function deleteEnvMemo(id) {
-  if (!confirm('このメモを削除しますか？')) return;
-  envMemos = envMemos.filter(m => String(m.id) !== String(id));
-  localStorage.setItem('envMemos', JSON.stringify(envMemos));
-  renderEnvHistory();
-}
+function toggleHistCard(id) { const body = document.getElementById('histBody-'+id); const chevron = document.getElementById('chevron-'+id); if (!body) return; const isOpen = body.classList.toggle('open'); if (chevron) chevron.classList.toggle('open', isOpen); }
+function deleteEnvMemo(id) { if (!confirm('このメモを削除しますか？')) return; envMemos = envMemos.filter(m => String(m.id) !== String(id)); localStorage.setItem('envMemos', JSON.stringify(envMemos)); renderEnvHistory(); }
 function loadEnvMemo(id) {
-  const m = envMemos.find(x => String(x.id) === String(id));
-  if (!m) return;
+  const m = envMemos.find(x => String(x.id) === String(id)); if (!m) return;
   const [y, mo, w, d] = [m.dateKey.split('-')[0], m.dateKey.split('-')[1], m.dateKey.split('-W')[1]?.split('-')[0], m.dateKey.split('-').pop()];
   if(document.getElementById('envYear')) document.getElementById('envYear').value = y;
   if(document.getElementById('envMonth')) document.getElementById('envMonth').value = parseInt(mo);
   if(document.getElementById('envWeek')) document.getElementById('envWeek').value = w;
   if(document.getElementById('envDay')) document.getElementById('envDay').value = d;
   updateEnvDateLabel();
-  const setTF = (tf, data) => {
-    if(!data) return;
-    document.getElementById(`prevCandle-${tf}`).value = data.candle || '';
-    document.getElementById(`marketState-${tf}`).value = data.state || '';
-    if(document.getElementById(`keyLevel-${tf}`)) document.getElementById(`keyLevel-${tf}`).value = data.key || '';
-    document.getElementById(`envNote-${tf}`).value = data.note || '';
-    const dirMap = {'ロング優位':'long','ショート優位':'short','レンジ':'range'};
-    const dir = dirMap[data.dir];
-    if(dir){
-      document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b => b.className='env-tag');
-      const btn = document.querySelector(`#dirRow-${tf} .env-tag[onclick*="${dir}"]`);
-      if(btn){ btn.classList.add('selected-'+dir); selectedDirByTF[tf]=dir; }
-    }
-  };
-  setTF('monthly', m.monthly);
-  setTF('weekly',  m.weekly);
-  setTF('daily',   m.daily);
-  if(m.daily){
-    if(document.getElementById('asiaH')) document.getElementById('asiaH').value = m.daily.asiaH || '';
-    if(document.getElementById('asiaL')) document.getElementById('asiaL').value = m.daily.asiaL || '';
-  }
-  if(m.aiResult){
-    document.getElementById('envResult').style.display='block';
-    document.getElementById('envResultText').textContent = m.aiResult;
-  }
-  document.getElementById('envHistoryList').style.display = 'none';
-  document.querySelector('.main').scrollTop = 0;
-  alert(`📋 ${m.dateLabel}のメモを読み込みました`);
+  const setTF = (tf, data) => { if(!data) return; document.getElementById(`prevCandle-${tf}`).value=data.candle||''; document.getElementById(`marketState-${tf}`).value=data.state||''; if(document.getElementById(`keyLevel-${tf}`)) document.getElementById(`keyLevel-${tf}`).value=data.key||''; document.getElementById(`envNote-${tf}`).value=data.note||''; const dirMap={'ロング優位':'long','ショート優位':'short','レンジ':'range'}; const dir=dirMap[data.dir]; if(dir){document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b=>b.className='env-tag'); const btn=document.querySelector(`#dirRow-${tf} .env-tag[onclick*="${dir}"]`); if(btn){btn.classList.add('selected-'+dir);selectedDirByTF[tf]=dir;}} };
+  setTF('monthly',m.monthly); setTF('weekly',m.weekly); setTF('daily',m.daily);
+  if(m.daily){if(document.getElementById('asiaH'))document.getElementById('asiaH').value=m.daily.asiaH||'';if(document.getElementById('asiaL'))document.getElementById('asiaL').value=m.daily.asiaL||'';}
+  if(m.aiResult){document.getElementById('envResult').style.display='block';document.getElementById('envResultText').textContent=m.aiResult;}
+  document.getElementById('envHistoryList').style.display='none';document.querySelector('.main').scrollTop=0;alert(`📋 ${m.dateLabel}のメモを読み込みました`);
 }
 
-// ===== チェックリスト =====
 const checkItems = {
   'checks-env': [
     { label: '上位足（月足・週足・日足）のトレンド方向を確認した', sub: '月足→週足→日足の順で確認。3つが揃っていると優位性高い' },
@@ -1543,18 +1022,13 @@ const checkItems = {
 function initChecks() {
   Object.entries(checkItems).forEach(([id, items]) => {
     const c = document.getElementById(id); c.innerHTML = '';
-    items.forEach(item => {
-      const d = document.createElement('div'); d.className = 'check-item';
-      d.innerHTML = `<div class="check-box" onclick="toggleCheck(this)"></div><div><div class="check-label">${item.label}</div><div class="check-sub">${item.sub}</div></div>`;
-      c.appendChild(d);
-    });
+    items.forEach(item => { const d = document.createElement('div'); d.className = 'check-item'; d.innerHTML = `<div class="check-box" onclick="toggleCheck(this)"></div><div><div class="check-label">${item.label}</div><div class="check-sub">${item.sub}</div></div>`; c.appendChild(d); });
   });
   updateCheckProgress();
 }
 function toggleCheck(box) { box.classList.toggle('checked'); updateCheckProgress(); }
 function updateCheckProgress() {
-  const total = document.querySelectorAll('.check-box').length;
-  const done = document.querySelectorAll('.check-box.checked').length;
+  const total = document.querySelectorAll('.check-box').length, done = document.querySelectorAll('.check-box.checked').length;
   const pct = Math.round(done / total * 100);
   document.getElementById('checkProgress').style.width = pct + '%';
   document.getElementById('checkSummary').textContent = `${done} / ${total} 完了`;
@@ -1566,26 +1040,14 @@ function updateCheckProgress() {
   const el = document.getElementById('checkJudge'); el.textContent = judge; el.style.color = color;
 }
 function resetChecks() { document.querySelectorAll('.check-box').forEach(b => b.classList.remove('checked')); updateCheckProgress(); }
-initChecks();
-initEnvDateBar();
-initPasteZones();
+initChecks(); initEnvDateBar(); initPasteZones();
 
-// ===== ATR =====
 function calcATR() {
-  const atr = parseFloat(document.getElementById('atrVal').value);
-  const asia = parseFloat(document.getElementById('asiaRange').value) || 0;
-  const bal = parseFloat(document.getElementById('balance').value);
-  const riskPct = parseFloat(document.getElementById('riskPct').value) || 1;
-  const sl = parseFloat(document.getElementById('slPips').value);
-  const rr = parseFloat(document.getElementById('rrRatio').value);
+  const atr = parseFloat(document.getElementById('atrVal').value), asia = parseFloat(document.getElementById('asiaRange').value)||0, bal = parseFloat(document.getElementById('balance').value), riskPct = parseFloat(document.getElementById('riskPct').value)||1, sl = parseFloat(document.getElementById('slPips').value), rr = parseFloat(document.getElementById('rrRatio').value);
   if (!atr) return;
   document.getElementById('atrResult').style.display = 'block';
-  const remain = Math.max(0, atr - asia);
-  const tp = sl * rr;
-  const riskAmt = bal ? bal * riskPct / 100 : null;
-  const lot = (riskAmt && sl) ? riskAmt / (sl * 100) : null;
-  const lotRounded = lot ? Math.floor(lot * 100) / 100 : null;
-  const actualRisk = (lotRounded && sl) ? (lotRounded * 100 * sl) : null;
+  const remain = Math.max(0, atr - asia), tp = sl * rr, riskAmt = bal ? bal * riskPct / 100 : null, lot = (riskAmt && sl) ? riskAmt / (sl * 100) : null;
+  const lotRounded = lot ? Math.floor(lot * 100) / 100 : null, actualRisk = (lotRounded && sl) ? (lotRounded * 100 * sl) : null;
   document.getElementById('r_remain').textContent = remain.toFixed(1) + ' $/oz';
   document.getElementById('r_tp').textContent = tp ? tp.toFixed(1) + ' $/oz' : '-';
   document.getElementById('r_riskAmt').textContent = riskAmt ? '$' + riskAmt.toFixed(2) : '残高未入力';
@@ -1599,628 +1061,160 @@ function calcATR() {
   document.getElementById('r_judge').innerHTML = judge;
 }
 
-// ===== 心理タグ =====
-function togglePsycho(el, tag) {
-  const idx = selectedPsychoTags.indexOf(tag);
-  if (idx === -1) { selectedPsychoTags.push(tag); el.classList.add('selected-long'); }
-  else { selectedPsychoTags.splice(idx, 1); el.className = 'env-tag'; }
-}
+function togglePsycho(el, tag) { const idx = selectedPsychoTags.indexOf(tag); if (idx === -1) { selectedPsychoTags.push(tag); el.classList.add('selected-long'); } else { selectedPsychoTags.splice(idx, 1); el.className = 'env-tag'; } }
 
-// ===== ジャーナル =====
 async function addJournal() {
-  const type = document.getElementById('jType').value;
-  const pnlUsd = document.getElementById('jPnlUsd').value;
-  const pnlPips = document.getElementById('jPnlPips').value;
-  const slPips = document.getElementById('jSlPips').value;
-  const setup = document.getElementById('jSetup').value;
-  const situation = document.getElementById('jSituation').value;
-  const psychoNote = document.getElementById('jPsycho').value;
-  const note = document.getElementById('jNote').value;
-  const biasMonthly = document.getElementById('jBiasMonthly').value;
-  const biasWeekly = document.getElementById('jBiasWeekly').value;
-  const biasDaily = document.getElementById('jBiasDaily').value;
-  const direction = document.getElementById('jDirection').value;
+  const type=document.getElementById('jType').value, pnlUsd=document.getElementById('jPnlUsd').value, pnlPips=document.getElementById('jPnlPips').value, slPips=document.getElementById('jSlPips').value, setup=document.getElementById('jSetup').value, situation=document.getElementById('jSituation').value, psychoNote=document.getElementById('jPsycho').value, note=document.getElementById('jNote').value, biasMonthly=document.getElementById('jBiasMonthly').value, biasWeekly=document.getElementById('jBiasWeekly').value, biasDaily=document.getElementById('jBiasDaily').value, direction=document.getElementById('jDirection').value;
   if (!note && !setup && !situation) { alert('セットアップ・状況・メモのいずれかを入力してください'); return; }
-  const entry = {
-    id: Date.now(),
-    date: new Date().toLocaleDateString('ja-JP'),
-    type,
-    pnlUsd: pnlUsd ? parseFloat(pnlUsd) : null,
-    pnlPips: pnlPips ? parseFloat(pnlPips) : null,
-    slPips: slPips ? parseFloat(slPips) : null,
-    setup, situation, psychoTags: [...selectedPsychoTags], psychoNote,
-    note, biasMonthly, biasWeekly, biasDaily, direction,
-    img: jnlUploadDataUrl || null
-  };
+  const entry = { id: Date.now(), date: new Date().toLocaleDateString('ja-JP'), type, pnlUsd: pnlUsd?parseFloat(pnlUsd):null, pnlPips: pnlPips?parseFloat(pnlPips):null, slPips: slPips?parseFloat(slPips):null, setup, situation, psychoTags: [...selectedPsychoTags], psychoNote, note, biasMonthly, biasWeekly, biasDaily, direction, img: jnlUploadDataUrl||null };
   journals.unshift(entry);
   localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
-
   const notionResult = await saveJournalToNotion(entry).catch(e => ({ error: e.message }));
-  if (notionResult?.error) {
-    alert(`✅ 記録しました\n⚠️ Notion保存失敗: ${notionResult.error}`);
-  } else if (notionResult?.id) {
-    alert('✅ 記録しました！Notionにも同期しました！');
-  }
-
-  ['jPnlUsd', 'jPnlPips', 'jSlPips', 'jSetup', 'jSituation', 'jPsycho', 'jNote'].forEach(id => document.getElementById(id).value = '');
-  ['jBiasMonthly', 'jBiasWeekly', 'jBiasDaily', 'jDirection'].forEach(id => document.getElementById(id).value = '');
+  if (notionResult?.error) { alert(`✅ 記録しました\n⚠️ Notion保存失敗: ${notionResult.error}`); }
+  else if (notionResult?.id) { alert('✅ 記録しました！Notionにも同期しました！'); }
+  ['jPnlUsd','jPnlPips','jSlPips','jSetup','jSituation','jPsycho','jNote'].forEach(id => document.getElementById(id).value = '');
+  ['jBiasMonthly','jBiasWeekly','jBiasDaily','jDirection'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('jnlPreview').style.display = 'none';
   document.querySelectorAll('#psychoTags .env-tag').forEach(b => b.className = 'env-tag');
-  selectedPsychoTags = [];
-  jnlUploadDataUrl = null;
-  renderJournals();
+  selectedPsychoTags = []; jnlUploadDataUrl = null; renderJournals();
 }
-
 function renderJournals() {
   const list = document.getElementById('journalList');
   if (!journals.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;">まだ記録がありません</p>'; return; }
   const tl = { win: '✅ 勝ち', loss: '❌ 負け', pass: '⭕ 見送り成功', miss: '⚠️ 機会損失' };
   const bc = { win: 'badge-green', loss: 'badge-red', pass: 'badge-teal', miss: 'badge-amber' };
   list.innerHTML = journals.slice(0, 20).map(e => {
-    const pnlBadge = (() => {
-      if (e.pnlUsd !== null && e.pnlPips !== null)
-        return `<span class="badge ${e.pnlUsd >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlUsd >= 0 ? '+' : ''}$${e.pnlUsd.toFixed(2)} / ${e.pnlPips >= 0 ? '+' : ''}${e.pnlPips}pips</span>`;
-      if (e.pnlUsd !== null)
-        return `<span class="badge ${e.pnlUsd >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlUsd >= 0 ? '+' : ''}$${e.pnlUsd.toFixed(2)}</span>`;
-      if (e.pnlPips !== null)
-        return `<span class="badge ${e.pnlPips >= 0 ? 'badge-green' : 'badge-red'}">${e.pnlPips >= 0 ? '+' : ''}${e.pnlPips}pips</span>`;
-      if (e.pnl !== undefined && e.pnl !== null)
-        return `<span class="badge ${e.pnl >= 0 ? 'badge-green' : 'badge-red'}">${e.pnl >= 0 ? '+' : ''}¥${Math.abs(e.pnl).toLocaleString()}</span>`;
-      return '';
-    })();
-    const metaParts = [];
-    if (e.direction) metaParts.push(`方向: ${e.direction}`);
-    if (e.biasMonthly || e.biasWeekly || e.biasDaily)
-      metaParts.push(`月:${e.biasMonthly || '-'} 週:${e.biasWeekly || '-'} 日:${e.biasDaily || '-'}`);
-    if (e.slPips) metaParts.push(`SL: ${e.slPips}pips`);
-    if (e.psychoTags && e.psychoTags.length) metaParts.push(`心理: ${e.psychoTags.join(' ')}`);
-    return `
-    <div class="journal-entry ${e.type}">
-      <div class="entry-header">
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <span class="badge ${bc[e.type]}">${tl[e.type]}</span>
-          ${pnlBadge}
-        </div>
-        <span class="entry-date">${e.date}</span>
-      </div>
-      ${e.setup ? `<div style="font-size:12px;color:var(--muted);margin-bottom:6px;">📌 ${e.setup}</div>` : ''}
-      ${metaParts.length ? `<div class="entry-meta">${metaParts.map(p => `<span>${p}</span>`).join('')}</div>` : ''}
-      ${e.situation ? `<div style="font-size:12px;color:var(--accent);margin-top:8px;margin-bottom:4px;">📊 状況: ${e.situation}</div>` : ''}
-      ${e.psychoNote ? `<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>` : ''}
-      <div class="entry-body">${e.note}</div>
-      ${e.img ? `<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">` : ''}
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
-        <button class="btn btn-ghost btn-sm" onclick="deleteJournal('${e.id}')" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red);">🗑 削除</button>
-      </div>
-    </div>`;
+    const pnlBadge = (() => { if (e.pnlUsd!==null&&e.pnlPips!==null) return `<span class="badge ${e.pnlUsd>=0?'badge-green':'badge-red'}">${e.pnlUsd>=0?'+':''}$${e.pnlUsd.toFixed(2)} / ${e.pnlPips>=0?'+':''}${e.pnlPips}pips</span>`; if (e.pnlUsd!==null) return `<span class="badge ${e.pnlUsd>=0?'badge-green':'badge-red'}">${e.pnlUsd>=0?'+':''}$${e.pnlUsd.toFixed(2)}</span>`; if (e.pnlPips!==null) return `<span class="badge ${e.pnlPips>=0?'badge-green':'badge-red'}">${e.pnlPips>=0?'+':''}${e.pnlPips}pips</span>`; return ''; })();
+    const metaParts = []; if (e.direction) metaParts.push(`方向: ${e.direction}`); if (e.biasMonthly||e.biasWeekly||e.biasDaily) metaParts.push(`月:${e.biasMonthly||'-'} 週:${e.biasWeekly||'-'} 日:${e.biasDaily||'-'}`); if (e.slPips) metaParts.push(`SL: ${e.slPips}pips`); if (e.psychoTags&&e.psychoTags.length) metaParts.push(`心理: ${e.psychoTags.join(' ')}`);
+    return `<div class="journal-entry ${e.type}"><div class="entry-header"><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge ${bc[e.type]}">${tl[e.type]}</span>${pnlBadge}</div><span class="entry-date">${e.date}</span></div>${e.setup?`<div style="font-size:12px;color:var(--muted);margin-bottom:6px;">📌 ${e.setup}</div>`:''} ${metaParts.length?`<div class="entry-meta">${metaParts.map(p=>`<span>${p}</span>`).join('')}</div>`:''} ${e.situation?`<div style="font-size:12px;color:var(--accent);margin-top:8px;margin-bottom:4px;">📊 状況: ${e.situation}</div>`:''} ${e.psychoNote?`<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>`:''}<div class="entry-body">${e.note}</div>${e.img?`<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">`:''}<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);"><button class="btn btn-ghost btn-sm" onclick="deleteJournal('${e.id}')" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red);">🗑 削除</button></div></div>`;
   }).join('');
 }
-
-function deleteJournal(id) {
-  if (!confirm('この記録を削除しますか？')) return;
-  journals = journals.filter(j => String(j.id) !== String(id));
-  localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
-  renderJournals();
-  updateStats();
-}
+function deleteJournal(id) { if (!confirm('この記録を削除しますか？')) return; journals = journals.filter(j => String(j.id) !== String(id)); localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null })))); renderJournals(); updateStats(); }
 renderJournals();
 
-// ===== 統計 =====
 function updateStats() {
-  const total = journals.length;
-  const wins = journals.filter(j => j.type === 'win').length;
-  const losses = journals.filter(j => j.type === 'loss').length;
-  const pass = journals.filter(j => j.type === 'pass').length;
-  const miss = journals.filter(j => j.type === 'miss').length;
-  const pnlUsd = journals.reduce((s, j) => s + (j.pnlUsd !== undefined && j.pnlUsd !== null ? j.pnlUsd : (j.pnl ? j.pnl / 150 : 0)), 0);
-  const pnlPips = journals.reduce((s, j) => s + (j.pnlPips || 0), 0);
-  const wr = (wins + losses) > 0 ? Math.round(wins / (wins + losses) * 100) : 0;
-  document.getElementById('s_total').textContent = total;
-  document.getElementById('s_wr').textContent = wr + '%';
-  document.getElementById('s_pnl').textContent = (pnlUsd >= 0 ? '+' : '') + '$' + Math.abs(pnlUsd).toFixed(2);
-  document.getElementById('s_pnl').style.color = pnlUsd >= 0 ? 'var(--green)' : 'var(--red)';
-  document.getElementById('s_pips').textContent = (pnlPips >= 0 ? '+' : '') + pnlPips.toFixed(1);
-  document.getElementById('s_pips').style.color = pnlPips >= 0 ? 'var(--green)' : 'var(--red)';
-  document.getElementById('s_pass').textContent = pass;
-  document.getElementById('s_miss').textContent = miss;
-  const detail = document.getElementById('statsDetail');
-  if (!total) { detail.textContent = '記録が増えると分析が表示されます。'; return; }
-  detail.innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div>勝ち: <strong style="color:var(--green)">${wins}回</strong></div>
-      <div>負け: <strong style="color:var(--red)">${losses}回</strong></div>
-      <div>見送り成功: <strong style="color:var(--teal)">${pass}回</strong></div>
-      <div>機会損失: <strong style="color:var(--amber)">${miss}回</strong></div>
-    </div>
-    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
-      見送り成功率: <strong style="color:var(--accent)">${(pass + miss) > 0 ? Math.round(pass / (pass + miss) * 100) : 0}%</strong>
-    </div>`;
+  const total=journals.length, wins=journals.filter(j=>j.type==='win').length, losses=journals.filter(j=>j.type==='loss').length, pass=journals.filter(j=>j.type==='pass').length, miss=journals.filter(j=>j.type==='miss').length;
+  const pnlUsd=journals.reduce((s,j)=>s+(j.pnlUsd!==undefined&&j.pnlUsd!==null?j.pnlUsd:(j.pnl?j.pnl/150:0)),0), pnlPips=journals.reduce((s,j)=>s+(j.pnlPips||0),0);
+  const wr=(wins+losses)>0?Math.round(wins/(wins+losses)*100):0;
+  document.getElementById('s_total').textContent=total; document.getElementById('s_wr').textContent=wr+'%';
+  document.getElementById('s_pnl').textContent=(pnlUsd>=0?'+':'')+'$'+Math.abs(pnlUsd).toFixed(2); document.getElementById('s_pnl').style.color=pnlUsd>=0?'var(--green)':'var(--red)';
+  document.getElementById('s_pips').textContent=(pnlPips>=0?'+':'')+pnlPips.toFixed(1); document.getElementById('s_pips').style.color=pnlPips>=0?'var(--green)':'var(--red)';
+  document.getElementById('s_pass').textContent=pass; document.getElementById('s_miss').textContent=miss;
+  const detail=document.getElementById('statsDetail'); if(!total){detail.textContent='記録が増えると分析が表示されます。';return;}
+  detail.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div>勝ち: <strong style="color:var(--green)">${wins}回</strong></div><div>負け: <strong style="color:var(--red)">${losses}回</strong></div><div>見送り成功: <strong style="color:var(--teal)">${pass}回</strong></div><div>機会損失: <strong style="color:var(--amber)">${miss}回</strong></div></div><div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">見送り成功率: <strong style="color:var(--accent)">${(pass+miss)>0?Math.round(pass/(pass+miss)*100):0}%</strong></div>`;
 }
 async function analyzeStats() {
   if (!journals.length) { alert('記録がありません'); return; }
-  const summary = journals.slice(0, 30).map(j =>
-    `${j.date}[${j.type}] USD:${j.pnlUsd !== undefined ? j.pnlUsd : ''} pips:${j.pnlPips || ''} ` +
-    `月:${j.biasMonthly || ''} 週:${j.biasWeekly || ''} 日:${j.biasDaily || ''} ` +
-    `方向:${j.direction || ''} 心理:${(j.psychoTags || []).join(',')} ` +
-    `${j.setup || ''} ${j.situation || ''} ${j.note}`
-  ).join('\n');
-  document.getElementById('statsAI').style.display = 'block';
-  document.getElementById('statsAI').textContent = '分析中...';
-  try {
-    const res = await callClaude(`以下は直近のトレード記録です。負けパターン・改善点・強みを分析してください。心理状態と結果の相関にも注目してください。\n${summary}`);
-    document.getElementById('statsAI').textContent = res;
-  } catch (e) { document.getElementById('statsAI').textContent = 'エラーが発生しました。'; }
+  const summary = journals.slice(0, 30).map(j => `${j.date}[${j.type}] USD:${j.pnlUsd!==undefined?j.pnlUsd:''} pips:${j.pnlPips||''} 月:${j.biasMonthly||''} 週:${j.biasWeekly||''} 日:${j.biasDaily||''} 方向:${j.direction||''} 心理:${(j.psychoTags||[]).join(',')} ${j.setup||''} ${j.situation||''} ${j.note}`).join('\n');
+  document.getElementById('statsAI').style.display = 'block'; document.getElementById('statsAI').textContent = '分析中...';
+  try { const res = await callClaude(`以下は直近のトレード記録です。負けパターン・改善点・強みを分析してください。心理状態と結果の相関にも注目してください。\n${summary}`); document.getElementById('statsAI').textContent = res; }
+  catch (e) { document.getElementById('statsAI').textContent = 'エラーが発生しました。'; }
 }
 
-// ===== チャット =====
 let chatHistory = [];
 async function sendChat() {
-  const input = document.getElementById('chatInput');
-  const msg = input.value.trim(); if (!msg) return;
-  input.value = '';
-  appendChat('user', msg);
-  chatHistory.push({ role: 'user', content: msg });
-  const tid = appendTyping();
-  try {
-    const res = await callClaude(msg, chatHistory);
-    removeTyping(tid); appendChat('ai', res);
-    chatHistory.push({ role: 'assistant', content: res });
-    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
-  } catch (e) { removeTyping(tid); appendChat('ai', 'エラーが発生しました。もう一度お試しください。'); }
+  const input = document.getElementById('chatInput'), msg = input.value.trim(); if (!msg) return;
+  input.value = ''; appendChat('user', msg); chatHistory.push({ role: 'user', content: msg }); const tid = appendTyping();
+  try { const res = await callClaude(msg, chatHistory); removeTyping(tid); appendChat('ai', res); chatHistory.push({ role: 'assistant', content: res }); if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20); }
+  catch (e) { removeTyping(tid); appendChat('ai', 'エラーが発生しました。もう一度お試しください。'); }
 }
 function quickChat(msg) { document.getElementById('chatInput').value = msg; sendChat(); }
-function appendChat(role, text) {
-  const area = document.getElementById('chatArea');
-  const div = document.createElement('div'); div.className = `chat-msg ${role}`;
-  div.innerHTML = `<div class="chat-sender">${role === 'user' ? 'あなた' : 'Trade AI'}</div><div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
-  area.appendChild(div); area.scrollTop = area.scrollHeight;
-}
-function appendTyping() {
-  const area = document.getElementById('chatArea');
-  const id = 'typing-' + Date.now();
-  const div = document.createElement('div'); div.className = 'chat-msg ai'; div.id = id;
-  div.innerHTML = `<div class="chat-sender">Trade AI</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
-  area.appendChild(div); area.scrollTop = area.scrollHeight; return id;
-}
-function removeTyping(id) { const el = document.getElementById(id); if (el) el.remove(); }
+function appendChat(role, text) { const area = document.getElementById('chatArea'), div = document.createElement('div'); div.className = `chat-msg ${role}`; div.innerHTML = `<div class="chat-sender">${role==='user'?'あなた':'Trade AI'}</div><div class="chat-bubble">${text.replace(/\n/g,'<br>')}</div>`; area.appendChild(div); area.scrollTop = area.scrollHeight; }
+function appendTyping() { const area=document.getElementById('chatArea'), id='typing-'+Date.now(), div=document.createElement('div'); div.className='chat-msg ai'; div.id=id; div.innerHTML=`<div class="chat-sender">Trade AI</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`; area.appendChild(div); area.scrollTop=area.scrollHeight; return id; }
+function removeTyping(id) { const el=document.getElementById(id); if(el) el.remove(); }
 
-// ===== APIキー管理 =====
 function getApiKey() { return localStorage.getItem('anthropicApiKey') || ''; }
-function saveApiKey() {
-  const key = document.getElementById('apikeyInput').value.trim();
-  if (!key.startsWith('sk-ant-')) { alert('APIキーは sk-ant- で始まる文字列です。確認してください。'); return; }
-  localStorage.setItem('anthropicApiKey', key);
-  document.getElementById('apikeyModal').style.display = 'none';
-  alert('✅ APIキーを保存しました！AI機能が使えるようになりました。');
-}
-function closeApiKeyModal() { document.getElementById('apikeyModal').style.display = 'none'; }
-function openApiKeyModal() {
-  const modal = document.getElementById('apikeyModal');
-  modal.style.display = 'flex';
-  const existing = getApiKey();
-  if (existing) document.getElementById('apikeyInput').value = existing;
-  setTimeout(() => document.getElementById('apikeyInput').focus(), 100);
-}
-(function() {
-  if (location.hash.startsWith('#t=')) return;
-  if (!getApiKey()) setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800);
-})();
+function saveApiKey() { const key=document.getElementById('apikeyInput').value.trim(); if (!key.startsWith('sk-ant-')) { alert('APIキーは sk-ant- で始まる文字列です。確認してください。'); return; } localStorage.setItem('anthropicApiKey', key); document.getElementById('apikeyModal').style.display='none'; alert('✅ APIキーを保存しました！AI機能が使えるようになりました。'); }
+function closeApiKeyModal() { document.getElementById('apikeyModal').style.display='none'; }
+function openApiKeyModal() { const modal=document.getElementById('apikeyModal'); modal.style.display='flex'; const existing=getApiKey(); if(existing) document.getElementById('apikeyInput').value=existing; setTimeout(()=>document.getElementById('apikeyInput').focus(),100); }
+(function() { if (location.hash.startsWith('#t=')) return; if (!getApiKey()) setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800); })();
 
-// ===== Notion設定モーダル =====
 function getNotionToken() { return localStorage.getItem('notionToken') || ''; }
 function getNotionEnvDbId() { return localStorage.getItem('notionEnvDbId') || ''; }
+function openNotionModal() { const modal=document.getElementById('notionModal'); modal.style.display='flex'; const t=getNotionToken(),d=getNotionEnvDbId(),j=localStorage.getItem('notionJnlDbId')||'',w=localStorage.getItem('notionWorkerUrl')||''; if(t) document.getElementById('notionTokenInput').value=t; if(d) document.getElementById('notionEnvDbInput').value=d; if(j) document.getElementById('notionJnlDbInput').value=j; if(w) document.getElementById('notionWorkerUrlInput').value=w; document.getElementById('notionStatus').className='notion-status'; }
+function closeNotionModal() { document.getElementById('notionModal').style.display='none'; }
+function saveNotionSettings() { const token=document.getElementById('notionTokenInput').value.trim(), dbId=document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,''); if (!token) { alert('トークンを入力してください'); return; } if (!dbId) { alert('データベースIDを入力してください'); return; } const jnlDbId=document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,''); localStorage.setItem('notionToken',token); localStorage.setItem('notionEnvDbId',dbId); if(jnlDbId) localStorage.setItem('notionJnlDbId',jnlDbId); const workerUrl=document.getElementById('notionWorkerUrlInput').value.trim().replace(/\/+$/,''); if(workerUrl) localStorage.setItem('notionWorkerUrl',workerUrl); const st=document.getElementById('notionStatus'); st.className='notion-status ok'; st.textContent='✅ 設定を保存しました！'; setTimeout(()=>closeNotionModal(),1200); }
+async function testNotionConnection() { const token=document.getElementById('notionTokenInput').value.trim(), dbId=document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,''), workerUrl=(document.getElementById('notionWorkerUrlInput').value.trim()||localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''), st=document.getElementById('notionStatus'); if(!token||!dbId){alert('トークンとデータベースIDを入力してください');return;} if(!workerUrl){alert('Cloudflare Worker URLを入力してください');return;} st.className='notion-status loading';st.textContent='接続テスト中...'; try { const res=await fetch(`${workerUrl}/notion/databases/${dbId}`,{headers:{'X-Notion-Token':token}}), data=await res.json(); if(res.ok){st.className='notion-status ok';st.textContent=`✅ 接続成功！DB名: ${data.title?.[0]?.plain_text||'OK'}`;} else{st.className='notion-status err';st.textContent=`❌ エラー: ${data.message||data.error||res.status}`;} } catch(e){st.className='notion-status err';st.textContent=`❌ 接続失敗: ${e.message}`;} }
 
-function openNotionModal() {
-  const modal = document.getElementById('notionModal');
-  modal.style.display = 'flex';
-  const t = getNotionToken();
-  const d = getNotionEnvDbId();
-  const j = localStorage.getItem('notionJnlDbId') || '';
-  const w = localStorage.getItem('notionWorkerUrl') || '';
-  if (t) document.getElementById('notionTokenInput').value = t;
-  if (d) document.getElementById('notionEnvDbInput').value = d;
-  if (j) document.getElementById('notionJnlDbInput').value = j;
-  if (w) document.getElementById('notionWorkerUrlInput').value = w;
-  document.getElementById('notionStatus').className = 'notion-status';
-}
-function closeNotionModal() { document.getElementById('notionModal').style.display = 'none'; }
-function saveNotionSettings() {
-  const token = document.getElementById('notionTokenInput').value.trim();
-  const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
-  if (!token) { alert('トークンを入力してください'); return; }
-  if (!dbId)  { alert('データベースIDを入力してください'); return; }
-  const jnlDbId = document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,'');
-  localStorage.setItem('notionToken', token);
-  localStorage.setItem('notionEnvDbId', dbId);
-  if (jnlDbId) localStorage.setItem('notionJnlDbId', jnlDbId);
-  const workerUrl = document.getElementById('notionWorkerUrlInput').value.trim().replace(/\/+$/, '');
-  if (workerUrl) localStorage.setItem('notionWorkerUrl', workerUrl);
-  const st = document.getElementById('notionStatus');
-  st.className = 'notion-status ok';
-  st.textContent = '✅ 設定を保存しました！';
-  setTimeout(() => closeNotionModal(), 1200);
-}
-async function testNotionConnection() {
-  const token = document.getElementById('notionTokenInput').value.trim();
-  const dbId  = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
-  const workerUrl = (document.getElementById('notionWorkerUrlInput').value.trim() || localStorage.getItem('notionWorkerUrl') || '').replace(/\/+$/, '');
-  const st = document.getElementById('notionStatus');
-  if (!token || !dbId) { alert('トークンとデータベースIDを入力してください'); return; }
-  if (!workerUrl) { alert('Cloudflare Worker URLを入力してください'); return; }
-  st.className = 'notion-status loading'; st.textContent = '接続テスト中...';
-  try {
-    const res = await fetch(`${workerUrl}/notion/databases/${dbId}`, {
-      headers: { 'X-Notion-Token': token }
-    });
-    const data = await res.json();
-    if (res.ok) {
-      const name = data.title?.[0]?.plain_text || 'OK';
-      st.className = 'notion-status ok';
-      st.textContent = `✅ 接続成功！DB名: ${name}`;
-    } else {
-      st.className = 'notion-status err';
-      st.textContent = `❌ エラー: ${data.message || data.error || res.status}`;
-    }
-  } catch(e) {
-    st.className = 'notion-status err';
-    st.textContent = `❌ 接続失敗: ${e.message}`;
-  }
-}
-
-// ===== Notion DB セットアップ =====
 async function setupNotionDatabases() {
-  const token = document.getElementById('notionTokenInput').value.trim();
-  const envDbId = document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,'');
-  const jnlDbId = document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,'');
-  const workerUrl = (document.getElementById('notionWorkerUrlInput').value.trim() || localStorage.getItem('notionWorkerUrl') || '').replace(/\/+$/,'');
-  const st = document.getElementById('notionStatus');
-
-  if (!token || !workerUrl) {
-    alert('トークンとWorker URLを入力してください');
-    return;
-  }
-
-  st.className = 'notion-status loading';
-  st.textContent = 'DBセットアップ中...';
-
-  const envProps = {
-    '日付キー':    { rich_text: {} },
-    '月足バイアス': { select: { options: [
-      { name: 'ロング優位', color: 'green' },
-      { name: 'ショート優位', color: 'red' },
-      { name: 'レンジ', color: 'yellow' },
-      { name: '未設定', color: 'gray' }
-    ]}},
-    '週足バイアス': { select: { options: [
-      { name: 'ロング優位', color: 'green' },
-      { name: 'ショート優位', color: 'red' },
-      { name: 'レンジ', color: 'yellow' },
-      { name: '未設定', color: 'gray' }
-    ]}},
-    '日足バイアス': { select: { options: [
-      { name: 'ロング優位', color: 'green' },
-      { name: 'ショート優位', color: 'red' },
-      { name: 'レンジ', color: 'yellow' },
-      { name: '未設定', color: 'gray' }
-    ]}},
-    '月足足型': { rich_text: {} },
-    '週足足型': { rich_text: {} },
-    '日足足型': { rich_text: {} },
-    'AS高値':   { rich_text: {} },
-    'AS安値':   { rich_text: {} }
-  };
-
-  const jnlProps = {
-    '結果': { select: { options: [
-      { name: '勝ち', color: 'green' },
-      { name: '負け', color: 'red' },
-      { name: '見送り成功', color: 'blue' },
-      { name: '機会損失', color: 'yellow' }
-    ]}},
-    '損益USD':     { number: { format: 'dollar' } },
-    '損益pips':    { number: {} },
-    'SL幅pips':    { number: {} },
-    '月足バイアス': { rich_text: {} },
-    '週足バイアス': { rich_text: {} },
-    '日足バイアス': { rich_text: {} },
-    '方向':        { rich_text: {} },
-    '心理タグ':    { rich_text: {} }
-  };
-
-  const results = [];
-
-  const patchDb = async (dbId, props, label) => {
-    if (!dbId) { results.push('⬜ ' + label + ': DB ID未設定（スキップ）'); return; }
-    try {
-      const res = await fetch(workerUrl + '/notion/databases/' + dbId, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'X-Notion-Token': token },
-        body: JSON.stringify({ properties: props })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        results.push('✅ ' + label + ': セットアップ完了');
-      } else {
-        results.push('❌ ' + label + ': ' + (data.message || data.error || res.status));
-      }
-    } catch(e) {
-      results.push('❌ ' + label + ': ' + e.message);
-    }
-  };
-
-  await patchDb(envDbId, envProps, '環境認識DB');
-  if (jnlDbId) await patchDb(jnlDbId, jnlProps, '振り返りDB');
-
-  const allOk = results.every(r => r.startsWith('✅') || r.startsWith('⬜'));
-  st.className = 'notion-status ' + (allOk ? 'ok' : 'err');
-  st.innerHTML = results.join('<br>') + (allOk ? '<br><span style="font-size:11px;">この後「保存」を押してから通常どおり保存をお試しください</span>' : '');
+  const token=document.getElementById('notionTokenInput').value.trim(), envDbId=document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,''), jnlDbId=document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,''), workerUrl=(document.getElementById('notionWorkerUrlInput').value.trim()||localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''), st=document.getElementById('notionStatus');
+  if(!token||!workerUrl){alert('トークンとWorker URLを入力してください');return;}
+  st.className='notion-status loading';st.textContent='DBセットアップ中...';
+  const envProps={'日付キー':{rich_text:{}},'月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'日足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'月足足型':{rich_text:{}},'週足足型':{rich_text:{}},'日足足型':{rich_text:{}},'AS高値':{rich_text:{}},'AS安値':{rich_text:{}}};
+  const jnlProps={'結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}]}},'損益USD':{number:{format:'dollar'}},'損益pips':{number:{}},'SL幅pips':{number:{}},'月足バイアス':{rich_text:{}},'週足バイアス':{rich_text:{}},'日足バイアス':{rich_text:{}},'方向':{rich_text:{}},'心理タグ':{rich_text:{}}};
+  const results=[], patchDb=async(dbId,props,label)=>{ if(!dbId){results.push('⬜ '+label+': DB ID未設定（スキップ）');return;} try{const res=await fetch(workerUrl+'/notion/databases/'+dbId,{method:'PATCH',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify({properties:props})}),data=await res.json(); if(res.ok){results.push('✅ '+label+': セットアップ完了');}else{results.push('❌ '+label+': '+(data.message||data.error||res.status));}}catch(e){results.push('❌ '+label+': '+e.message);}};
+  await patchDb(envDbId,envProps,'環境認識DB'); if(jnlDbId) await patchDb(jnlDbId,jnlProps,'振り返りDB');
+  const allOk=results.every(r=>r.startsWith('✅')||r.startsWith('⬜')); st.className='notion-status '+(allOk?'ok':'err'); st.innerHTML=results.join('<br>')+(allOk?'<br><span style="font-size:11px;">この後「保存」を押してから通常どおり保存をお試しください</span>':'');
 }
 
-// ===== Notion連携（Cloudflare Worker経由） =====
-function getWorkerUrl() { return (localStorage.getItem('notionWorkerUrl') || '').replace(/\/+$/, ''); }
+function getWorkerUrl() { return (localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''); }
+async function notionPost(path, body, token) { const workerUrl=getWorkerUrl(); if(!workerUrl) throw new Error('Cloudflare Worker URLが未設定です（Notion設定モーダルで入力してください）'); const res=await fetch(`${workerUrl}${path}`,{method:'POST',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify(body)}); if(!res.ok){const err=await res.json().catch(()=>({})); throw new Error(err.message||err.error||'HTTP '+res.status);} return await res.json(); }
 
-async function notionPost(path, body, token) {
-  const workerUrl = getWorkerUrl();
-  if (!workerUrl) throw new Error('Cloudflare Worker URLが未設定です（Notion設定モーダルで入力してください）');
-  const res = await fetch(`${workerUrl}${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Notion-Token': token },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || err.error || 'HTTP ' + res.status);
-  }
-  return await res.json();
-}
-
-// ===== R2画像アップロード =====
 async function uploadImageToR2(base64DataUrl, prefix) {
-  const workerUrl = getWorkerUrl();
-  if (!workerUrl || !base64DataUrl) return null;
-  try {
-    const parts = base64DataUrl.split(',');
-    const meta = parts[0];
-    const data = parts[1];
-    const contentType = meta.match(/:(.*?);/)?.[1] || 'image/png';
-    const ext = contentType.split('/')[1] || 'png';
-    const filename = prefix + '-' + Date.now() + '.' + ext;
-    const res = await fetch(workerUrl + '/r2/upload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filename, contentType, data })
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Upload failed');
-    return result.url;
-  } catch(e) {
-    console.warn('R2 upload failed:', e.message);
-    return null;
-  }
+  const workerUrl=getWorkerUrl(); if(!workerUrl||!base64DataUrl) return null;
+  try { const parts=base64DataUrl.split(','), meta=parts[0], data=parts[1], contentType=meta.match(/:(.*?);/)?.[1]||'image/png', ext=contentType.split('/')[1]||'png', filename=prefix+'-'+Date.now()+'.'+ext;
+    const res=await fetch(workerUrl+'/r2/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename,contentType,data})}), result=await res.json();
+    if(!res.ok) throw new Error(result.error||'Upload failed'); return result.url;
+  } catch(e) { console.warn('R2 upload failed:',e.message); return null; }
 }
 
 async function saveEnvMemoToNotion(memo) {
-  const token = getNotionToken();
-  const dbId  = getNotionEnvDbId();
-  if (!token || !dbId) return null;
-
-  const [monthlyUrl, weeklyUrl, dailyUrl] = await Promise.all([
-    uploadImageToR2(memo.monthly?.img, 'monthly'),
-    uploadImageToR2(memo.weekly?.img,  'weekly'),
-    uploadImageToR2(memo.daily?.img,   'daily'),
-  ]);
-
-  const children = [];
-  const addSection = (heading, text) => {
-    if (!text) return;
-    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:heading}}] } });
-    children.push({ object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:text}}] } });
-  };
-  const addImage = (label, url) => {
-    if (!url) return;
-    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:label}}] } });
-    children.push({ object:'block', type:'image', image:{ type:'external', external:{ url } } });
-  };
-  addSection('🌙 月足メモ', memo.monthly?.note);
-  addImage('🌙 月足チャート', monthlyUrl);
-  addSection('📅 週足メモ', memo.weekly?.note);
-  addImage('📅 週足チャート', weeklyUrl);
-  addSection('📆 日足メモ', memo.daily?.note);
-  addImage('📆 日足チャート', dailyUrl);
-  addSection('🤖 AI分析結果', memo.aiResult);
-
-  const props = {
-    '名前':        { title: [{ text: { content: memo.dateLabel } }] },
-    '日付キー':    { rich_text: [{ text: { content: memo.dateKey } }] },
-    '月足バイアス': { select: { name: memo.monthly?.dir || '未設定' } },
-    '週足バイアス': { select: { name: memo.weekly?.dir  || '未設定' } },
-    '日足バイアス': { select: { name: memo.daily?.dir   || '未設定' } },
-    '月足足型':    { rich_text: [{ text: { content: memo.monthly?.candle || '' } }] },
-    '週足足型':    { rich_text: [{ text: { content: memo.weekly?.candle  || '' } }] },
-    '日足足型':    { rich_text: [{ text: { content: memo.daily?.candle   || '' } }] },
-    'AS高値':      { rich_text: [{ text: { content: String(memo.daily?.asiaH || '') } }] },
-    'AS安値':      { rich_text: [{ text: { content: String(memo.daily?.asiaL || '') } }] },
-  };
-
-  return await notionPost('/notion/pages', { parent:{ database_id: dbId }, properties: props, children }, token);
+  const token=getNotionToken(), dbId=getNotionEnvDbId(); if(!token||!dbId) return null;
+  const [monthlyUrl,weeklyUrl,dailyUrl]=await Promise.all([uploadImageToR2(memo.monthly?.img,'monthly'),uploadImageToR2(memo.weekly?.img,'weekly'),uploadImageToR2(memo.daily?.img,'daily')]);
+  const children=[], addSection=(heading,text)=>{if(!text)return;children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:heading}}]}});children.push({object:'block',type:'paragraph',paragraph:{rich_text:[{text:{content:text}}]}});}, addImage=(label,url)=>{if(!url)return;children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:label}}]}});children.push({object:'block',type:'image',image:{type:'external',external:{url}}});};
+  addSection('🌙 月足メモ',memo.monthly?.note);addImage('🌙 月足チャート',monthlyUrl);addSection('📅 週足メモ',memo.weekly?.note);addImage('📅 週足チャート',weeklyUrl);addSection('📆 日足メモ',memo.daily?.note);addImage('📆 日足チャート',dailyUrl);addSection('🤖 AI分析結果',memo.aiResult);
+  const props={'名前':{title:[{text:{content:memo.dateLabel}}]},'日付キー':{rich_text:[{text:{content:memo.dateKey}}]},'月足バイアス':{select:{name:memo.monthly?.dir||'未設定'}},'週足バイアス':{select:{name:memo.weekly?.dir||'未設定'}},'日足バイアス':{select:{name:memo.daily?.dir||'未設定'}},'月足足型':{rich_text:[{text:{content:memo.monthly?.candle||''}}]},'週足足型':{rich_text:[{text:{content:memo.weekly?.candle||''}}]},'日足足型':{rich_text:[{text:{content:memo.daily?.candle||''}}]},'AS高値':{rich_text:[{text:{content:String(memo.daily?.asiaH||'')}}]},'AS安値':{rich_text:[{text:{content:String(memo.daily?.asiaL||'')}}]}};
+  return await notionPost('/notion/pages',{parent:{database_id:dbId},properties:props,children},token);
 }
-
 async function saveJournalToNotion(entry) {
-  const token = getNotionToken();
-  const dbId  = localStorage.getItem('notionJnlDbId') || '';
-  if (!token || !dbId) return null;
-
-  const chartUrl = await uploadImageToR2(entry.img, 'journal');
-
-  const typeLabel = { win:'勝ち', loss:'負け', pass:'見送り成功', miss:'機会損失' };
-  const title = `${entry.date} ${typeLabel[entry.type] || entry.type}`;
-
-  const children = [];
-  const addSection = (heading, text) => {
-    if (!text) return;
-    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:heading}}] } });
-    children.push({ object:'block', type:'paragraph', paragraph:{ rich_text:[{text:{content:text}}] } });
-  };
-  addSection('📌 セットアップ', entry.setup);
-  addSection('📊 トレード時の状況', entry.situation);
-  addSection('🧠 心理状態', entry.psychoNote);
-  addSection('📝 良かった点 / 反省点', entry.note);
-  if (chartUrl) {
-    children.push({ object:'block', type:'heading_3', heading_3:{ rich_text:[{text:{content:'📈 チャート'}}] } });
-    children.push({ object:'block', type:'image', image:{ type:'external', external:{ url: chartUrl } } });
-  }
-
-  const props = {
-    '名前':        { title: [{ text: { content: title } }] },
-    '結果':        { select: { name: typeLabel[entry.type] || entry.type } },
-    '月足バイアス': { rich_text: [{ text: { content: entry.biasMonthly || '' } }] },
-    '週足バイアス': { rich_text: [{ text: { content: entry.biasWeekly  || '' } }] },
-    '日足バイアス': { rich_text: [{ text: { content: entry.biasDaily   || '' } }] },
-    '方向':        { rich_text: [{ text: { content: entry.direction || '' } }] },
-    '心理タグ':    { rich_text: [{ text: { content: (entry.psychoTags||[]).join(', ') } }] },
-  };
-  if (entry.pnlUsd  != null) props['損益USD']  = { number: entry.pnlUsd };
-  if (entry.pnlPips != null) props['損益pips'] = { number: entry.pnlPips };
-  if (entry.slPips  != null) props['SL幅pips'] = { number: entry.slPips };
-
-  return await notionPost('/notion/pages', { parent:{ database_id: dbId }, properties: props, children }, token);
+  const token=getNotionToken(), dbId=localStorage.getItem('notionJnlDbId')||''; if(!token||!dbId) return null;
+  const chartUrl=await uploadImageToR2(entry.img,'journal');
+  const typeLabel={win:'勝ち',loss:'負け',pass:'見送り成功',miss:'機会損失'}, title=`${entry.date} ${typeLabel[entry.type]||entry.type}`;
+  const children=[], addSection=(heading,text)=>{if(!text)return;children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:heading}}]}});children.push({object:'block',type:'paragraph',paragraph:{rich_text:[{text:{content:text}}]}});};
+  addSection('📌 セットアップ',entry.setup);addSection('📊 トレード時の状況',entry.situation);addSection('🧠 心理状態',entry.psychoNote);addSection('📝 良かった点 / 反省点',entry.note);
+  if(chartUrl){children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:'📈 チャート'}}]}});children.push({object:'block',type:'image',image:{type:'external',external:{url:chartUrl}}});}
+  const props={'名前':{title:[{text:{content:title}}]},'結果':{select:{name:typeLabel[entry.type]||entry.type}},'月足バイアス':{rich_text:[{text:{content:entry.biasMonthly||''}}]},'週足バイアス':{rich_text:[{text:{content:entry.biasWeekly||''}}]},'日足バイアス':{rich_text:[{text:{content:entry.biasDaily||''}}]},'方向':{rich_text:[{text:{content:entry.direction||''}}]},'心理タグ':{rich_text:[{text:{content:(entry.psychoTags||[]).join(', ')}}]}};
+  if(entry.pnlUsd!=null) props['損益USD']={number:entry.pnlUsd}; if(entry.pnlPips!=null) props['損益pips']={number:entry.pnlPips}; if(entry.slPips!=null) props['SL幅pips']={number:entry.slPips};
+  return await notionPost('/notion/pages',{parent:{database_id:dbId},properties:props,children},token);
 }
 
-// ===== QRコード転送 =====
 function openQRModal() {
-  const apiKey = getApiKey();
-  const notionToken = getNotionToken();
-  const notionEnvDbId = getNotionEnvDbId();
-  const notionJnlDbId = localStorage.getItem('notionJnlDbId') || '';
-  const workerUrl = localStorage.getItem('notionWorkerUrl') || '';
-
-  if (!apiKey) {
-    alert('APIキーが設定されていません。先に「🔑 APIキー設定」で入力してください。');
-    return;
-  }
-
-  const modal = document.getElementById('qrModal');
-  modal.style.display = 'flex';
-
-  const data = { ak: apiKey, nt: notionToken, ne: notionEnvDbId, nj: notionJnlDbId, nw: workerUrl };
-  const encoded = btoa(JSON.stringify(data));
-  const url = `${location.origin}${location.pathname}#t=${encoded}`;
-
-  const note = document.getElementById('qrNote');
-  const items = [
-    apiKey ? '✅ APIキー' : '❌ APIキー（未設定）',
-    notionToken ? '✅ Notionトークン' : '⬜ Notionトークン（未設定）',
-    notionEnvDbId ? '✅ 環境認識DB ID' : '⬜ 環境認識DB ID（未設定）',
-    notionJnlDbId ? '✅ 振り返りDB ID' : '⬜ 振り返りDB ID（未設定）',
-    workerUrl ? '✅ Worker URL' : '⬜ Worker URL（未設定）',
-  ];
-  note.innerHTML = '転送される設定：<br>' + items.join('<br>');
-
-  const wrap = document.getElementById('qrCanvas').parentNode;
-  generateQRSVG(url, wrap);
+  const apiKey=getApiKey(); if(!apiKey){alert('APIキーが設定されていません。先に「🔑 APIキー設定」で入力してください。');return;}
+  const modal=document.getElementById('qrModal'); modal.style.display='flex';
+  const notionToken=getNotionToken(),notionEnvDbId=getNotionEnvDbId(),notionJnlDbId=localStorage.getItem('notionJnlDbId')||'',workerUrl=localStorage.getItem('notionWorkerUrl')||'';
+  const data={ak:apiKey,nt:notionToken,ne:notionEnvDbId,nj:notionJnlDbId,nw:workerUrl}, encoded=btoa(JSON.stringify(data)), url=`${location.origin}${location.pathname}#t=${encoded}`;
+  const items=[apiKey?'✅ APIキー':'❌ APIキー（未設定）',notionToken?'✅ Notionトークン':'⬜ Notionトークン（未設定）',notionEnvDbId?'✅ 環境認識DB ID':'⬜ 環境認識DB ID（未設定）',notionJnlDbId?'✅ 振り返りDB ID':'⬜ 振り返りDB ID（未設定）',workerUrl?'✅ Worker URL':'⬜ Worker URL（未設定）'];
+  document.getElementById('qrNote').innerHTML='転送される設定：<br>'+items.join('<br>');
+  generateQRSVG(url, document.getElementById('qrCanvas').parentNode);
 }
-
-function closeQRModal() {
-  document.getElementById('qrModal').style.display = 'none';
-}
-
+function closeQRModal() { document.getElementById('qrModal').style.display='none'; }
 function copyBookmarkUrl() {
-  const apiKey = getApiKey();
-  const notionToken = getNotionToken();
-  const notionEnvDbId = getNotionEnvDbId();
-  const notionJnlDbId = localStorage.getItem('notionJnlDbId') || '';
-  const workerUrl = localStorage.getItem('notionWorkerUrl') || '';
-  const data = { ak: apiKey, nt: notionToken, ne: notionEnvDbId, nj: notionJnlDbId, nw: workerUrl };
-  const encoded = btoa(JSON.stringify(data));
-  const url = `${location.origin}${location.pathname}#t=${encoded}`;
-  navigator.clipboard.writeText(url).then(() => {
-    document.getElementById('bookmarkNote').style.display = 'block';
-  }).catch(() => {
-    prompt('このURLをコピーしてSafariで開いてください:', url);
-  });
+  const apiKey=getApiKey(),notionToken=getNotionToken(),notionEnvDbId=getNotionEnvDbId(),notionJnlDbId=localStorage.getItem('notionJnlDbId')||'',workerUrl=localStorage.getItem('notionWorkerUrl')||'';
+  const data={ak:apiKey,nt:notionToken,ne:notionEnvDbId,nj:notionJnlDbId,nw:workerUrl}, encoded=btoa(JSON.stringify(data)), url=`${location.origin}${location.pathname}#t=${encoded}`;
+  navigator.clipboard.writeText(url).then(()=>{document.getElementById('bookmarkNote').style.display='block';}).catch(()=>{prompt('このURLをコピーしてSafariで開いてください:',url);});
 }
-
 function generateQRSVG(text, wrap) {
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
-  script.onload = () => {
-    try {
-      const qr = qrcode(0, 'M');
-      qr.addData(text);
-      qr.make();
-      const size = 200;
-      const cellSize = Math.floor(size / qr.getModuleCount());
-      const svgTag = qr.createSvgTag(cellSize, 0);
-      wrap.innerHTML = svgTag;
-      wrap.querySelector('svg').style.cssText = 'width:200px;height:200px;';
-    } catch(e) {
-      showCopyFallback(text, wrap);
-    }
-  };
-  script.onerror = () => showCopyFallback(text, wrap);
-  document.head.appendChild(script);
+  const script=document.createElement('script'); script.src='https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
+  script.onload=()=>{ try{ const qr=qrcode(0,'M'); qr.addData(text); qr.make(); const size=200, cellSize=Math.floor(size/qr.getModuleCount()), svgTag=qr.createSvgTag(cellSize,0); wrap.innerHTML=svgTag; wrap.querySelector('svg').style.cssText='width:200px;height:200px;'; }catch(e){showCopyFallback(text,wrap);} };
+  script.onerror=()=>showCopyFallback(text,wrap); document.head.appendChild(script);
 }
-
 function showCopyFallback(url, wrap) {
-  wrap.innerHTML = '';
-  const div = document.createElement('div');
-  div.style.cssText = 'width:200px;padding:16px;text-align:center;';
-  const msg = document.createElement('div');
-  msg.style.cssText = 'font-size:13px;color:#7a8099;margin-bottom:12px;';
-  msg.innerHTML = 'QR生成できませんでした<br>下のボタンでURLをコピーして<br>スマホのブラウザに貼り付けてください';
-  const btn = document.createElement('button');
-  btn.style.cssText = 'background:#4f8ef7;color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:13px;cursor:pointer;width:100%;';
-  btn.textContent = '📋 URLをコピー';
-  btn.onclick = () => {
-    navigator.clipboard.writeText(url).then(() => { btn.textContent = '✅ コピーしました！'; });
-  };
-  div.appendChild(msg);
-  div.appendChild(btn);
-  wrap.appendChild(div);
+  wrap.innerHTML=''; const div=document.createElement('div'); div.style.cssText='width:200px;padding:16px;text-align:center;';
+  const msg=document.createElement('div'); msg.style.cssText='font-size:13px;color:#7a8099;margin-bottom:12px;'; msg.innerHTML='QR生成できませんでした<br>下のボタンでURLをコピーして<br>スマホのブラウザに貼り付けてください';
+  const btn=document.createElement('button'); btn.style.cssText='background:#4f8ef7;color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:13px;cursor:pointer;width:100%;'; btn.textContent='📋 URLをコピー'; btn.onclick=()=>{navigator.clipboard.writeText(url).then(()=>{btn.textContent='✅ コピーしました！';});};
+  div.appendChild(msg); div.appendChild(btn); wrap.appendChild(div);
 }
-
-// ===== URL転送データの自動読み込み =====
 (function() {
-  const hash = location.hash;
-  if (!hash.startsWith('#t=')) return;
-  try {
-    const encoded = hash.replace('#t=', '');
-    const data = JSON.parse(atob(encoded));
-    if (data.ak) localStorage.setItem('anthropicApiKey', data.ak);
-    if (data.nt) localStorage.setItem('notionToken', data.nt);
-    if (data.ne) localStorage.setItem('notionEnvDbId', data.ne);
-    if (data.nj) localStorage.setItem('notionJnlDbId', data.nj);
-    if (data.nw) localStorage.setItem('notionWorkerUrl', data.nw);
-    document.getElementById('apikeyModal').style.display = 'none';
-  } catch(e) {
-    console.warn('Transfer data parse error:', e);
-  }
+  const hash=location.hash; if(!hash.startsWith('#t=')) return;
+  try { const encoded=hash.replace('#t=',''), data=JSON.parse(atob(encoded)); if(data.ak) localStorage.setItem('anthropicApiKey',data.ak); if(data.nt) localStorage.setItem('notionToken',data.nt); if(data.ne) localStorage.setItem('notionEnvDbId',data.ne); if(data.nj) localStorage.setItem('notionJnlDbId',data.nj); if(data.nw) localStorage.setItem('notionWorkerUrl',data.nw); document.getElementById('apikeyModal').style.display='none'; } catch(e) { console.warn('Transfer data parse error:',e); }
 })();
 
-// ===== Claude API =====
 async function callClaude(userMsg, history = []) {
-  const apiKey = getApiKey();
-  if (!apiKey) { openApiKeyModal(); throw new Error('APIキーが設定されていません'); }
-  const messages = (history.length > 0 && history[history.length - 1].role === 'user')
-    ? history : [...history, { role: 'user', content: userMsg }];
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1000, system: SYSTEM_PROMPT, messages })
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    const msg = err.error?.message || 'HTTP ' + res.status;
-    if (res.status === 401) { localStorage.removeItem('anthropicApiKey'); openApiKeyModal(); throw new Error('APIキーが無効です。再設定してください。'); }
-    throw new Error(msg);
-  }
-  const data = await res.json();
-  return data.content?.[0]?.text || 'レスポンスが空でした';
+  const apiKey=getApiKey(); if(!apiKey){openApiKeyModal();throw new Error('APIキーが設定されていません');}
+  const messages=(history.length>0&&history[history.length-1].role==='user')?history:[...history,{role:'user',content:userMsg}];
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1000,system:SYSTEM_PROMPT,messages})});
+  if(!res.ok){const err=await res.json().catch(()=>({}));const msg=err.error?.message||'HTTP '+res.status;if(res.status===401){localStorage.removeItem('anthropicApiKey');openApiKeyModal();throw new Error('APIキーが無効です。再設定してください。');}throw new Error(msg);}
+  const data=await res.json(); return data.content?.[0]?.text||'レスポンスが空でした';
 }
 </script>
 </body>
