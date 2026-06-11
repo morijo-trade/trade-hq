@@ -10,6 +10,7 @@
   --bg:#0d0f14;--bg2:#141720;--bg3:#1c2030;--bg4:#242840;
   --border:#2a2f45;--text:#e8eaf0;--muted:#7a8099;
   --accent:#4f8ef7;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--teal:#14b8a6;
+  --purple:#a78bfa;
   --r:10px;--font:'Noto Sans JP',sans-serif;--mono:'JetBrains Mono',monospace;
   --nav-h:60px;
 }
@@ -53,6 +54,7 @@ select option{background:var(--bg3);}
 .badge-amber{background:rgba(245,158,11,.15);color:var(--amber);}
 .badge-blue{background:rgba(79,142,247,.15);color:var(--accent);}
 .badge-teal{background:rgba(20,184,166,.15);color:var(--teal);}
+.badge-purple{background:rgba(167,139,250,.15);color:var(--purple);}
 .check-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
 .check-item:last-child{border-bottom:none;}
 .check-box{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:1px;}
@@ -66,7 +68,6 @@ select option{background:var(--bg3);}
 .calc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
 .calc-row:last-child{border-bottom:none;}
 .calc-val{font-family:var(--mono);font-size:14px;font-weight:600;}
-/* ===== 環境認識タイムフレームタブ ===== */
 .tf-tabs{display:flex;gap:0;margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
 .tf-tab{flex:1;padding:9px;border:none;background:var(--bg3);color:var(--muted);font-size:12px;font-family:var(--font);font-weight:500;cursor:pointer;transition:all .15s;border-right:1px solid var(--border);}
 .tf-tab:last-child{border-right:none;}
@@ -78,9 +79,38 @@ select option{background:var(--bg3);}
 .tf-label.monthly{color:#a78bfa;background:rgba(167,139,250,.1);}
 .tf-label.weekly{color:var(--amber);background:rgba(245,158,11,.1);}
 .tf-label.daily{color:var(--teal);background:rgba(20,184,166,.1);}
-/* ===== 引き継ぎバナー ===== */
 .autofill-banner{display:flex;align-items:center;gap:8px;padding:7px 12px;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.25);border-radius:7px;margin-bottom:12px;font-size:12px;color:var(--accent);}
 .autofill-banner.weekly{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:var(--amber);}
+/* ===== 上位足コンテキスト（振り返りノート用） ===== */
+.ctx-panel{background:var(--bg3);border-radius:8px;padding:0;margin-bottom:12px;overflow:hidden;border:1px solid var(--border);}
+.ctx-panel-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;user-select:none;}
+.ctx-panel-header:hover{background:var(--bg4);}
+.ctx-panel-title{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
+.ctx-panel-preview{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.ctx-panel-body{padding:14px;border-top:1px solid var(--border);display:none;}
+.ctx-panel-body.open{display:block;}
+.ctx-chevron{font-size:11px;color:var(--muted);transition:transform .2s;}
+.ctx-chevron.open{transform:rotate(180deg);}
+.ctx-tf-row{display:flex;align-items:stretch;gap:10px;margin-bottom:12px;}
+.ctx-tf-row:last-child{margin-bottom:0;}
+.ctx-img-box{width:96px;flex-shrink:0;border-radius:6px;border:1px solid var(--border);background:var(--bg4);overflow:hidden;display:flex;flex-direction:column;}
+.ctx-img-label{font-size:9px;font-weight:600;padding:3px 6px;letter-spacing:.3px;}
+.ctx-img-label.monthly{background:rgba(167,139,250,.15);color:var(--purple);}
+.ctx-img-label.weekly{background:rgba(245,158,11,.12);color:var(--amber);}
+.ctx-img-thumb{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.ctx-img-thumb img{width:100%;height:100%;object-fit:cover;cursor:pointer;}
+.ctx-img-thumb .no-img{font-size:18px;color:var(--muted);}
+.ctx-info{flex:1;display:flex;flex-direction:column;gap:5px;}
+.ctx-info-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.ctx-info-key{color:var(--muted);}
+.ctx-info-val{font-weight:500;color:var(--text);}
+.ctx-note-mini{font-size:11px;color:var(--muted);line-height:1.5;margin-top:4px;background:var(--bg4);border-radius:5px;padding:5px 8px;}
+.ctx-align-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;background:var(--bg4);border-radius:6px;margin-top:8px;}
+.ctx-align-label{font-size:11px;color:var(--muted);}
+.ctx-align-ok{font-size:12px;font-weight:600;color:var(--green);}
+.ctx-align-warn{font-size:12px;font-weight:600;color:var(--amber);}
+/* オートフィルバナー（ジャーナル用） */
+.jnl-autofill-banner{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:7px;margin-bottom:10px;font-size:12px;color:var(--purple);}
 /* ===== ジャーナル ===== */
 .journal-entry{background:var(--bg3);border-radius:8px;padding:14px;margin-bottom:10px;border-left:3px solid transparent;}
 .journal-entry.win{border-left-color:var(--green);}
@@ -187,30 +217,12 @@ select option{background:var(--bg3);}
   .preview-img{max-height:200px;}
   .entry-img{max-height:180px;}
   textarea{min-height:90px;}
+  .ctx-tf-row{flex-direction:column;}
+  .ctx-img-box{width:100%;min-height:80px;}
+  .ctx-img-thumb{min-height:80px;}
 }
-/* ===== 環境認識 日付・履歴 ===== */
 .env-date-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 .env-date-bar select,.env-date-bar input{width:auto;font-size:14px;padding:7px 10px;}
-.env-history-item{background:var(--bg3);border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid var(--border);cursor:pointer;transition:all .15s;}
-.env-history-item:hover{border-left-color:var(--accent);background:var(--bg4);}
-.env-history-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.env-history-date{font-size:12px;font-weight:600;color:var(--accent);font-family:var(--mono);}
-.env-history-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
-.env-history-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--bg4);color:var(--muted);}
-.env-imgs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;}
-.env-imgs-grid img{width:100%;height:90px;object-fit:cover;border-radius:6px;cursor:pointer;border:1px solid var(--border);}
-.paste-zone{border:2px dashed var(--border);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;outline:none;}
-.paste-zone:hover,.paste-zone.drag-over{border-color:var(--accent);background:rgba(79,142,247,.06);}
-.paste-zone.paste-active{border-color:var(--accent);border-style:solid;background:rgba(79,142,247,.1);box-shadow:0 0 0 3px rgba(79,142,247,.2);}
-.paste-zone.paste-active .paste-hint{color:var(--accent) !important;}
-.paste-zone p{font-size:12px;color:var(--muted);margin:0;}
-.paste-zone .paste-hint{font-size:11px;color:var(--muted);margin-top:2px;}
-.paste-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-@media(max-width:640px){
-  .env-imgs-grid{grid-template-columns:1fr 1fr;}
-  .env-date-bar select,.env-date-bar input{font-size:16px !important;}
-}
-/* ===== 環境認識ログ 一覧 ===== */
 .month-group{margin-bottom:28px;}
 .month-group-label{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .month-group-label::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -255,7 +267,6 @@ select option{background:var(--bg3);}
   .hist-meta-grid{grid-template-columns:1fr;}
   .hist-card-header{padding:10px 12px;}
 }
-/* ===== APIキー設定モーダル ===== */
 .apikey-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .apikey-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:440px;width:100%;}
 .apikey-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
@@ -265,14 +276,12 @@ select option{background:var(--bg3);}
 .apikey-box input::placeholder{color:var(--muted);font-size:12px;}
 .apikey-actions{display:flex;gap:10px;margin-top:6px;}
 .apikey-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6;padding:10px;background:var(--bg3);border-radius:6px;}
-/* ===== QR転送モーダル ===== */
 .qr-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .qr-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:380px;width:100%;text-align:center;}
 .qr-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
 .qr-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
 .qr-canvas-wrap{background:#fff;border-radius:10px;padding:16px;display:inline-block;margin-bottom:16px;}
 .qr-note{font-size:11px;color:var(--muted);line-height:1.7;padding:10px;background:var(--bg3);border-radius:6px;text-align:left;}
-/* ===== Notion設定モーダル ===== */
 .notion-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .notion-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;}
 .notion-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
@@ -284,6 +293,13 @@ select option{background:var(--bg3);}
 .notion-status.ok{background:rgba(34,197,94,.15);color:var(--green);display:block;}
 .notion-status.err{background:rgba(239,68,68,.15);color:var(--red);display:block;}
 .notion-status.loading{background:var(--bg3);color:var(--muted);display:block;}
+.paste-zone{border:2px dashed var(--border);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;outline:none;}
+.paste-zone:hover,.paste-zone.drag-over{border-color:var(--accent);background:rgba(79,142,247,.06);}
+.paste-zone.paste-active{border-color:var(--accent);border-style:solid;background:rgba(79,142,247,.1);box-shadow:0 0 0 3px rgba(79,142,247,.2);}
+.paste-zone.paste-active .paste-hint{color:var(--accent) !important;}
+.paste-zone p{font-size:12px;color:var(--muted);margin:0;}
+.paste-zone .paste-hint{font-size:11px;color:var(--muted);margin-top:2px;}
+.paste-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 </style>
 </head>
 <body>
@@ -306,7 +322,7 @@ select option{background:var(--bg3);}
 <div class="notion-modal" id="notionModal" style="display:none;">
   <div class="notion-box">
     <h2>📓 Notion連携設定</h2>
-    <p>NotionのアクセストークンとデータベースIDを設定してください。保存時にClaude AI経由で自動的にNotionへ書き込まれます（CORSエラー回避）。</p>
+    <p>NotionのアクセストークンとデータベースIDを設定してください。</p>
     <label>Notionアクセストークン（ntn_で始まる）</label>
     <input type="password" id="notionTokenInput" placeholder="ntn_..." autocomplete="off" spellcheck="false">
     <label>環境認識メモ データベースID</label>
@@ -339,7 +355,7 @@ select option{background:var(--bg3);}
       <button class="btn btn-primary" style="flex:1;" onclick="saveApiKey()">💾 保存して使う</button>
       <button class="btn btn-ghost" onclick="closeApiKeyModal()">あとで</button>
     </div>
-    <div class="apikey-note">🔒 キーはブラウザのlocalStorageに保存されます。ファイルには書き込まれません。<br>📋 取得先: <span style="color:var(--accent);">console.anthropic.com</span> → APIキー</div>
+    <div class="apikey-note">🔒 キーはブラウザのlocalStorageに保存されます。<br>📋 取得先: <span style="color:var(--accent);">console.anthropic.com</span> → APIキー</div>
   </div>
 </div>
 
@@ -400,7 +416,6 @@ select option{background:var(--bg3);}
           <button class="tf-tab" onclick="switchTF('weekly',this)"><span class="tf-icon">📅</span>週足</button>
           <button class="tf-tab" onclick="switchTF('daily',this)"><span class="tf-icon">📆</span>日足</button>
         </div>
-        <!-- 月足パネル -->
         <div class="tf-panel active" id="tf-monthly">
           <div id="autofill-banner-monthly"></div>
           <div class="tf-label monthly">🌙 月足</div>
@@ -416,7 +431,6 @@ select option{background:var(--bg3);}
           <div style="margin-bottom:8px;"><label>月足の主要節目・意識ライン</label><input id="keyLevel-monthly" type="text" placeholder="例: 3000, 3200（心理的節目）"></div>
           <label>月足メモ</label><textarea id="envNote-monthly" placeholder="月足で見えるトレンド・大局観など"></textarea>
         </div>
-        <!-- 週足パネル -->
         <div class="tf-panel" id="tf-weekly">
           <div id="autofill-banner-weekly"></div>
           <div class="tf-label weekly">📅 週足</div>
@@ -432,7 +446,6 @@ select option{background:var(--bg3);}
           <div style="margin-bottom:8px;"><label>週足の主要節目・意識ライン</label><input id="keyLevel-weekly" type="text" placeholder="例: 3280（先週安値）, 3320（先々週高値）"></div>
           <label>週足メモ</label><textarea id="envNote-weekly" placeholder="週足で見えるトレンド・節目・週ボラ残余など"></textarea>
         </div>
-        <!-- 日足パネル -->
         <div class="tf-panel" id="tf-daily">
           <div class="tf-label daily">📆 日足</div>
           <div class="env-row" id="dirRow-daily">
@@ -452,7 +465,6 @@ select option{background:var(--bg3);}
           <label>日足メモ</label><textarea id="envNote-daily" placeholder="ヘッドラインレート・アジア高安・当日バイアスなど"></textarea>
         </div>
       </div>
-      <!-- スクショ -->
       <div class="card">
         <div class="card-title">📷 チャートスクショ</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">画像を貼り付け(Ctrl+V / 長押しペースト) またはタップして添付</div>
@@ -482,7 +494,7 @@ select option{background:var(--bg3);}
       </div>
       <div style="border-top:2px solid var(--border);margin-top:8px;padding-top:20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
-          <div><div class="page-title" style="font-size:17px;">🗂 環境認識ログ</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">保存した記録の一覧 — 月ごとにまとめて表示</div></div>
+          <div><div class="page-title" style="font-size:17px;">🗂 環境認識ログ</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">保存した記録の一覧</div></div>
           <div style="display:flex;gap:8px;align-items:center;">
             <select id="histFilterYear" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;"><option value="">全年</option></select>
             <select id="histFilterMonth" onchange="renderEnvHistory()" style="width:auto;font-size:12px;padding:6px 10px;"><option value="">全月</option><option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option><option value="5">5月</option><option value="6">6月</option><option value="7">7月</option><option value="8">8月</option><option value="9">9月</option><option value="10">10月</option><option value="11">11月</option><option value="12">12月</option></select>
@@ -512,7 +524,7 @@ select option{background:var(--bg3);}
     <!-- ===== ATR計算機 ===== -->
     <div class="page" id="page-atr">
       <div class="page-title">ATR・ポジション計算機</div>
-      <div class="page-sub">海外口座（1ロット = 100oz）でのロット計算　※国内100枚 = 海外1ロット相当</div>
+      <div class="page-sub">海外口座（1ロット = 100oz）でのロット計算</div>
       <div class="card"><div class="card-title">市場・ボラティリティ</div><div class="grid2"><div><label>ATR（日足5期間）</label><input id="atrVal" type="number" placeholder="例: 28.5" oninput="calcATR()"></div><div><label>アジア消費値幅</label><input id="asiaRange" type="number" placeholder="例: 12.0" oninput="calcATR()"></div></div></div>
       <div class="card"><div class="card-title">口座・リスク設定</div><div class="grid2"><div><label>口座残高（USD）</label><input id="balance" type="number" placeholder="例: 5000" oninput="calcATR()"></div><div><label>許容損失（%）</label><input id="riskPct" type="number" placeholder="例: 1" oninput="calcATR()"></div></div></div>
       <div class="card"><div class="card-title">トレード設定</div><div class="grid2"><div><label>損切り幅（ドル / oz）</label><input id="slPips" type="number" placeholder="例: 8.0" oninput="calcATR()"></div><div><label>RR比率</label><select id="rrRatio" onchange="calcATR()"><option value="1.5">1:1.5</option><option value="2" selected>1:2</option><option value="2.5">1:2.5</option><option value="3">1:3</option></select></div></div></div>
@@ -521,11 +533,10 @@ select option{background:var(--bg3);}
         <div class="calc-row"><span>ATR残余力</span><span class="calc-val" id="r_remain" style="color:var(--teal)">-</span></div>
         <div class="calc-row"><span>利確目標（RR基準）</span><span class="calc-val" id="r_tp" style="color:var(--green)">-</span></div>
         <div class="calc-row"><span>許容損失額（USD）</span><span class="calc-val" id="r_riskAmt" style="color:var(--red)">-</span></div>
-        <div class="calc-row"><div><div>推奨ロット（海外口座）</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">1ロット = 100oz　※国内換算も表示</div></div><div style="text-align:right;"><div class="calc-val" id="r_lot" style="color:var(--accent)">-</div><div style="font-size:11px;color:var(--muted);margin-top:2px;" id="r_lot_domestic">-</div></div></div>
+        <div class="calc-row"><div><div>推奨ロット（海外口座）</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">1ロット = 100oz</div></div><div style="text-align:right;"><div class="calc-val" id="r_lot" style="color:var(--accent)">-</div><div style="font-size:11px;color:var(--muted);margin-top:2px;" id="r_lot_domestic">-</div></div></div>
         <div class="calc-row"><span>リスク金額（損切り時）</span><span class="calc-val" id="r_actual_risk" style="color:var(--amber)">-</span></div>
         <div class="calc-row"><span>判定</span><span id="r_judge">-</span></div>
       </div>
-      <div class="card" style="margin-top:4px;padding:12px 16px;"><div class="card-title">換算メモ</div><div style="font-size:12px;color:var(--muted);line-height:1.9;">🌍 海外口座: 1ロット = 100oz（Gold 100オンス）<br>🇯🇵 国内口座: 1枚 = 1oz → 国内100枚 = 海外1ロット<br>💰 損益計算: ロット × 100 × 値幅($/oz) = 損益(USD)</div></div>
     </div>
 
     <!-- ===== 振り返りノート ===== -->
@@ -545,6 +556,107 @@ select option{background:var(--bg3);}
       </div>
       <div class="card">
         <div class="card-title">新規記録</div>
+
+        <!-- ===== 上位足コンテキスト（自動引き継ぎ＋手動修正） ===== -->
+        <div id="jnlCtxBanner"></div>
+        <div style="background:var(--bg3);border-radius:8px;padding:12px 14px;margin-bottom:14px;border:1px solid var(--border);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div style="font-size:12px;font-weight:600;color:var(--text);">📊 上位足コンテキスト（月足・週足）</div>
+            <button class="btn btn-ghost btn-sm" onclick="autoFillJournalContext()" style="font-size:11px;padding:5px 10px;">🔄 環境認識から再読込</button>
+          </div>
+          <!-- 月足コンテキスト -->
+          <div style="margin-bottom:12px;">
+            <div class="tf-label monthly" style="margin-bottom:8px;">🌙 月足</div>
+            <div class="grid2" style="margin-bottom:8px;">
+              <div>
+                <label style="font-size:11px;">月足バイアス</label>
+                <select id="jCtxMonthlyDir">
+                  <option value="">未設定</option>
+                  <option value="ロング優位">↑ ロング優位</option>
+                  <option value="ショート優位">↓ ショート優位</option>
+                  <option value="レンジ">↔ レンジ</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:11px;">月足足型</label>
+                <select id="jCtxMonthlyCandle">
+                  <option value="">選択...</option>
+                  <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
+                  <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
+                  <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
+                  <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
+                  <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
+                  <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
+                  <option>十字線（ドージ）</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-bottom:6px;"><label style="font-size:11px;">月足 節目・意識ライン</label><input id="jCtxMonthlyKey" type="text" placeholder="例: 3000, 3200"></div>
+            <div><label style="font-size:11px;">月足メモ（任意修正可）</label><textarea id="jCtxMonthlyNote" placeholder="月足の大局観..." style="min-height:52px;"></textarea></div>
+            <!-- 月足チャート画像 -->
+            <div style="margin-top:8px;">
+              <label style="font-size:11px;">月足チャート画像</label>
+              <div id="jCtxMonthlyImgWrap">
+                <div id="jCtxMonthlyImgPreviewWrap" style="display:none;position:relative;margin-top:6px;">
+                  <button class="img-clear-btn" onclick="clearJCtxImg('monthly')" title="削除">✕</button>
+                  <img id="jCtxMonthlyImgPreview" class="preview-img" style="max-height:140px;" onclick="openLightbox(this.src)">
+                </div>
+                <div class="paste-zone" id="pasteZone-jCtxMonthly" tabindex="0" style="min-height:52px;margin-top:6px;">
+                  <input type="file" id="fileJCtxMonthly" accept="image/*" style="display:none" onchange="handleJCtxImgUpload(event,'monthly')">
+                  <div style="font-size:14px;">📋</div>
+                  <p>タップ / Ctrl+V で貼り付け</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 週足コンテキスト -->
+          <div style="border-top:1px solid var(--border);padding-top:12px;">
+            <div class="tf-label weekly" style="margin-bottom:8px;">📅 週足</div>
+            <div class="grid2" style="margin-bottom:8px;">
+              <div>
+                <label style="font-size:11px;">週足バイアス</label>
+                <select id="jCtxWeeklyDir">
+                  <option value="">未設定</option>
+                  <option value="ロング優位">↑ ロング優位</option>
+                  <option value="ショート優位">↓ ショート優位</option>
+                  <option value="レンジ">↔ レンジ</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:11px;">週足足型</label>
+                <select id="jCtxWeeklyCandle">
+                  <option value="">選択...</option>
+                  <option>陽線（スラスト）</option><option>陰線（スラスト）</option>
+                  <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
+                  <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
+                  <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
+                  <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
+                  <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
+                  <option>十字線（ドージ）</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-bottom:6px;"><label style="font-size:11px;">週足 節目・意識ライン</label><input id="jCtxWeeklyKey" type="text" placeholder="例: 3280（先週安値）"></div>
+            <div><label style="font-size:11px;">週足メモ（任意修正可）</label><textarea id="jCtxWeeklyNote" placeholder="週足のトレンド・節目..." style="min-height:52px;"></textarea></div>
+            <!-- 週足チャート画像 -->
+            <div style="margin-top:8px;">
+              <label style="font-size:11px;">週足チャート画像</label>
+              <div id="jCtxWeeklyImgWrap">
+                <div id="jCtxWeeklyImgPreviewWrap" style="display:none;position:relative;margin-top:6px;">
+                  <button class="img-clear-btn" onclick="clearJCtxImg('weekly')" title="削除">✕</button>
+                  <img id="jCtxWeeklyImgPreview" class="preview-img" style="max-height:140px;" onclick="openLightbox(this.src)">
+                </div>
+                <div class="paste-zone" id="pasteZone-jCtxWeekly" tabindex="0" style="min-height:52px;margin-top:6px;">
+                  <input type="file" id="fileJCtxWeekly" accept="image/*" style="display:none" onchange="handleJCtxImgUpload(event,'weekly')">
+                  <div style="font-size:14px;">📋</div>
+                  <p>タップ / Ctrl+V で貼り付け</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 既存フォーム ===== -->
         <div class="grid2" style="margin-bottom:12px;">
           <div><label>結果タイプ</label><select id="jType"><option value="win">✅ 勝ち</option><option value="loss">❌ 負け</option><option value="pass">⭕ 見送り成功</option><option value="miss">⚠️ 機会損失</option></select></div>
           <div><label>損切り幅（pips / oz）</label><div class="input-unit" style="position:relative;"><input id="jSlPips" type="number" placeholder="例: 8.0" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span></div></div>
@@ -554,12 +666,10 @@ select option{background:var(--bg3);}
         <div style="margin-bottom:12px;">
           <label>トレード時の状況</label>
           <div class="grid2" style="margin-bottom:8px;">
-            <div><label style="font-size:11px;">月足バイアス</label><select id="jBiasMonthly"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select></div>
-            <div><label style="font-size:11px;">週足バイアス</label><select id="jBiasWeekly"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select></div>
             <div><label style="font-size:11px;">日足バイアス</label><select id="jBiasDaily"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select></div>
             <div><label style="font-size:11px;">エントリー方向</label><select id="jDirection"><option value="">-</option><option>ロング</option><option>ショート</option></select></div>
           </div>
-          <textarea id="jSituation" placeholder="価格がアジア安値を一度ヒゲで割ってから戻り。前日陽線スラストの流れに乗る形。NYオープン前の動き。"></textarea>
+          <textarea id="jSituation" placeholder="価格がアジア安値を一度ヒゲで割ってから戻り。前日陽線スラストの流れに乗る形。"></textarea>
         </div>
         <div style="margin-bottom:12px;">
           <label>心理状態</label>
@@ -575,7 +685,7 @@ select option{background:var(--bg3);}
         </div>
         <div style="margin-bottom:14px;"><label>良かった点 / 反省点</label><textarea id="jNote" placeholder="根拠明確だったが利確を引っ張りすぎた。次回は節目利確を徹底する。"></textarea></div>
         <div style="margin-bottom:14px;">
-          <label>チャートスクショ（任意）</label>
+          <label>日足チャートスクショ（任意）</label>
           <div class="paste-zone" id="pasteZone-jnl" tabindex="0"><input type="file" id="fileJnl" accept="image/*" style="display:none" onchange="handleUpload(event,'jnlPreview')"><div style="font-size:18px;">📋</div><p>クリックして選択 → Ctrl+V で貼り付け</p><span class="paste-hint">またはタップしてファイル選択 / ドラッグ&amp;ドロップ</span></div>
           <div class="img-wrap" id="imgWrap-jnl"><button class="img-clear-btn" onclick="clearPreview('jnl')" title="削除">✕</button><img id="jnlPreview" class="preview-img" onclick="openLightbox(this.src)"></div>
         </div>
@@ -647,22 +757,26 @@ let envImgs = { monthly: null, weekly: null, daily: null };
 let selectedDirByTF = { monthly: '', weekly: '', daily: '' };
 let jnlUploadDataUrl = null;
 let selectedPsychoTags = [];
+// 上位足コンテキスト画像（ジャーナル入力用）
+let jCtxImgs = { monthly: null, weekly: null };
 
 const SYSTEM_PROMPT = `あなたはプライスアクション・オーダーフロー分析専門のトレードアドバイザーです。
 【基本哲学】ローソク足は結果。勝つより負けないことが最優先。環境認識は「選別」。
 【環境認識】月足→週足→日足の順。四本値の守るか崩すかが軸。アジア高安・キリ番・ヘッドラインレートを意識。スラスト=トレンド継続、ハラミ足=レンジ入り疑い。
 【モメンタム】スラスト継続中・大陽線大陰線→逆張り不可。スラスト継続しない・逆ヒゲ実体より長い・実体縮小→モメンタム喪失サイン。
-【エントリー順序】環境認識→売り買いバランス→プライスアクション確認（PAの詳細判断はトレーダー本人の裁量）。
-【PA】具体的なPA名（ピンバー・アウトサイドバー等）は出力しない。「節目でプライスアクションを確認してエントリー」という表現にとどめる。PAの詳細はトレーダー自身が判断する。
-【ブレイクアウト】アジア起点のみ。前日陽線→アジア高値ブレイク、前日陰線→アジア安値ブレイク。アジアで大きく動いた後は避ける。
+【エントリー順序】環境認識→売り買いバランス→プライスアクション確認。
+【PA】具体的なPA名は出力しない。「節目でプライスアクションを確認してエントリー」という表現にとどめる。
+【ブレイクアウト】アジア起点のみ。前日陽線→アジア高値ブレイク、前日陰線→アジア安値ブレイク。
 日本語で簡潔かつ実践的に答えてください。`;
 
+// ===== ページ切替 =====
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
   if (id === 'stats') updateStats();
+  if (id === 'journal') { autoFillJournalContext(); }
 }
 function showPageMobile(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -671,12 +785,16 @@ function showPageMobile(id, btn) {
   btn.classList.add('active');
   document.querySelector('.main').scrollTop = 0;
   if (id === 'stats') updateStats();
+  if (id === 'journal') { autoFillJournalContext(); }
 }
+
 (function () {
   const now = new Date();
   const el = document.getElementById('sideDate');
   if (el) el.textContent = now.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
 })();
+
+// ===== TradingView =====
 function getNextGCSymbol() {
   const majors = [{ month: 2, code: 'G' }, { month: 4, code: 'J' }, { month: 6, code: 'M' }, { month: 8, code: 'Q' }, { month: 10, code: 'V' }, { month: 12, code: 'Z' }];
   const now = new Date(); const m = now.getMonth() + 1; const y = now.getFullYear();
@@ -706,6 +824,7 @@ function openTVTab(id) {
 }
 (function () { const sym = getNextGCSymbol(); ['tvSymbolEnv', 'tvSymbolJnl'].forEach(id => { const el = document.getElementById(id); if (el) el.placeholder = sym; }); })();
 
+// ===== 画像アップロード・プレビュー =====
 function handleUpload(event, previewId) { const file = event.target.files[0]; if (!file) return; setPreviewFromFile(file, previewId); }
 function setPreviewFromFile(file, previewId) { const reader = new FileReader(); reader.onload = e => { setPreviewSrc(previewId, e.target.result); }; reader.readAsDataURL(file); }
 function setPreviewSrc(previewId, src) {
@@ -728,8 +847,46 @@ function clearPreview(key) {
   if (key === 'daily')   envImgs.daily   = null;
 }
 
-const PASTE_MAP = { 'pasteZone-monthly': 'envPreview-monthly', 'pasteZone-weekly': 'envPreview-weekly', 'pasteZone-daily': 'envPreview-daily', 'pasteZone-jnl': 'jnlPreview' };
-const FILE_MAP = { 'pasteZone-monthly': 'fileEnv-monthly', 'pasteZone-weekly': 'fileEnv-weekly', 'pasteZone-daily': 'fileEnv-daily', 'pasteZone-jnl': 'fileJnl' };
+// ===== ジャーナル用 上位足コンテキスト 画像 =====
+function handleJCtxImgUpload(event, tf) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => setJCtxImg(tf, e.target.result);
+  reader.readAsDataURL(file);
+}
+function setJCtxImg(tf, src) {
+  jCtxImgs[tf] = src;
+  const previewWrap = document.getElementById('jCtxMonthlyImgPreviewWrap'.replace('Monthly', tf === 'monthly' ? 'Monthly' : 'Weekly'));
+  const previewImg  = document.getElementById('jCtxMonthlyImgPreview'.replace('Monthly', tf === 'monthly' ? 'Monthly' : 'Weekly'));
+  if (previewImg) previewImg.src = src;
+  if (previewWrap) previewWrap.style.display = 'block';
+}
+function clearJCtxImg(tf) {
+  jCtxImgs[tf] = null;
+  const key = tf === 'monthly' ? 'Monthly' : 'Weekly';
+  const previewWrap = document.getElementById('jCtx' + key + 'ImgPreviewWrap');
+  const previewImg  = document.getElementById('jCtx' + key + 'ImgPreview');
+  if (previewImg) previewImg.src = '';
+  if (previewWrap) previewWrap.style.display = 'none';
+}
+
+// ===== paste zones =====
+const PASTE_MAP = {
+  'pasteZone-monthly': 'envPreview-monthly',
+  'pasteZone-weekly':  'envPreview-weekly',
+  'pasteZone-daily':   'envPreview-daily',
+  'pasteZone-jnl':     'jnlPreview',
+  'pasteZone-jCtxMonthly': '__jCtxMonthly__',
+  'pasteZone-jCtxWeekly':  '__jCtxWeekly__'
+};
+const FILE_MAP = {
+  'pasteZone-monthly': 'fileEnv-monthly',
+  'pasteZone-weekly':  'fileEnv-weekly',
+  'pasteZone-daily':   'fileEnv-daily',
+  'pasteZone-jnl':     'fileJnl',
+  'pasteZone-jCtxMonthly': 'fileJCtxMonthly',
+  'pasteZone-jCtxWeekly':  'fileJCtxWeekly'
+};
 let activePasteZoneId = null;
 function setActivePasteZone(zoneId) {
   document.querySelectorAll('.paste-zone').forEach(z => z.classList.remove('paste-active'));
@@ -747,7 +904,15 @@ function initPasteZones() {
     zone.addEventListener('blur', () => { setTimeout(() => { if (document.activeElement !== zone) { zone.classList.remove('paste-active'); if (activePasteZoneId === zoneId) activePasteZoneId = null; } }, 200); });
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-    zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); const file = e.dataTransfer.files[0]; if (file && file.type.startsWith('image/')) { setPreviewFromFile(file, PASTE_MAP[zoneId] || 'jnlPreview'); setActivePasteZone(null); } });
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0]; if (!file || !file.type.startsWith('image/')) return;
+      const target = PASTE_MAP[zoneId];
+      if (target === '__jCtxMonthly__') { const r = new FileReader(); r.onload = ev => setJCtxImg('monthly', ev.target.result); r.readAsDataURL(file); }
+      else if (target === '__jCtxWeekly__') { const r = new FileReader(); r.onload = ev => setJCtxImg('weekly', ev.target.result); r.readAsDataURL(file); }
+      else { setPreviewFromFile(file, target); }
+      setActivePasteZone(null);
+    });
   });
   document.addEventListener('paste', e => {
     const items = e.clipboardData?.items; if (!items) return;
@@ -763,10 +928,15 @@ function initPasteZones() {
           if (activeTF?.id === 'tf-monthly') targetPreviewId = 'envPreview-monthly';
           else if (activeTF?.id === 'tf-weekly') targetPreviewId = 'envPreview-weekly';
           else targetPreviewId = 'envPreview-daily';
-        } else if (document.getElementById('page-journal')?.classList.contains('active')) { targetPreviewId = 'jnlPreview'; }
+        } else if (document.getElementById('page-journal')?.classList.contains('active')) {
+          targetPreviewId = 'jnlPreview';
+        }
       }
       if (targetPreviewId) {
-        setPreviewFromFile(file, targetPreviewId); setActivePasteZone(null); e.preventDefault();
+        if (targetPreviewId === '__jCtxMonthly__') { const r = new FileReader(); r.onload = ev => setJCtxImg('monthly', ev.target.result); r.readAsDataURL(file); }
+        else if (targetPreviewId === '__jCtxWeekly__') { const r = new FileReader(); r.onload = ev => setJCtxImg('weekly', ev.target.result); r.readAsDataURL(file); }
+        else { setPreviewFromFile(file, targetPreviewId); }
+        setActivePasteZone(null); e.preventDefault();
         const zoneId = Object.keys(PASTE_MAP).find(k => PASTE_MAP[k] === targetPreviewId);
         if (zoneId) { const zone = document.getElementById(zoneId); if (zone) { zone.style.borderColor = 'var(--green)'; zone.style.background = 'rgba(34,197,94,.1)'; setTimeout(() => { zone.style.borderColor = ''; zone.style.background = ''; }, 800); } }
         break;
@@ -778,6 +948,7 @@ function initPasteZones() {
 function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.add('open'); }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
 
+// ===== タイムフレームタブ（環境認識） =====
 function switchTF(tf, btn) {
   document.querySelectorAll('.tf-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tf-panel').forEach(p => p.classList.remove('active'));
@@ -787,10 +958,8 @@ function selectDirTF(el, dir, tf) {
   document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b => b.className = 'env-tag');
   selectedDirByTF[tf] = dir; el.classList.add('selected-' + dir);
 }
-let selectedDir = '';
-function selectDir(el, dir) { selectDirTF(el, dir, 'daily'); selectedDir = dir; }
 
-// ===== 月足・週足 自動引き継ぎ =====
+// ===== 月足・週足 自動引き継ぎキャッシュ =====
 function compressImageForStorage(dataUrl, maxKB) {
   return new Promise(resolve => {
     if (!dataUrl) { resolve(null); return; }
@@ -818,11 +987,11 @@ async function saveAutoFillCache(year, month, week, monthlyData, weeklyData) {
   try {
     const mKey = 'envCache_monthly_' + year + '_' + month;
     localStorage.setItem(mKey + '_text', JSON.stringify({ dir: monthlyData.dir, candle: monthlyData.candle, state: monthlyData.state, key: monthlyData.key, note: monthlyData.note }));
-    if (monthlyData.img) { const c = await compressImageForStorage(monthlyData.img, 300); if (c) { try { localStorage.setItem(mKey + '_img', c); } catch(e) { console.warn('月足画像キャッシュ失敗'); } } }
+    if (monthlyData.img) { const c = await compressImageForStorage(monthlyData.img, 300); if (c) { try { localStorage.setItem(mKey + '_img', c); } catch(e) {} } }
     const wKey = 'envCache_weekly_' + year + '_' + month + '_' + week;
     localStorage.setItem(wKey + '_text', JSON.stringify({ dir: weeklyData.dir, candle: weeklyData.candle, state: weeklyData.state, key: weeklyData.key, note: weeklyData.note }));
-    if (weeklyData.img) { const c = await compressImageForStorage(weeklyData.img, 300); if (c) { try { localStorage.setItem(wKey + '_img', c); } catch(e) { console.warn('週足画像キャッシュ失敗'); } } }
-  } catch(e) { console.warn('AutoFill cache error:', e); }
+    if (weeklyData.img) { const c = await compressImageForStorage(weeklyData.img, 300); if (c) { try { localStorage.setItem(wKey + '_img', c); } catch(e) {} } }
+  } catch(e) {}
 }
 function applyAutoFillCache(year, month, week) {
   const mKey = 'envCache_monthly_' + year + '_' + month;
@@ -844,7 +1013,7 @@ function applyAutoFillCache(year, month, week) {
     try {
       setTFFields('weekly', JSON.parse(wText));
       if (wImg) setPreviewSrc('envPreview-weekly', wImg);
-      if (bannerW) bannerW.innerHTML = '<div class="autofill-banner weekly">↩ 週足データを前回（' + year + '年' + month + '月 第' + week + '週）から引き継ぎました' + (wImg ? '（画像含む）' : '') + ' <button onclick="clearAutoFill(\'weekly\',\'' + year + '\',\'' + month + '\',\'' + week + '\')" style="margin-left:auto;background:none;border:none;color:var(--amber);cursor:pointer;font-size:11px;text-decoration:underline;">クリア</button></div>';
+      if (bannerW) bannerW.innerHTML = '<div class="autofill-banner weekly">↩ 週足データを前回から引き継ぎました' + (wImg ? '（画像含む）' : '') + ' <button onclick="clearAutoFill(\'weekly\',\'' + year + '\',\'' + month + '\',\'' + week + '\')" style="margin-left:auto;background:none;border:none;color:var(--amber);cursor:pointer;font-size:11px;text-decoration:underline;">クリア</button></div>';
     } catch(e) {}
   } else { if (bannerW) bannerW.innerHTML = ''; }
 }
@@ -872,6 +1041,89 @@ function clearAutoFill(tf, year, month, week) {
   document.querySelectorAll('#dirRow-' + px + ' .env-tag').forEach(b => b.className = 'env-tag');
   selectedDirByTF[px] = ''; clearPreview(px);
   const banner = document.getElementById('autofill-banner-' + px); if (banner) banner.innerHTML = '';
+}
+
+// ===== ▼ 振り返りノート：上位足コンテキスト 自動引き継ぎ ===== 
+function getCurrentYearMonthWeek() {
+  const now = new Date();
+  return {
+    year:  now.getFullYear(),
+    month: now.getMonth() + 1,
+    week:  Math.ceil(now.getDate() / 7)
+  };
+}
+
+function autoFillJournalContext() {
+  const { year, month, week } = getCurrentYearMonthWeek();
+  // 直近の環境認識メモから月足・週足データを探す（同月・同週を優先）
+  let foundMemo = null;
+  // 同週→同月→最新の順で探す
+  const sameWeekKey = `${year}-${String(month).padStart(2,'0')}-W${week}`;
+  const sameMonthKey = `${year}-${String(month).padStart(2,'0')}`;
+  foundMemo = envMemos.find(m => m.dateKey && m.dateKey.startsWith(sameWeekKey));
+  if (!foundMemo) foundMemo = envMemos.find(m => m.dateKey && m.dateKey.startsWith(sameMonthKey));
+  if (!foundMemo && envMemos.length > 0) foundMemo = envMemos[0]; // 最新
+
+  const banner = document.getElementById('jnlCtxBanner');
+  let filledFrom = '';
+  let monthlyData = null, weeklyData = null;
+  let monthlyImg = null, weeklyImg = null;
+
+  if (foundMemo) {
+    monthlyData = foundMemo.monthly;
+    weeklyData  = foundMemo.weekly;
+    filledFrom  = foundMemo.dateLabel;
+    // 画像はlocalStorageキャッシュから
+    const mImgKey = 'envCache_monthly_' + year + '_' + month + '_img';
+    const wImgKey = 'envCache_weekly_' + year + '_' + month + '_' + week + '_img';
+    // Try memo-embedded img first, then cache
+    monthlyImg = (foundMemo.monthly?.img) || localStorage.getItem('envCache_monthly_' + foundMemo.dateKey?.split('-')[0] + '_' + parseInt(foundMemo.dateKey?.split('-')[1]) + '_img') || null;
+    weeklyImg  = (foundMemo.weekly?.img)  || localStorage.getItem('envCache_weekly_'  + foundMemo.dateKey?.split('-')[0] + '_' + parseInt(foundMemo.dateKey?.split('-')[1]) + '_' + (foundMemo.dateKey?.match(/W(\d)/)?.[1]||1) + '_img') || null;
+  } else {
+    // localStorageキャッシュから直接
+    const mKey = 'envCache_monthly_' + year + '_' + month;
+    const wKey = 'envCache_weekly_'  + year + '_' + month + '_' + week;
+    const mText = localStorage.getItem(mKey + '_text');
+    const wText = localStorage.getItem(wKey + '_text');
+    if (mText) { try { monthlyData = JSON.parse(mText); } catch(e){} }
+    if (wText) { try { weeklyData  = JSON.parse(wText);  } catch(e){} }
+    monthlyImg = localStorage.getItem(mKey + '_img');
+    weeklyImg  = localStorage.getItem(wKey + '_img');
+    if (monthlyData || weeklyData) filledFrom = year + '年' + month + '月 キャッシュ';
+  }
+
+  if (monthlyData) {
+    const dirMap = {'ロング優位':'ロング優位','ショート優位':'ショート優位','レンジ':'レンジ'};
+    const d = document.getElementById('jCtxMonthlyDir');
+    if (d) d.value = dirMap[monthlyData.dir] || '';
+    const c = document.getElementById('jCtxMonthlyCandle');
+    if (c) c.value = monthlyData.candle || '';
+    const k = document.getElementById('jCtxMonthlyKey');
+    if (k) k.value = monthlyData.key || '';
+    const n = document.getElementById('jCtxMonthlyNote');
+    if (n) n.value = monthlyData.note || '';
+  }
+  if (weeklyData) {
+    const d = document.getElementById('jCtxWeeklyDir');
+    if (d) d.value = weeklyData.dir || '';
+    const c = document.getElementById('jCtxWeeklyCandle');
+    if (c) c.value = weeklyData.candle || '';
+    const k = document.getElementById('jCtxWeeklyKey');
+    if (k) k.value = weeklyData.key || '';
+    const n = document.getElementById('jCtxWeeklyNote');
+    if (n) n.value = weeklyData.note || '';
+  }
+  // 画像のセット
+  if (monthlyImg) { setJCtxImg('monthly', monthlyImg); }
+  if (weeklyImg)  { setJCtxImg('weekly',  weeklyImg);  }
+
+  if (banner) {
+    if (filledFrom) {
+      banner.innerHTML = `<div class="jnl-autofill-banner">🔄 月足・週足コンテキストを「${filledFrom}」の環境認識から自動引き継ぎしました。必要に応じて修正してください。</div>`;
+    } else {
+      banner.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:6px 0;margin-bottom:4px;">💡 環境認識メモがまだ保存されていません。手動で入力するか、先に環境認識を保存してください。</div>`;
+    }
+  }
 }
 
 // ===== 環境認識 AI分析 =====
@@ -913,7 +1165,6 @@ function initEnvDateBar() {
     })
   );
   renderEnvHistory();
-  // 初期表示時に自動引き継ぎ
   const _afy = document.getElementById('envYear').value;
   const _afm = document.getElementById('envMonth').value;
   const _afw = document.getElementById('envWeek').value;
@@ -945,18 +1196,15 @@ async function saveEnvMemo() {
   if (idx >= 0) envMemos[idx] = memo; else envMemos.unshift(memo);
   const toSave = envMemos.map(m => ({ ...m, monthly: {...m.monthly, img: null}, weekly: {...m.weekly, img: null}, daily: {...m.daily, img: null} }));
   localStorage.setItem('envMemos', JSON.stringify(toSave));
-
-  // ★ 月足・週足キャッシュ保存（テキスト＋画像）
   const _cy = document.getElementById('envYear').value;
   const _cm = document.getElementById('envMonth').value;
   const _cw = document.getElementById('envWeek').value;
   await saveAutoFillCache(_cy, _cm, _cw, memo.monthly, memo.weekly);
-
   const memoWithImgs = { ...memo, monthly: { ...memo.monthly, img: envImgs.monthly }, weekly: { ...memo.weekly, img: envImgs.weekly }, daily: { ...memo.daily, img: envImgs.daily } };
   const notionResult = await saveEnvMemoToNotion(memoWithImgs).catch(e => ({ error: e.message }));
-  if (notionResult?.error) { alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}\n\nNotion設定を確認してください（左下「📓 Notion連携設定」）`); }
+  if (notionResult?.error) { alert(`💾 ローカル保存完了\n⚠️ Notion保存失敗: ${notionResult.error}`); }
   else if (notionResult?.id) { alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n✅ Notionにも同期しました！`); }
-  else { alert(`💾 ${memo.dateLabel}の環境認識を保存しました\n（Notion未設定のためローカルのみ）`); }
+  else { alert(`💾 ${memo.dateLabel}の環境認識を保存しました`); }
   renderEnvHistory();
 }
 
@@ -972,7 +1220,7 @@ function renderEnvHistory() {
   let memos = [...envMemos];
   if (filterYear) memos = memos.filter(m => m.dateKey?.startsWith(filterYear));
   if (filterMonth) memos = memos.filter(m => { const mo = m.dateKey?.split('-')[1]; return mo && parseInt(mo) === parseInt(filterMonth); });
-  if (!memos.length) { list.innerHTML = '<div class="hist-empty">📭 保存された環境認識メモはありません<br><span style="font-size:11px;margin-top:6px;display:block;">記録入力後「💾 保存して記録」で保存されます</span></div>'; return; }
+  if (!memos.length) { list.innerHTML = '<div class="hist-empty">📭 保存された環境認識メモはありません</div>'; return; }
   const groups = {};
   memos.forEach(m => { const y = m.dateKey?.split('-')[0]||'?'; const mo = m.dateKey?.split('-')[1]||'?'; const key = `${y}-${mo}`; if (!groups[key]) groups[key] = { label: `${y}年 ${parseInt(mo)}月`, items: [] }; groups[key].items.push(m); });
   const biasChip = dir => { if (dir==='ロング優位') return `<span class="hist-bias-chip hist-bias-long">↑ ロング</span>`; if (dir==='ショート優位') return `<span class="hist-bias-chip hist-bias-short">↓ ショート</span>`; if (dir==='レンジ') return `<span class="hist-bias-chip hist-bias-range">↔ レンジ</span>`; return `<span class="hist-bias-chip hist-bias-none">未設定</span>`; };
@@ -982,21 +1230,8 @@ function renderEnvHistory() {
 }
 function toggleHistCard(id) { const body = document.getElementById('histBody-'+id); const chevron = document.getElementById('chevron-'+id); if (!body) return; const isOpen = body.classList.toggle('open'); if (chevron) chevron.classList.toggle('open', isOpen); }
 function deleteEnvMemo(id) { if (!confirm('このメモを削除しますか？')) return; envMemos = envMemos.filter(m => String(m.id) !== String(id)); localStorage.setItem('envMemos', JSON.stringify(envMemos)); renderEnvHistory(); }
-function loadEnvMemo(id) {
-  const m = envMemos.find(x => String(x.id) === String(id)); if (!m) return;
-  const [y, mo, w, d] = [m.dateKey.split('-')[0], m.dateKey.split('-')[1], m.dateKey.split('-W')[1]?.split('-')[0], m.dateKey.split('-').pop()];
-  if(document.getElementById('envYear')) document.getElementById('envYear').value = y;
-  if(document.getElementById('envMonth')) document.getElementById('envMonth').value = parseInt(mo);
-  if(document.getElementById('envWeek')) document.getElementById('envWeek').value = w;
-  if(document.getElementById('envDay')) document.getElementById('envDay').value = d;
-  updateEnvDateLabel();
-  const setTF = (tf, data) => { if(!data) return; document.getElementById(`prevCandle-${tf}`).value=data.candle||''; document.getElementById(`marketState-${tf}`).value=data.state||''; if(document.getElementById(`keyLevel-${tf}`)) document.getElementById(`keyLevel-${tf}`).value=data.key||''; document.getElementById(`envNote-${tf}`).value=data.note||''; const dirMap={'ロング優位':'long','ショート優位':'short','レンジ':'range'}; const dir=dirMap[data.dir]; if(dir){document.querySelectorAll(`#dirRow-${tf} .env-tag`).forEach(b=>b.className='env-tag'); const btn=document.querySelector(`#dirRow-${tf} .env-tag[onclick*="${dir}"]`); if(btn){btn.classList.add('selected-'+dir);selectedDirByTF[tf]=dir;}} };
-  setTF('monthly',m.monthly); setTF('weekly',m.weekly); setTF('daily',m.daily);
-  if(m.daily){if(document.getElementById('asiaH'))document.getElementById('asiaH').value=m.daily.asiaH||'';if(document.getElementById('asiaL'))document.getElementById('asiaL').value=m.daily.asiaL||'';}
-  if(m.aiResult){document.getElementById('envResult').style.display='block';document.getElementById('envResultText').textContent=m.aiResult;}
-  document.getElementById('envHistoryList').style.display='none';document.querySelector('.main').scrollTop=0;alert(`📋 ${m.dateLabel}のメモを読み込みました`);
-}
 
+// ===== チェックリスト =====
 const checkItems = {
   'checks-env': [
     { label: '上位足（月足・週足・日足）のトレンド方向を確認した', sub: '月足→週足→日足の順で確認。3つが揃っていると優位性高い' },
@@ -1042,6 +1277,7 @@ function updateCheckProgress() {
 function resetChecks() { document.querySelectorAll('.check-box').forEach(b => b.classList.remove('checked')); updateCheckProgress(); }
 initChecks(); initEnvDateBar(); initPasteZones();
 
+// ===== ATR計算 =====
 function calcATR() {
   const atr = parseFloat(document.getElementById('atrVal').value), asia = parseFloat(document.getElementById('asiaRange').value)||0, bal = parseFloat(document.getElementById('balance').value), riskPct = parseFloat(document.getElementById('riskPct').value)||1, sl = parseFloat(document.getElementById('slPips').value), rr = parseFloat(document.getElementById('rrRatio').value);
   if (!atr) return;
@@ -1061,40 +1297,212 @@ function calcATR() {
   document.getElementById('r_judge').innerHTML = judge;
 }
 
+// ===== 心理タグ =====
 function togglePsycho(el, tag) { const idx = selectedPsychoTags.indexOf(tag); if (idx === -1) { selectedPsychoTags.push(tag); el.classList.add('selected-long'); } else { selectedPsychoTags.splice(idx, 1); el.className = 'env-tag'; } }
 
+// ===== 振り返りノート 追加 =====
 async function addJournal() {
-  const type=document.getElementById('jType').value, pnlUsd=document.getElementById('jPnlUsd').value, pnlPips=document.getElementById('jPnlPips').value, slPips=document.getElementById('jSlPips').value, setup=document.getElementById('jSetup').value, situation=document.getElementById('jSituation').value, psychoNote=document.getElementById('jPsycho').value, note=document.getElementById('jNote').value, biasMonthly=document.getElementById('jBiasMonthly').value, biasWeekly=document.getElementById('jBiasWeekly').value, biasDaily=document.getElementById('jBiasDaily').value, direction=document.getElementById('jDirection').value;
+  const type        = document.getElementById('jType').value;
+  const pnlUsd      = document.getElementById('jPnlUsd').value;
+  const pnlPips     = document.getElementById('jPnlPips').value;
+  const slPips      = document.getElementById('jSlPips').value;
+  const setup       = document.getElementById('jSetup').value;
+  const situation   = document.getElementById('jSituation').value;
+  const psychoNote  = document.getElementById('jPsycho').value;
+  const note        = document.getElementById('jNote').value;
+  const biasDaily   = document.getElementById('jBiasDaily').value;
+  const direction   = document.getElementById('jDirection').value;
+  // 上位足コンテキスト
+  const ctxMonthlyDir    = document.getElementById('jCtxMonthlyDir').value;
+  const ctxMonthlyCandle = document.getElementById('jCtxMonthlyCandle').value;
+  const ctxMonthlyKey    = document.getElementById('jCtxMonthlyKey').value;
+  const ctxMonthlyNote   = document.getElementById('jCtxMonthlyNote').value;
+  const ctxWeeklyDir     = document.getElementById('jCtxWeeklyDir').value;
+  const ctxWeeklyCandle  = document.getElementById('jCtxWeeklyCandle').value;
+  const ctxWeeklyKey     = document.getElementById('jCtxWeeklyKey').value;
+  const ctxWeeklyNote    = document.getElementById('jCtxWeeklyNote').value;
+
   if (!note && !setup && !situation) { alert('セットアップ・状況・メモのいずれかを入力してください'); return; }
-  const entry = { id: Date.now(), date: new Date().toLocaleDateString('ja-JP'), type, pnlUsd: pnlUsd?parseFloat(pnlUsd):null, pnlPips: pnlPips?parseFloat(pnlPips):null, slPips: slPips?parseFloat(slPips):null, setup, situation, psychoTags: [...selectedPsychoTags], psychoNote, note, biasMonthly, biasWeekly, biasDaily, direction, img: jnlUploadDataUrl||null };
+  const entry = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString('ja-JP'),
+    type, pnlUsd: pnlUsd?parseFloat(pnlUsd):null, pnlPips: pnlPips?parseFloat(pnlPips):null,
+    slPips: slPips?parseFloat(slPips):null, setup, situation,
+    psychoTags: [...selectedPsychoTags], psychoNote, note,
+    biasMonthly: ctxMonthlyDir, biasWeekly: ctxWeeklyDir, biasDaily, direction,
+    img: jnlUploadDataUrl||null,
+    ctx: {
+      monthly: { dir: ctxMonthlyDir, candle: ctxMonthlyCandle, key: ctxMonthlyKey, note: ctxMonthlyNote, img: jCtxImgs.monthly },
+      weekly:  { dir: ctxWeeklyDir,  candle: ctxWeeklyCandle,  key: ctxWeeklyKey,  note: ctxWeeklyNote,  img: jCtxImgs.weekly  }
+    }
+  };
   journals.unshift(entry);
-  localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null }))));
+  // localStorage保存（画像は除外）
+  const toSave = journals.map(j => ({ ...j, img: null, ctx: j.ctx ? { monthly: {...j.ctx.monthly, img: null}, weekly: {...j.ctx.weekly, img: null} } : null }));
+  localStorage.setItem('tradeJournals', JSON.stringify(toSave));
+
   const notionResult = await saveJournalToNotion(entry).catch(e => ({ error: e.message }));
   if (notionResult?.error) { alert(`✅ 記録しました\n⚠️ Notion保存失敗: ${notionResult.error}`); }
   else if (notionResult?.id) { alert('✅ 記録しました！Notionにも同期しました！'); }
+  else { alert('✅ 記録しました'); }
+
+  // フォームリセット
   ['jPnlUsd','jPnlPips','jSlPips','jSetup','jSituation','jPsycho','jNote'].forEach(id => document.getElementById(id).value = '');
-  ['jBiasMonthly','jBiasWeekly','jBiasDaily','jDirection'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('jnlPreview').style.display = 'none';
+  ['jBiasDaily','jDirection'].forEach(id => document.getElementById(id).value = '');
   document.querySelectorAll('#psychoTags .env-tag').forEach(b => b.className = 'env-tag');
-  selectedPsychoTags = []; jnlUploadDataUrl = null; renderJournals();
+  selectedPsychoTags = []; jnlUploadDataUrl = null;
+  clearPreview('jnl');
+  // 上位足コンテキストはクリアしない（次の記録でも使い回せるように）
+  renderJournals();
 }
+
+// ===== 振り返りノート 表示 =====
 function renderJournals() {
   const list = document.getElementById('journalList');
   if (!journals.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;">まだ記録がありません</p>'; return; }
   const tl = { win: '✅ 勝ち', loss: '❌ 負け', pass: '⭕ 見送り成功', miss: '⚠️ 機会損失' };
   const bc = { win: 'badge-green', loss: 'badge-red', pass: 'badge-teal', miss: 'badge-amber' };
+
+  const biasLabel = v => {
+    if (v === 'ロング優位') return `<span class="badge badge-green" style="font-size:10px;">↑ロング</span>`;
+    if (v === 'ショート優位') return `<span class="badge badge-red" style="font-size:10px;">↓ショート</span>`;
+    if (v === 'レンジ') return `<span class="badge badge-amber" style="font-size:10px;">↔レンジ</span>`;
+    return '';
+  };
+
+  const renderCtxPanel = (entry) => {
+    const ctx = entry.ctx;
+    // 後方互換：ctx未保存の旧データはbiasMonthly/biasWeeklyから簡易表示
+    const mDir = ctx?.monthly?.dir || entry.biasMonthly || '';
+    const wDir = ctx?.weekly?.dir  || entry.biasWeekly  || '';
+    const mCandle = ctx?.monthly?.candle || '';
+    const mKey    = ctx?.monthly?.key    || '';
+    const mNote   = ctx?.monthly?.note   || '';
+    const wCandle = ctx?.weekly?.candle  || '';
+    const wKey    = ctx?.weekly?.key     || '';
+    const wNote   = ctx?.weekly?.note    || '';
+    const mImg    = ctx?.monthly?.img    || null;
+    const wImg    = ctx?.weekly?.img     || null;
+
+    const hasAnyDetail = mCandle || mKey || mNote || wCandle || wKey || wNote || mImg || wImg;
+    const id = entry.id;
+
+    // 整合性チェック
+    const dDir = ctx ? (entry.biasDaily || '') : (entry.biasDaily || '');
+    const dirs = [mDir, wDir, dDir].filter(Boolean);
+    let alignHtml = '';
+    if (dirs.length >= 2) {
+      const allSame = dirs.every(d => d === dirs[0]);
+      alignHtml = allSame
+        ? `<span style="font-size:11px;color:var(--green);font-weight:600;">✓ ${dirs.length}TF整合</span>`
+        : `<span style="font-size:11px;color:var(--amber);">△ TF不一致</span>`;
+    }
+
+    const previewRow = `
+      <div class="ctx-panel-preview">
+        ${mDir ? `<span class="badge badge-purple" style="font-size:10px;">月 ${mDir==='ロング優位'?'↑':mDir==='ショート優位'?'↓':'↔'}</span>` : ''}
+        ${wDir ? `<span class="badge badge-amber" style="font-size:10px;">週 ${wDir==='ロング優位'?'↑':wDir==='ショート優位'?'↓':'↔'}</span>` : ''}
+        ${alignHtml}
+      </div>`;
+
+    if (!hasAnyDetail && !mDir && !wDir) return '';
+
+    const imgThumb = (img, tf) => img
+      ? `<div class="ctx-img-box"><div class="ctx-img-label ${tf}">${tf==='monthly'?'🌙 月足':'📅 週足'}</div><div class="ctx-img-thumb"><img src="${img}" onclick="openLightbox(this.src)" loading="lazy"></div></div>`
+      : '';
+
+    const bodyHtml = `
+      <div class="ctx-panel-body" id="ctxBody-${id}">
+        <div class="ctx-tf-row">
+          ${imgThumb(mImg,'monthly')}
+          <div class="ctx-info">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+              <span class="badge badge-purple" style="font-size:10px;">🌙 月足</span>
+              ${biasLabel(mDir)}
+            </div>
+            ${mCandle ? `<div class="ctx-info-row"><span class="ctx-info-key">足型</span><span class="ctx-info-val">${mCandle}</span></div>` : ''}
+            ${mKey    ? `<div class="ctx-info-row"><span class="ctx-info-key">節目</span><span class="ctx-info-val">${mKey}</span></div>` : ''}
+            ${mNote   ? `<div class="ctx-note-mini">${mNote}</div>` : ''}
+          </div>
+        </div>
+        <div class="ctx-tf-row" style="margin-top:10px;">
+          ${imgThumb(wImg,'weekly')}
+          <div class="ctx-info">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+              <span class="badge badge-amber" style="font-size:10px;">📅 週足</span>
+              ${biasLabel(wDir)}
+            </div>
+            ${wCandle ? `<div class="ctx-info-row"><span class="ctx-info-key">足型</span><span class="ctx-info-val">${wCandle}</span></div>` : ''}
+            ${wKey    ? `<div class="ctx-info-row"><span class="ctx-info-key">節目</span><span class="ctx-info-val">${wKey}</span></div>` : ''}
+            ${wNote   ? `<div class="ctx-note-mini">${wNote}</div>` : ''}
+          </div>
+        </div>
+        ${alignHtml ? `<div class="ctx-align-row"><span class="ctx-align-label">整合性</span>${alignHtml}</div>` : ''}
+      </div>`;
+
+    return `
+      <div class="ctx-panel" style="margin-top:10px;">
+        <div class="ctx-panel-header" onclick="toggleCtxPanel('${id}')">
+          <span class="ctx-panel-title">📊 上位足コンテキスト</span>
+          ${previewRow}
+          <span class="ctx-chevron" id="ctxChevron-${id}">▼</span>
+        </div>
+        ${bodyHtml}
+      </div>`;
+  };
+
   list.innerHTML = journals.slice(0, 20).map(e => {
-    const pnlBadge = (() => { if (e.pnlUsd!==null&&e.pnlPips!==null) return `<span class="badge ${e.pnlUsd>=0?'badge-green':'badge-red'}">${e.pnlUsd>=0?'+':''}$${e.pnlUsd.toFixed(2)} / ${e.pnlPips>=0?'+':''}${e.pnlPips}pips</span>`; if (e.pnlUsd!==null) return `<span class="badge ${e.pnlUsd>=0?'badge-green':'badge-red'}">${e.pnlUsd>=0?'+':''}$${e.pnlUsd.toFixed(2)}</span>`; if (e.pnlPips!==null) return `<span class="badge ${e.pnlPips>=0?'badge-green':'badge-red'}">${e.pnlPips>=0?'+':''}${e.pnlPips}pips</span>`; return ''; })();
-    const metaParts = []; if (e.direction) metaParts.push(`方向: ${e.direction}`); if (e.biasMonthly||e.biasWeekly||e.biasDaily) metaParts.push(`月:${e.biasMonthly||'-'} 週:${e.biasWeekly||'-'} 日:${e.biasDaily||'-'}`); if (e.slPips) metaParts.push(`SL: ${e.slPips}pips`); if (e.psychoTags&&e.psychoTags.length) metaParts.push(`心理: ${e.psychoTags.join(' ')}`);
-    return `<div class="journal-entry ${e.type}"><div class="entry-header"><div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge ${bc[e.type]}">${tl[e.type]}</span>${pnlBadge}</div><span class="entry-date">${e.date}</span></div>${e.setup?`<div style="font-size:12px;color:var(--muted);margin-bottom:6px;">📌 ${e.setup}</div>`:''} ${metaParts.length?`<div class="entry-meta">${metaParts.map(p=>`<span>${p}</span>`).join('')}</div>`:''} ${e.situation?`<div style="font-size:12px;color:var(--accent);margin-top:8px;margin-bottom:4px;">📊 状況: ${e.situation}</div>`:''} ${e.psychoNote?`<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>`:''}<div class="entry-body">${e.note}</div>${e.img?`<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">`:''}<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);"><button class="btn btn-ghost btn-sm" onclick="deleteJournal('${e.id}')" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red);">🗑 削除</button></div></div>`;
+    const pnlBadge = (() => {
+      if (e.pnlUsd!==null&&e.pnlPips!==null) return `<span class="badge ${e.pnlUsd>=0?'badge-green':'badge-red'}">${e.pnlUsd>=0?'+':''}$${e.pnlUsd.toFixed(2)} / ${e.pnlPips>=0?'+':''}${e.pnlPips}pips</span>`;
+      if (e.pnlUsd!==null) return `<span class="badge ${e.pnlUsd>=0?'badge-green':'badge-red'}">${e.pnlUsd>=0?'+':''}$${e.pnlUsd.toFixed(2)}</span>`;
+      if (e.pnlPips!==null) return `<span class="badge ${e.pnlPips>=0?'badge-green':'badge-red'}">${e.pnlPips>=0?'+':''}${e.pnlPips}pips</span>`;
+      return '';
+    })();
+    const metaParts = [];
+    if (e.direction) metaParts.push(`方向: ${e.direction}`);
+    if (e.biasDaily) metaParts.push(`日足: ${e.biasDaily}`);
+    if (e.slPips) metaParts.push(`SL: ${e.slPips}pips`);
+    if (e.psychoTags&&e.psychoTags.length) metaParts.push(`心理: ${e.psychoTags.join(' ')}`);
+    return `<div class="journal-entry ${e.type}">
+      <div class="entry-header">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="badge ${bc[e.type]}">${tl[e.type]}</span>${pnlBadge}</div>
+        <span class="entry-date">${e.date}</span>
+      </div>
+      ${e.setup?`<div style="font-size:12px;color:var(--muted);margin-bottom:6px;">📌 ${e.setup}</div>`:''}
+      ${metaParts.length?`<div class="entry-meta">${metaParts.map(p=>`<span>${p}</span>`).join('')}</div>`:''}
+      ${renderCtxPanel(e)}
+      ${e.situation?`<div style="font-size:12px;color:var(--accent);margin-top:8px;margin-bottom:4px;">📊 状況: ${e.situation}</div>`:''}
+      ${e.psychoNote?`<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>`:''}
+      <div class="entry-body">${e.note}</div>
+      ${e.img?`<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">`:''}
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+        <button class="btn btn-ghost btn-sm" onclick="deleteJournal('${e.id}')" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red);">🗑 削除</button>
+      </div>
+    </div>`;
   }).join('');
 }
-function deleteJournal(id) { if (!confirm('この記録を削除しますか？')) return; journals = journals.filter(j => String(j.id) !== String(id)); localStorage.setItem('tradeJournals', JSON.stringify(journals.map(j => ({ ...j, img: null })))); renderJournals(); updateStats(); }
+
+function toggleCtxPanel(id) {
+  const body    = document.getElementById('ctxBody-' + id);
+  const chevron = document.getElementById('ctxChevron-' + id);
+  if (!body) return;
+  const isOpen = body.classList.toggle('open');
+  if (chevron) chevron.classList.toggle('open', isOpen);
+}
+
+function deleteJournal(id) {
+  if (!confirm('この記録を削除しますか？')) return;
+  journals = journals.filter(j => String(j.id) !== String(id));
+  const toSave = journals.map(j => ({ ...j, img: null, ctx: j.ctx ? { monthly: {...j.ctx.monthly, img: null}, weekly: {...j.ctx.weekly, img: null} } : null }));
+  localStorage.setItem('tradeJournals', JSON.stringify(toSave));
+  renderJournals(); updateStats();
+}
 renderJournals();
 
+// ===== パフォーマンス =====
 function updateStats() {
   const total=journals.length, wins=journals.filter(j=>j.type==='win').length, losses=journals.filter(j=>j.type==='loss').length, pass=journals.filter(j=>j.type==='pass').length, miss=journals.filter(j=>j.type==='miss').length;
-  const pnlUsd=journals.reduce((s,j)=>s+(j.pnlUsd!==undefined&&j.pnlUsd!==null?j.pnlUsd:(j.pnl?j.pnl/150:0)),0), pnlPips=journals.reduce((s,j)=>s+(j.pnlPips||0),0);
+  const pnlUsd=journals.reduce((s,j)=>s+(j.pnlUsd!==undefined&&j.pnlUsd!==null?j.pnlUsd:0),0), pnlPips=journals.reduce((s,j)=>s+(j.pnlPips||0),0);
   const wr=(wins+losses)>0?Math.round(wins/(wins+losses)*100):0;
   document.getElementById('s_total').textContent=total; document.getElementById('s_wr').textContent=wr+'%';
   document.getElementById('s_pnl').textContent=(pnlUsd>=0?'+':'')+'$'+Math.abs(pnlUsd).toFixed(2); document.getElementById('s_pnl').style.color=pnlUsd>=0?'var(--green)':'var(--red)';
@@ -1105,12 +1513,16 @@ function updateStats() {
 }
 async function analyzeStats() {
   if (!journals.length) { alert('記録がありません'); return; }
-  const summary = journals.slice(0, 30).map(j => `${j.date}[${j.type}] USD:${j.pnlUsd!==undefined?j.pnlUsd:''} pips:${j.pnlPips||''} 月:${j.biasMonthly||''} 週:${j.biasWeekly||''} 日:${j.biasDaily||''} 方向:${j.direction||''} 心理:${(j.psychoTags||[]).join(',')} ${j.setup||''} ${j.situation||''} ${j.note}`).join('\n');
+  const summary = journals.slice(0, 30).map(j => {
+    const ctx = j.ctx;
+    return `${j.date}[${j.type}] USD:${j.pnlUsd??''} pips:${j.pnlPips||''} 月:${ctx?.monthly?.dir||j.biasMonthly||''} 週:${ctx?.weekly?.dir||j.biasWeekly||''} 日:${j.biasDaily||''} 方向:${j.direction||''} 心理:${(j.psychoTags||[]).join(',')} ${j.setup||''} ${j.note}`;
+  }).join('\n');
   document.getElementById('statsAI').style.display = 'block'; document.getElementById('statsAI').textContent = '分析中...';
-  try { const res = await callClaude(`以下は直近のトレード記録です。負けパターン・改善点・強みを分析してください。心理状態と結果の相関にも注目してください。\n${summary}`); document.getElementById('statsAI').textContent = res; }
+  try { const res = await callClaude(`以下は直近のトレード記録です。負けパターン・改善点・強みを分析してください。心理状態・上位足整合性と結果の相関にも注目してください。\n${summary}`); document.getElementById('statsAI').textContent = res; }
   catch (e) { document.getElementById('statsAI').textContent = 'エラーが発生しました。'; }
 }
 
+// ===== AIチャット =====
 let chatHistory = [];
 async function sendChat() {
   const input = document.getElementById('chatInput'), msg = input.value.trim(); if (!msg) return;
@@ -1123,12 +1535,14 @@ function appendChat(role, text) { const area = document.getElementById('chatArea
 function appendTyping() { const area=document.getElementById('chatArea'), id='typing-'+Date.now(), div=document.createElement('div'); div.className='chat-msg ai'; div.id=id; div.innerHTML=`<div class="chat-sender">Trade AI</div><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`; area.appendChild(div); area.scrollTop=area.scrollHeight; return id; }
 function removeTyping(id) { const el=document.getElementById(id); if(el) el.remove(); }
 
+// ===== API =====
 function getApiKey() { return localStorage.getItem('anthropicApiKey') || ''; }
-function saveApiKey() { const key=document.getElementById('apikeyInput').value.trim(); if (!key.startsWith('sk-ant-')) { alert('APIキーは sk-ant- で始まる文字列です。確認してください。'); return; } localStorage.setItem('anthropicApiKey', key); document.getElementById('apikeyModal').style.display='none'; alert('✅ APIキーを保存しました！AI機能が使えるようになりました。'); }
+function saveApiKey() { const key=document.getElementById('apikeyInput').value.trim(); if (!key.startsWith('sk-ant-')) { alert('APIキーは sk-ant- で始まる文字列です。確認してください。'); return; } localStorage.setItem('anthropicApiKey', key); document.getElementById('apikeyModal').style.display='none'; alert('✅ APIキーを保存しました！'); }
 function closeApiKeyModal() { document.getElementById('apikeyModal').style.display='none'; }
 function openApiKeyModal() { const modal=document.getElementById('apikeyModal'); modal.style.display='flex'; const existing=getApiKey(); if(existing) document.getElementById('apikeyInput').value=existing; setTimeout(()=>document.getElementById('apikeyInput').focus(),100); }
 (function() { if (location.hash.startsWith('#t=')) return; if (!getApiKey()) setTimeout(() => document.getElementById('apikeyModal').style.display = 'flex', 800); })();
 
+// ===== Notion =====
 function getNotionToken() { return localStorage.getItem('notionToken') || ''; }
 function getNotionEnvDbId() { return localStorage.getItem('notionEnvDbId') || ''; }
 function openNotionModal() { const modal=document.getElementById('notionModal'); modal.style.display='flex'; const t=getNotionToken(),d=getNotionEnvDbId(),j=localStorage.getItem('notionJnlDbId')||'',w=localStorage.getItem('notionWorkerUrl')||''; if(t) document.getElementById('notionTokenInput').value=t; if(d) document.getElementById('notionEnvDbInput').value=d; if(j) document.getElementById('notionJnlDbInput').value=j; if(w) document.getElementById('notionWorkerUrlInput').value=w; document.getElementById('notionStatus').className='notion-status'; }
@@ -1141,14 +1555,23 @@ async function setupNotionDatabases() {
   if(!token||!workerUrl){alert('トークンとWorker URLを入力してください');return;}
   st.className='notion-status loading';st.textContent='DBセットアップ中...';
   const envProps={'日付キー':{rich_text:{}},'月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'日足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'月足足型':{rich_text:{}},'週足足型':{rich_text:{}},'日足足型':{rich_text:{}},'AS高値':{rich_text:{}},'AS安値':{rich_text:{}}};
-  const jnlProps={'結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}]}},'損益USD':{number:{format:'dollar'}},'損益pips':{number:{}},'SL幅pips':{number:{}},'月足バイアス':{rich_text:{}},'週足バイアス':{rich_text:{}},'日足バイアス':{rich_text:{}},'方向':{rich_text:{}},'心理タグ':{rich_text:{}}};
+  // 振り返りDBに月足・週足コンテキスト用プロパティを追加
+  const jnlProps={
+    '結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}]}},
+    '損益USD':{number:{format:'dollar'}},'損益pips':{number:{}},'SL幅pips':{number:{}},
+    '月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'}]}},
+    '月足足型':{rich_text:{}},'月足節目':{rich_text:{}},
+    '週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'}]}},
+    '週足足型':{rich_text:{}},'週足節目':{rich_text:{}},
+    '日足バイアス':{rich_text:{}},'方向':{rich_text:{}},'心理タグ':{rich_text:{}}
+  };
   const results=[], patchDb=async(dbId,props,label)=>{ if(!dbId){results.push('⬜ '+label+': DB ID未設定（スキップ）');return;} try{const res=await fetch(workerUrl+'/notion/databases/'+dbId,{method:'PATCH',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify({properties:props})}),data=await res.json(); if(res.ok){results.push('✅ '+label+': セットアップ完了');}else{results.push('❌ '+label+': '+(data.message||data.error||res.status));}}catch(e){results.push('❌ '+label+': '+e.message);}};
   await patchDb(envDbId,envProps,'環境認識DB'); if(jnlDbId) await patchDb(jnlDbId,jnlProps,'振り返りDB');
-  const allOk=results.every(r=>r.startsWith('✅')||r.startsWith('⬜')); st.className='notion-status '+(allOk?'ok':'err'); st.innerHTML=results.join('<br>')+(allOk?'<br><span style="font-size:11px;">この後「保存」を押してから通常どおり保存をお試しください</span>':'');
+  const allOk=results.every(r=>r.startsWith('✅')||r.startsWith('⬜')); st.className='notion-status '+(allOk?'ok':'err'); st.innerHTML=results.join('<br>');
 }
 
 function getWorkerUrl() { return (localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''); }
-async function notionPost(path, body, token) { const workerUrl=getWorkerUrl(); if(!workerUrl) throw new Error('Cloudflare Worker URLが未設定です（Notion設定モーダルで入力してください）'); const res=await fetch(`${workerUrl}${path}`,{method:'POST',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify(body)}); if(!res.ok){const err=await res.json().catch(()=>({})); throw new Error(err.message||err.error||'HTTP '+res.status);} return await res.json(); }
+async function notionPost(path, body, token) { const workerUrl=getWorkerUrl(); if(!workerUrl) throw new Error('Cloudflare Worker URLが未設定です'); const res=await fetch(`${workerUrl}${path}`,{method:'POST',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify(body)}); if(!res.ok){const err=await res.json().catch(()=>({})); throw new Error(err.message||err.error||'HTTP '+res.status);} return await res.json(); }
 
 async function uploadImageToR2(base64DataUrl, prefix) {
   const workerUrl=getWorkerUrl(); if(!workerUrl||!base64DataUrl) return null;
@@ -1166,24 +1589,81 @@ async function saveEnvMemoToNotion(memo) {
   const props={'名前':{title:[{text:{content:memo.dateLabel}}]},'日付キー':{rich_text:[{text:{content:memo.dateKey}}]},'月足バイアス':{select:{name:memo.monthly?.dir||'未設定'}},'週足バイアス':{select:{name:memo.weekly?.dir||'未設定'}},'日足バイアス':{select:{name:memo.daily?.dir||'未設定'}},'月足足型':{rich_text:[{text:{content:memo.monthly?.candle||''}}]},'週足足型':{rich_text:[{text:{content:memo.weekly?.candle||''}}]},'日足足型':{rich_text:[{text:{content:memo.daily?.candle||''}}]},'AS高値':{rich_text:[{text:{content:String(memo.daily?.asiaH||'')}}]},'AS安値':{rich_text:[{text:{content:String(memo.daily?.asiaL||'')}}]}};
   return await notionPost('/notion/pages',{parent:{database_id:dbId},properties:props,children},token);
 }
+
+// ===== 振り返りノート → Notion保存（月足・週足コンテキスト対応版） =====
 async function saveJournalToNotion(entry) {
   const token=getNotionToken(), dbId=localStorage.getItem('notionJnlDbId')||''; if(!token||!dbId) return null;
-  const chartUrl=await uploadImageToR2(entry.img,'journal');
-  const typeLabel={win:'勝ち',loss:'負け',pass:'見送り成功',miss:'機会損失'}, title=`${entry.date} ${typeLabel[entry.type]||entry.type}`;
-  const children=[], addSection=(heading,text)=>{if(!text)return;children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:heading}}]}});children.push({object:'block',type:'paragraph',paragraph:{rich_text:[{text:{content:text}}]}});};
-  addSection('📌 セットアップ',entry.setup);addSection('📊 トレード時の状況',entry.situation);addSection('🧠 心理状態',entry.psychoNote);addSection('📝 良かった点 / 反省点',entry.note);
-  if(chartUrl){children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:'📈 チャート'}}]}});children.push({object:'block',type:'image',image:{type:'external',external:{url:chartUrl}}});}
-  const props={'名前':{title:[{text:{content:title}}]},'結果':{select:{name:typeLabel[entry.type]||entry.type}},'月足バイアス':{rich_text:[{text:{content:entry.biasMonthly||''}}]},'週足バイアス':{rich_text:[{text:{content:entry.biasWeekly||''}}]},'日足バイアス':{rich_text:[{text:{content:entry.biasDaily||''}}]},'方向':{rich_text:[{text:{content:entry.direction||''}}]},'心理タグ':{rich_text:[{text:{content:(entry.psychoTags||[]).join(', ')}}]}};
-  if(entry.pnlUsd!=null) props['損益USD']={number:entry.pnlUsd}; if(entry.pnlPips!=null) props['損益pips']={number:entry.pnlPips}; if(entry.slPips!=null) props['SL幅pips']={number:entry.slPips};
+  // 画像アップロード（日足チャート＋月足・週足コンテキスト）
+  const [chartUrl, ctxMonthlyUrl, ctxWeeklyUrl] = await Promise.all([
+    uploadImageToR2(entry.img, 'journal'),
+    uploadImageToR2(entry.ctx?.monthly?.img, 'ctx-monthly'),
+    uploadImageToR2(entry.ctx?.weekly?.img,  'ctx-weekly')
+  ]);
+  const typeLabel={win:'勝ち',loss:'負け',pass:'見送り成功',miss:'機会損失'};
+  const title=`${entry.date} ${typeLabel[entry.type]||entry.type}`;
+  const children=[];
+  const addSection=(heading,text)=>{ if(!text) return; children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:heading}}]}}); children.push({object:'block',type:'paragraph',paragraph:{rich_text:[{text:{content:text}}]}}); };
+  const addImage=(label,url)=>{ if(!url) return; children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:label}}]}}); children.push({object:'block',type:'image',image:{type:'external',external:{url}}}); };
+
+  // 月足コンテキストブロック
+  const ctx = entry.ctx;
+  if (ctx?.monthly?.dir || ctx?.monthly?.candle || ctx?.monthly?.note || ctxMonthlyUrl) {
+    children.push({object:'block',type:'heading_2',heading_2:{rich_text:[{text:{content:'🌙 月足コンテキスト'}}]}});
+    if (ctx.monthly.dir)    addSection('バイアス', ctx.monthly.dir);
+    if (ctx.monthly.candle) addSection('足型',     ctx.monthly.candle);
+    if (ctx.monthly.key)    addSection('節目',     ctx.monthly.key);
+    addImage('🌙 月足チャート', ctxMonthlyUrl);
+    if (ctx.monthly.note)   addSection('メモ',     ctx.monthly.note);
+  }
+  // 週足コンテキストブロック
+  if (ctx?.weekly?.dir || ctx?.weekly?.candle || ctx?.weekly?.note || ctxWeeklyUrl) {
+    children.push({object:'block',type:'heading_2',heading_2:{rich_text:[{text:{content:'📅 週足コンテキスト'}}]}});
+    if (ctx.weekly.dir)    addSection('バイアス', ctx.weekly.dir);
+    if (ctx.weekly.candle) addSection('足型',     ctx.weekly.candle);
+    if (ctx.weekly.key)    addSection('節目',     ctx.weekly.key);
+    addImage('📅 週足チャート', ctxWeeklyUrl);
+    if (ctx.weekly.note)   addSection('メモ',     ctx.weekly.note);
+  }
+  // トレード内容
+  children.push({object:'block',type:'heading_2',heading_2:{rich_text:[{text:{content:'📈 トレード内容'}}]}});
+  addSection('📌 セットアップ',  entry.setup);
+  addSection('📊 トレード状況',  entry.situation);
+  addSection('🧠 心理状態',     entry.psychoNote);
+  addSection('📝 良かった点/反省点', entry.note);
+  addImage('📈 日足チャート', chartUrl);
+
+  // Notionプロパティ（月足・週足の select + テキスト）
+  const biasSelectOpts = [
+    {name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'}
+  ];
+  const mDir = ctx?.monthly?.dir || entry.biasMonthly || '';
+  const wDir = ctx?.weekly?.dir  || entry.biasWeekly  || '';
+  const props = {
+    '名前': {title:[{text:{content:title}}]},
+    '結果': {select:{name:typeLabel[entry.type]||entry.type}},
+    '日足バイアス': {rich_text:[{text:{content:entry.biasDaily||''}}]},
+    '方向':         {rich_text:[{text:{content:entry.direction||''}}]},
+    '心理タグ':     {rich_text:[{text:{content:(entry.psychoTags||[]).join(', ')}}]},
+    '月足足型':     {rich_text:[{text:{content:ctx?.monthly?.candle||''}}]},
+    '月足節目':     {rich_text:[{text:{content:ctx?.monthly?.key||''}}]},
+    '週足足型':     {rich_text:[{text:{content:ctx?.weekly?.candle||''}}]},
+    '週足節目':     {rich_text:[{text:{content:ctx?.weekly?.key||''}}]}
+  };
+  if (mDir) props['月足バイアス'] = {select:{name:mDir}};
+  if (wDir) props['週足バイアス'] = {select:{name:wDir}};
+  if (entry.pnlUsd!=null)  props['損益USD']  = {number:entry.pnlUsd};
+  if (entry.pnlPips!=null) props['損益pips'] = {number:entry.pnlPips};
+  if (entry.slPips!=null)  props['SL幅pips'] = {number:entry.slPips};
   return await notionPost('/notion/pages',{parent:{database_id:dbId},properties:props,children},token);
 }
 
+// ===== QR転送 =====
 function openQRModal() {
-  const apiKey=getApiKey(); if(!apiKey){alert('APIキーが設定されていません。先に「🔑 APIキー設定」で入力してください。');return;}
+  const apiKey=getApiKey(); if(!apiKey){alert('APIキーが設定されていません。');return;}
   const modal=document.getElementById('qrModal'); modal.style.display='flex';
   const notionToken=getNotionToken(),notionEnvDbId=getNotionEnvDbId(),notionJnlDbId=localStorage.getItem('notionJnlDbId')||'',workerUrl=localStorage.getItem('notionWorkerUrl')||'';
   const data={ak:apiKey,nt:notionToken,ne:notionEnvDbId,nj:notionJnlDbId,nw:workerUrl}, encoded=btoa(JSON.stringify(data)), url=`${location.origin}${location.pathname}#t=${encoded}`;
-  const items=[apiKey?'✅ APIキー':'❌ APIキー（未設定）',notionToken?'✅ Notionトークン':'⬜ Notionトークン（未設定）',notionEnvDbId?'✅ 環境認識DB ID':'⬜ 環境認識DB ID（未設定）',notionJnlDbId?'✅ 振り返りDB ID':'⬜ 振り返りDB ID（未設定）',workerUrl?'✅ Worker URL':'⬜ Worker URL（未設定）'];
+  const items=[apiKey?'✅ APIキー':'❌ APIキー（未設定）',notionToken?'✅ Notionトークン':'⬜ Notionトークン',notionEnvDbId?'✅ 環境認識DB ID':'⬜ 環境認識DB ID',notionJnlDbId?'✅ 振り返りDB ID':'⬜ 振り返りDB ID',workerUrl?'✅ Worker URL':'⬜ Worker URL'];
   document.getElementById('qrNote').innerHTML='転送される設定：<br>'+items.join('<br>');
   generateQRSVG(url, document.getElementById('qrCanvas').parentNode);
 }
@@ -1191,7 +1671,7 @@ function closeQRModal() { document.getElementById('qrModal').style.display='none
 function copyBookmarkUrl() {
   const apiKey=getApiKey(),notionToken=getNotionToken(),notionEnvDbId=getNotionEnvDbId(),notionJnlDbId=localStorage.getItem('notionJnlDbId')||'',workerUrl=localStorage.getItem('notionWorkerUrl')||'';
   const data={ak:apiKey,nt:notionToken,ne:notionEnvDbId,nj:notionJnlDbId,nw:workerUrl}, encoded=btoa(JSON.stringify(data)), url=`${location.origin}${location.pathname}#t=${encoded}`;
-  navigator.clipboard.writeText(url).then(()=>{document.getElementById('bookmarkNote').style.display='block';}).catch(()=>{prompt('このURLをコピーしてSafariで開いてください:',url);});
+  navigator.clipboard.writeText(url).then(()=>{document.getElementById('bookmarkNote').style.display='block';}).catch(()=>{prompt('このURLをコピーしてください:',url);});
 }
 function generateQRSVG(text, wrap) {
   const script=document.createElement('script'); script.src='https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
@@ -1200,13 +1680,13 @@ function generateQRSVG(text, wrap) {
 }
 function showCopyFallback(url, wrap) {
   wrap.innerHTML=''; const div=document.createElement('div'); div.style.cssText='width:200px;padding:16px;text-align:center;';
-  const msg=document.createElement('div'); msg.style.cssText='font-size:13px;color:#7a8099;margin-bottom:12px;'; msg.innerHTML='QR生成できませんでした<br>下のボタンでURLをコピーして<br>スマホのブラウザに貼り付けてください';
+  const msg=document.createElement('div'); msg.style.cssText='font-size:13px;color:#7a8099;margin-bottom:12px;'; msg.innerHTML='QR生成できませんでした<br>下のボタンでURLをコピーしてください';
   const btn=document.createElement('button'); btn.style.cssText='background:#4f8ef7;color:#fff;border:none;border-radius:7px;padding:10px 16px;font-size:13px;cursor:pointer;width:100%;'; btn.textContent='📋 URLをコピー'; btn.onclick=()=>{navigator.clipboard.writeText(url).then(()=>{btn.textContent='✅ コピーしました！';});};
   div.appendChild(msg); div.appendChild(btn); wrap.appendChild(div);
 }
 (function() {
   const hash=location.hash; if(!hash.startsWith('#t=')) return;
-  try { const encoded=hash.replace('#t=',''), data=JSON.parse(atob(encoded)); if(data.ak) localStorage.setItem('anthropicApiKey',data.ak); if(data.nt) localStorage.setItem('notionToken',data.nt); if(data.ne) localStorage.setItem('notionEnvDbId',data.ne); if(data.nj) localStorage.setItem('notionJnlDbId',data.nj); if(data.nw) localStorage.setItem('notionWorkerUrl',data.nw); document.getElementById('apikeyModal').style.display='none'; } catch(e) { console.warn('Transfer data parse error:',e); }
+  try { const encoded=hash.replace('#t=',''), data=JSON.parse(atob(encoded)); if(data.ak) localStorage.setItem('anthropicApiKey',data.ak); if(data.nt) localStorage.setItem('notionToken',data.nt); if(data.ne) localStorage.setItem('notionEnvDbId',data.ne); if(data.nj) localStorage.setItem('notionJnlDbId',data.nj); if(data.nw) localStorage.setItem('notionWorkerUrl',data.nw); document.getElementById('apikeyModal').style.display='none'; } catch(e) {}
 })();
 
 async function callClaude(userMsg, history = []) {
