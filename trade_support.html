@@ -293,7 +293,53 @@ select option{background:var(--bg3);}
 .notion-status.ok{background:rgba(34,197,94,.15);color:var(--green);display:block;}
 .notion-status.err{background:rgba(239,68,68,.15);color:var(--red);display:block;}
 .notion-status.loading{background:var(--bg3);color:var(--muted);display:block;}
-.paste-zone{border:2px dashed var(--border);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;outline:none;}
+/* ===== 経済指標カレンダー ===== */
+.ind-next-banner{background:linear-gradient(135deg,rgba(79,142,247,.12),rgba(167,139,250,.12));border:1px solid rgba(79,142,247,.3);border-radius:10px;padding:16px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.ind-next-countdown{font-size:28px;font-weight:700;font-family:var(--mono);color:var(--accent);}
+.ind-next-info{flex:1;}
+.ind-next-name{font-size:15px;font-weight:700;color:var(--text);}
+.ind-next-date{font-size:12px;color:var(--muted);margin-top:2px;}
+.ind-next-rank{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;}
+.rank-s{background:rgba(239,68,68,.2);color:#f87171;}
+.rank-a{background:rgba(245,158,11,.2);color:var(--amber);}
+.rank-b{background:rgba(79,142,247,.18);color:var(--accent);}
+.rank-c{background:var(--bg3);color:var(--muted);}
+.ind-upcoming-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.ind-upcoming-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:8px;border-left:3px solid transparent;}
+.ind-upcoming-item.rank-s-item{border-left-color:#f87171;}
+.ind-upcoming-item.rank-a-item{border-left-color:var(--amber);}
+.ind-upcoming-item.rank-b-item{border-left-color:var(--accent);}
+.ind-upcoming-name{font-size:13px;font-weight:500;color:var(--text);flex:1;}
+.ind-upcoming-sub{font-size:11px;color:var(--muted);}
+.ind-upcoming-date{font-size:11px;color:var(--muted);font-family:var(--mono);white-space:nowrap;}
+.ind-upcoming-days{font-size:12px;font-weight:600;font-family:var(--mono);min-width:44px;text-align:right;white-space:nowrap;}
+.days-urgent{color:var(--red);}
+.days-soon{color:var(--amber);}
+.days-normal{color:var(--muted);}
+.ind-filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.ind-filter-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;font-family:var(--font);cursor:pointer;transition:all .15s;}
+.ind-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.ind-table{width:100%;border-collapse:collapse;font-size:13px;}
+.ind-table th{font-size:10px;font-weight:600;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;letter-spacing:.5px;text-transform:uppercase;background:var(--bg3);white-space:nowrap;}
+.ind-table td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.ind-table tr:last-child td{border-bottom:none;}
+.ind-table tr:hover td{background:var(--bg3);}
+.ind-name-cell{font-weight:500;color:var(--text);}
+.ind-en-name{font-size:10px;color:var(--muted);margin-top:2px;}
+.ind-impact-cell{white-space:nowrap;}
+.ind-arrow-up{display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(34,197,94,.15);color:var(--green);font-size:11px;font-weight:600;white-space:nowrap;}
+.ind-arrow-dn{display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(239,68,68,.15);color:var(--red);font-size:11px;font-weight:600;white-space:nowrap;}
+.ind-arrow-nt{display:inline-block;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;}
+.ind-arrow-warn{display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(245,158,11,.15);color:var(--amber);font-size:11px;font-weight:600;white-space:nowrap;}
+.ind-section-header{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 10px 6px;background:var(--bg3);border-bottom:1px solid var(--border);}
+.ind-note-box{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--amber);line-height:1.7;margin-top:12px;}
+@media(max-width:640px){
+  .ind-next-countdown{font-size:22px;}
+  .ind-next-name{font-size:13px;}
+  .ind-table{font-size:12px;}
+  .ind-table th,.ind-table td{padding:7px 7px;}
+  .ind-arrow-up,.ind-arrow-dn,.ind-arrow-nt,.ind-arrow-warn{font-size:10px;padding:2px 5px;}
+}border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;outline:none;}
 .paste-zone:hover,.paste-zone.drag-over{border-color:var(--accent);background:rgba(79,142,247,.06);}
 .paste-zone.paste-active{border-color:var(--accent);border-style:solid;background:rgba(79,142,247,.1);box-shadow:0 0 0 3px rgba(79,142,247,.2);}
 .paste-zone.paste-active .paste-hint{color:var(--accent) !important;}
@@ -374,6 +420,7 @@ select option{background:var(--bg3);}
       <button class="nav-btn" onclick="showPage('journal',this)"><span class="nav-icon">📓</span> 振り返りノート</button>
       <button class="nav-btn" onclick="showPage('stats',this)"><span class="nav-icon">📊</span> パフォーマンス</button>
       <button class="nav-btn" onclick="showPage('chat',this)"><span class="nav-icon">🤖</span> AIチャット</button>
+      <button class="nav-btn" onclick="showPage('indicators',this)"><span class="nav-icon">📅</span> 経済指標カレンダー</button>
     </nav>
     <div style="padding:8px;">
       <button class="nav-btn" onclick="openApiKeyModal()" style="font-size:12px;color:var(--muted);"><span class="nav-icon">🔑</span> APIキー設定</button>
@@ -738,8 +785,67 @@ select option{background:var(--bg3);}
         </div>
       </div>
     </div>
-  </div>
-</div>
+    <!-- ===== 経済指標カレンダー ===== -->
+    <div class="page" id="page-indicators">
+      <div class="page-title">経済指標カレンダー</div>
+      <div class="page-sub">金先物に影響する米経済指標一覧・ランク付け・次回発表まで</div>
+
+      <!-- 次回発表バナー -->
+      <div class="ind-next-banner" id="indNextBanner">
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">⏰ 次の重要発表まで</div>
+          <div class="ind-next-countdown" id="indNextCountdown">—</div>
+        </div>
+        <div class="ind-next-info">
+          <div class="ind-next-name" id="indNextName">—</div>
+          <div class="ind-next-date" id="indNextDate">—</div>
+          <div style="margin-top:6px;" id="indNextRankBadge"></div>
+        </div>
+      </div>
+
+      <!-- 直近予定リスト -->
+      <div class="card" style="padding:14px 16px;">
+        <div class="card-title" style="margin-bottom:10px;">📆 直近の主要発表スケジュール（2026年）</div>
+        <div id="indUpcomingList" class="ind-upcoming-list"></div>
+      </div>
+
+      <!-- フィルタ -->
+      <div class="ind-filter-row" id="indFilterRow">
+        <button class="ind-filter-btn active" onclick="setIndFilter('all',this)">すべて</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('s',this)"><span style="color:#f87171;">●</span> Sランク</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('a',this)"><span style="color:var(--amber);">●</span> Aランク</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('b',this)"><span style="color:var(--accent);">●</span> Bランク</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('employment',this)">雇用</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('inflation',this)">インフレ</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('growth',this)">景気</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('policy',this)">金融政策</button>
+      </div>
+
+      <!-- 指標一覧テーブル -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table class="ind-table" id="indTable">
+            <thead>
+              <tr>
+                <th style="width:28px;">ランク</th>
+                <th>指標名</th>
+                <th>概要</th>
+                <th>強い数字→金</th>
+                <th>弱い数字→金</th>
+                <th>予想通り</th>
+              </tr>
+            </thead>
+            <tbody id="indTableBody"></tbody>
+          </table>
+        </div>
+        <div class="ind-note-box" id="indNoteBox">
+          ⚠️ インフレ系指標（CPI / PPI / PCE）は「注意」の理由：インフレ高→①実質金利低下で金高という側面と、②FRBが利上げ継続でドル高・実質金利上昇→金安、という側面が同時に働く。現在（2026年）のように高金利局面では②が優勢になりやすく、インフレ上振れは金の下落要因になる場合が多い。インフレが極端に高く「通貨価値毀損」が意識される局面では①に転じることもある。
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /.main -->
+</div><!-- /.shell -->
 
 <div class="bottom-nav">
   <button class="bnav-btn active" onclick="showPageMobile('env',this)"><span class="bnav-icon">📋</span>環境認識</button>
@@ -748,6 +854,7 @@ select option{background:var(--bg3);}
   <button class="bnav-btn" onclick="showPageMobile('journal',this)"><span class="bnav-icon">📓</span>振り返り</button>
   <button class="bnav-btn" onclick="showPageMobile('stats',this)"><span class="bnav-icon">📊</span>成績</button>
   <button class="bnav-btn" onclick="showPageMobile('chat',this)"><span class="bnav-icon">🤖</span>AI相談</button>
+  <button class="bnav-btn" onclick="showPageMobile('indicators',this)"><span class="bnav-icon">📅</span>指標</button>
 </div>
 
 <script>
@@ -1688,6 +1795,276 @@ function showCopyFallback(url, wrap) {
   const hash=location.hash; if(!hash.startsWith('#t=')) return;
   try { const encoded=hash.replace('#t=',''), data=JSON.parse(atob(encoded)); if(data.ak) localStorage.setItem('anthropicApiKey',data.ak); if(data.nt) localStorage.setItem('notionToken',data.nt); if(data.ne) localStorage.setItem('notionEnvDbId',data.ne); if(data.nj) localStorage.setItem('notionJnlDbId',data.nj); if(data.nw) localStorage.setItem('notionWorkerUrl',data.nw); document.getElementById('apikeyModal').style.display='none'; } catch(e) {}
 })();
+
+// ===== 経済指標カレンダー =====
+const INDICATORS = [
+  // ===== 雇用・労働市場 =====
+  { id:'nfp',    rank:'S', cat:'employment', name:'非農業部門雇用者数', en:'NFP (Non-Farm Payrolls)', summary:'毎月第1金曜。最重要の雇用指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立', strongNote:'', weakNote:'', neutralNote:'',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'jobless', rank:'A', cat:'employment', name:'新規失業保険申請件数', en:'Initial Jobless Claims', summary:'毎週木曜。件数増＝雇用悪化', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'unemp',  rank:'A', cat:'employment', name:'失業率', en:'Unemployment Rate', summary:'NFPと同時発表。低い＝雇用良好', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'adp',    rank:'B', cat:'employment', name:'ADP雇用統計', en:'ADP Employment', summary:'NFPの2日前。民間雇用の先行指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'ahe',    rank:'A', cat:'employment', name:'平均時給', en:'Average Hourly Earnings', summary:'NFPと同時。賃金インフレの目安', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  // ===== 物価・インフレ =====
+  { id:'cpi',    rank:'S', cat:'inflation', name:'消費者物価指数', en:'CPI', summary:'最重要インフレ指標。毎月中旬', strong:'〜注意', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'warn', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'corecpi',rank:'S', cat:'inflation', name:'コアCPI', en:'Core CPI', summary:'食品・エネルギー除く。FRBが重視', strong:'〜注意', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'warn', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'ppi',    rank:'A', cat:'inflation', name:'生産者物価指数', en:'PPI', summary:'卸売物価。CPIの先行指標', strong:'〜注意', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'warn', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'pce',    rank:'S', cat:'inflation', name:'PCEデフレーター', en:'PCE Price Index', summary:'FRBが最も重視するインフレ指標', strong:'〜注意', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'warn', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'michiganinfl',rank:'B', cat:'inflation', name:'ミシガン大インフレ期待', en:'Mich. Inflation Expectations', summary:'消費者のインフレ期待。長期が重要', strong:'〜注意', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'warn', goldWeak:'up', goldNeutral:'neutral' },
+  // ===== 景気・成長 =====
+  { id:'gdp',    rank:'S', cat:'growth', name:'GDP成長率', en:'GDP Growth Rate', summary:'四半期ごとの経済成長。速報値が最重要', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'ismmfg', rank:'A', cat:'growth', name:'ISM製造業PMI', en:'ISM Manufacturing', summary:'50超＝拡大。景気の先行指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'ismsvc', rank:'A', cat:'growth', name:'ISMサービス業PMI', en:'ISM Services', summary:'サービス業の景況感。製造業より大きい', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'retail', rank:'A', cat:'growth', name:'小売売上高', en:'Retail Sales', summary:'個人消費の強弱。GDPの先行指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'durable',rank:'B', cat:'growth', name:'耐久財受注', en:'Durable Goods Orders', summary:'設備投資の先行指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  { id:'confcon',rank:'B', cat:'growth', name:'消費者信頼感指数', en:'Consumer Confidence', summary:'将来への消費者の見方', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  // ===== 金融政策・金利 =====
+  { id:'fomc',   rank:'S', cat:'policy', name:'FOMC政策金利', en:'Fed Funds Rate', summary:'年8回。利上げ→ドル高→金安', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'タカ派', weakLabel:'ハト派' },
+  { id:'fomcmin',rank:'A', cat:'policy', name:'FOMC議事録', en:'FOMC Minutes', summary:'会合3週間後に公開。トーンが重要', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'タカ派', weakLabel:'ハト派' },
+  { id:'fedspeak',rank:'A', cat:'policy', name:'FRB議長発言', en:'Fed Chair Speech', summary:'パウエル議長の発言は最重要イベント', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'タカ派', weakLabel:'ハト派' },
+  { id:'ust10y', rank:'A', cat:'policy', name:'米10年国債利回り', en:'10Y Treasury Yield', summary:'リアルタイムで金と逆相関が強い', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'利回り上昇', weakLabel:'利回り低下' },
+  // ===== ドル・貿易 =====
+  { id:'dxy',    rank:'A', cat:'policy', name:'ドル指数', en:'DXY / USD Index', summary:'金とほぼ常に逆相関。最重要連動指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'ドル高', weakLabel:'ドル安' },
+  { id:'trade',  rank:'B', cat:'growth', name:'貿易収支', en:'Trade Balance', summary:'赤字拡大→ドル安→金高', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'黒字拡大', weakLabel:'赤字拡大' },
+  { id:'housing',rank:'B', cat:'growth', name:'住宅着工件数', en:'Housing Starts', summary:'景気全般の先行指標のひとつ', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+];
+
+// 2026年 主要指標発表日（確定分・推定分）
+// 形式: { id, date:'YYYY-MM-DD', label }
+const SCHEDULED_DATES_2026 = [
+  // NFP (第1金曜) ─ 確定
+  { id:'nfp', date:'2026-07-10', label:'6月分NFP' },
+  { id:'nfp', date:'2026-08-07', label:'7月分NFP' },
+  { id:'nfp', date:'2026-09-04', label:'8月分NFP' },
+  { id:'nfp', date:'2026-10-02', label:'9月分NFP' },
+  { id:'nfp', date:'2026-11-06', label:'10月分NFP' },
+  { id:'nfp', date:'2026-12-04', label:'11月分NFP' },
+  // CPI (毎月中旬)
+  { id:'cpi', date:'2026-06-12', label:'5月分CPI' },
+  { id:'cpi', date:'2026-07-15', label:'6月分CPI' },
+  { id:'cpi', date:'2026-08-13', label:'7月分CPI' },
+  { id:'cpi', date:'2026-09-11', label:'8月分CPI' },
+  { id:'cpi', date:'2026-10-13', label:'9月分CPI' },
+  { id:'cpi', date:'2026-11-12', label:'10月分CPI' },
+  { id:'cpi', date:'2026-12-11', label:'11月分CPI' },
+  // FOMC (確定: Jun16-17, Jul28-29, Sep15-16, Oct27-28, Dec8-9 → 発表は2日目)
+  { id:'fomc', date:'2026-06-17', label:'FOMC政策金利発表（6月）' },
+  { id:'fomc', date:'2026-07-29', label:'FOMC政策金利発表（7月）' },
+  { id:'fomc', date:'2026-09-16', label:'FOMC政策金利発表（9月）' },
+  { id:'fomc', date:'2026-10-28', label:'FOMC政策金利発表（10月）' },
+  { id:'fomc', date:'2026-12-09', label:'FOMC政策金利発表（12月）' },
+  // PCE (毎月末付近)
+  { id:'pce', date:'2026-06-25', label:'5月分PCE' },
+  { id:'pce', date:'2026-07-30', label:'6月分PCE' },
+  { id:'pce', date:'2026-08-26', label:'7月分PCE' },
+  { id:'pce', date:'2026-09-30', label:'8月分PCE' },
+  { id:'pce', date:'2026-10-29', label:'9月分PCE' },
+  { id:'pce', date:'2026-11-25', label:'10月分PCE' },
+  // PPI (CPI翌日前後)
+  { id:'ppi', date:'2026-06-11', label:'5月分PPI' },
+  { id:'ppi', date:'2026-07-14', label:'6月分PPI' },
+  { id:'ppi', date:'2026-08-12', label:'7月分PPI' },
+  { id:'ppi', date:'2026-09-10', label:'8月分PPI' },
+  // GDP (四半期、速報)
+  { id:'gdp', date:'2026-07-30', label:'2Q26 GDP速報' },
+  { id:'gdp', date:'2026-10-29', label:'3Q26 GDP速報' },
+  // Retail Sales
+  { id:'retail', date:'2026-06-17', label:'5月分小売売上高' },
+  { id:'retail', date:'2026-07-16', label:'6月分小売売上高' },
+  { id:'retail', date:'2026-08-14', label:'7月分小売売上高' },
+  { id:'retail', date:'2026-09-16', label:'8月分小売売上高' },
+  // ISM Manufacturing (毎月第1営業日)
+  { id:'ismmfg', date:'2026-07-01', label:'6月分ISM製造業PMI' },
+  { id:'ismmfg', date:'2026-08-03', label:'7月分ISM製造業PMI' },
+  { id:'ismmfg', date:'2026-09-01', label:'8月分ISM製造業PMI' },
+  // ISM Services (毎月第3営業日前後)
+  { id:'ismsvc', date:'2026-07-07', label:'6月分ISMサービスPMI' },
+  { id:'ismsvc', date:'2026-08-05', label:'7月分ISMサービスPMI' },
+  { id:'ismsvc', date:'2026-09-03', label:'8月分ISMサービスPMI' },
+  // FOMC Minutes (会合3週間後)
+  { id:'fomcmin', date:'2026-07-08', label:'FOMC議事録（6月16-17日会合分）' },
+  { id:'fomcmin', date:'2026-08-19', label:'FOMC議事録（7月28-29日会合分）' },
+  // ADP (NFPの2日前)
+  { id:'adp', date:'2026-07-08', label:'6月分ADP雇用' },
+  { id:'adp', date:'2026-08-05', label:'7月分ADP雇用' },
+  { id:'adp', date:'2026-09-02', label:'8月分ADP雇用' },
+];
+
+const RANK_LABELS = { S: 'S', A: 'A', B: 'B', C: 'C' };
+const CAT_LABELS = { employment:'雇用・労働', inflation:'物価・インフレ', growth:'景気・成長', policy:'金融政策・ドル' };
+
+let currentIndFilter = 'all';
+
+function setIndFilter(filter, btn) {
+  currentIndFilter = filter;
+  document.querySelectorAll('.ind-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderIndTable();
+}
+
+function getImpactHtml(type) {
+  if (type === 'up')      return '<span class="ind-arrow-up">↑ 上昇</span>';
+  if (type === 'down')    return '<span class="ind-arrow-dn">↓ 下落</span>';
+  if (type === 'warn')    return '<span class="ind-arrow-warn">〜 注意</span>';
+  if (type === 'neutral') return '<span class="ind-arrow-nt">→ 中立</span>';
+  return '';
+}
+
+function getRankBadgeHtml(rank) {
+  return `<span class="ind-next-rank rank-${rank.toLowerCase()}">${rank}ランク</span>`;
+}
+
+function renderIndTable() {
+  const tbody = document.getElementById('indTableBody');
+  if (!tbody) return;
+  let filtered = INDICATORS;
+  const f = currentIndFilter;
+  if (f === 's') filtered = filtered.filter(i => i.rank === 'S');
+  else if (f === 'a') filtered = filtered.filter(i => i.rank === 'A');
+  else if (f === 'b') filtered = filtered.filter(i => i.rank === 'B');
+  else if (f === 'employment') filtered = filtered.filter(i => i.cat === 'employment');
+  else if (f === 'inflation')  filtered = filtered.filter(i => i.cat === 'inflation');
+  else if (f === 'growth')     filtered = filtered.filter(i => i.cat === 'growth');
+  else if (f === 'policy')     filtered = filtered.filter(i => i.cat === 'policy');
+
+  // カテゴリーごとにグループ化
+  const groups = {};
+  filtered.forEach(ind => {
+    if (!groups[ind.cat]) groups[ind.cat] = [];
+    groups[ind.cat].push(ind);
+  });
+  const catOrder = ['employment', 'inflation', 'growth', 'policy'];
+
+  let html = '';
+  catOrder.forEach(cat => {
+    if (!groups[cat]) return;
+    html += `<tr><td colspan="6" class="ind-section-header">${CAT_LABELS[cat]}</td></tr>`;
+    groups[cat].forEach(ind => {
+      const rankCls = `rank-${ind.rank.toLowerCase()}`;
+      const strongLabel = ind.strongLabel || '強い数字';
+      const weakLabel   = ind.weakLabel   || '弱い数字';
+      html += `<tr>
+        <td class="ind-impact-cell"><span class="${rankCls} ind-next-rank">${ind.rank}</span></td>
+        <td>
+          <div class="ind-name-cell">${ind.name}</div>
+          <div class="ind-en-name">${ind.en}</div>
+        </td>
+        <td style="font-size:11px;color:var(--muted);max-width:160px;">${ind.summary}</td>
+        <td class="ind-impact-cell" title="${strongLabel}">
+          ${getImpactHtml(ind.goldStrong)}
+          ${ind.strongLabel ? `<div style="font-size:10px;color:var(--muted);margin-top:2px;">${ind.strongLabel}</div>` : ''}
+        </td>
+        <td class="ind-impact-cell" title="${weakLabel}">
+          ${getImpactHtml(ind.goldWeak)}
+          ${ind.weakLabel ? `<div style="font-size:10px;color:var(--muted);margin-top:2px;">${ind.weakLabel}</div>` : ''}
+        </td>
+        <td class="ind-impact-cell">${getImpactHtml(ind.goldNeutral)}</td>
+      </tr>`;
+    });
+  });
+  tbody.innerHTML = html;
+}
+
+function renderIndUpcoming() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // 今日以降の予定を全部取得してソート
+  const upcoming = SCHEDULED_DATES_2026
+    .map(ev => {
+      const d = new Date(ev.date);
+      const diffMs = d - today;
+      const diffDays = Math.ceil(diffMs / 86400000);
+      const ind = INDICATORS.find(i => i.id === ev.id);
+      return { ...ev, dateObj: d, diffDays, ind };
+    })
+    .filter(ev => ev.diffDays >= 0)
+    .sort((a, b) => a.diffDays - b.diffDays);
+
+  // 次の重要発表バナー（S/Aランクの最近のもの）
+  const nextImportant = upcoming.find(ev => ev.ind && (ev.ind.rank === 'S' || ev.ind.rank === 'A'));
+  const nextAny = upcoming[0];
+  const bannerEv = nextImportant || nextAny;
+
+  if (bannerEv) {
+    const dStr = bannerEv.dateObj.toLocaleDateString('ja-JP', { month:'long', day:'numeric', weekday:'short' });
+    const timeStr = bannerEv.diffDays === 0 ? '本日' : bannerEv.diffDays === 1 ? '明日' : `${bannerEv.diffDays}日後`;
+    document.getElementById('indNextCountdown').textContent = timeStr;
+    document.getElementById('indNextName').textContent = bannerEv.label;
+    document.getElementById('indNextDate').textContent = `📅 ${dStr}（日本時間21:30〜）`;
+    document.getElementById('indNextRankBadge').innerHTML = bannerEv.ind ? getRankBadgeHtml(bannerEv.ind.rank) : '';
+  }
+
+  // 直近リスト（次の14件、Sランク優先で上位20）
+  const listItems = upcoming.slice(0, 14);
+  const listEl = document.getElementById('indUpcomingList');
+  if (!listEl) return;
+  if (!listItems.length) {
+    listEl.innerHTML = '<div style="font-size:13px;color:var(--muted);">2026年の予定は以上です</div>';
+    return;
+  }
+  listEl.innerHTML = listItems.map(ev => {
+    const rank = ev.ind?.rank || 'B';
+    const dStr = ev.dateObj.toLocaleDateString('ja-JP', { month:'numeric', day:'numeric', weekday:'short' });
+    const timeStr = ev.diffDays === 0 ? '<span class="days-urgent">本日</span>'
+                  : ev.diffDays === 1 ? '<span class="days-urgent">明日</span>'
+                  : ev.diffDays <= 7  ? `<span class="days-soon">${ev.diffDays}日後</span>`
+                  :                     `<span class="days-normal">${ev.diffDays}日後</span>`;
+    return `<div class="ind-upcoming-item rank-${rank.toLowerCase()}-item">
+      <span class="ind-next-rank rank-${rank.toLowerCase()}">${rank}</span>
+      <div style="flex:1;">
+        <div class="ind-upcoming-name">${ev.label}</div>
+        <div class="ind-upcoming-sub">${ev.ind?.name || ''}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="ind-upcoming-date">${dStr}</div>
+        <div class="ind-upcoming-days">${timeStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function initIndicatorsPage() {
+  renderIndUpcoming();
+  renderIndTable();
+}
+
+// ページ表示時に初期化 - showPage/showPageMobileをフック
+window._indInited = false;
+
+// showPage/showPageMobileを上書きして指標ページ初期化をフック
+const _origShowPage = showPage;
+showPage = function(id, btn) {
+  _origShowPage(id, btn);
+  if (id === 'indicators' && !window._indInited) { initIndicatorsPage(); window._indInited = true; }
+};
+const _origShowPageMobile = showPageMobile;
+showPageMobile = function(id, btn) {
+  _origShowPageMobile(id, btn);
+  if (id === 'indicators' && !window._indInited) { initIndicatorsPage(); window._indInited = true; }
+};
 
 async function callClaude(userMsg, history = []) {
   const apiKey=getApiKey(); if(!apiKey){openApiKeyModal();throw new Error('APIキーが設定されていません');}
