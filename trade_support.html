@@ -1676,20 +1676,59 @@ async function setupNotionDatabases() {
   const token=document.getElementById('notionTokenInput').value.trim(), envDbId=document.getElementById('notionEnvDbInput').value.trim().replace(/-/g,''), jnlDbId=document.getElementById('notionJnlDbInput').value.trim().replace(/-/g,''), workerUrl=(document.getElementById('notionWorkerUrlInput').value.trim()||localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''), st=document.getElementById('notionStatus');
   if(!token||!workerUrl){alert('トークンとWorker URLを入力してください');return;}
   st.className='notion-status loading';st.textContent='DBセットアップ中...';
-  const envProps={'日付キー':{rich_text:{}},'月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'日足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'月足足型':{rich_text:{}},'週足足型':{rich_text:{}},'日足足型':{rich_text:{}},'AS高値':{rich_text:{}},'AS安値':{rich_text:{}}};
-  // 振り返りDBに月足・週足コンテキスト用プロパティを追加
-  const jnlProps={
-    '結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'建値',color:'blue'},{name:'見送り成功',color:'purple'},{name:'機会損失',color:'yellow'}]}},
+
+  const envProps={
+    '日付キー':{rich_text:{}},'月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},
+    '週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},
+    '日足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},
+    '月足足型':{rich_text:{}},'週足足型':{rich_text:{}},'日足足型':{rich_text:{}},'AS高値':{rich_text:{}},'AS安値':{rich_text:{}}
+  };
+
+  // 振り返りDB: 結果selectは既存オプションを取得してから建値を追加（色変更エラー回避）
+  const jnlBaseProps={
     '損益USD':{number:{format:'dollar'}},'損益pips':{number:{}},'SL幅pips':{number:{}},
     '月足バイアス':{rich_text:{}},'月足足型':{rich_text:{}},'月足節目':{rich_text:{}},
     '週足バイアス':{rich_text:{}},'週足足型':{rich_text:{}},'週足節目':{rich_text:{}},
     '日足バイアス':{rich_text:{}},'方向':{rich_text:{}},'心理タグ':{rich_text:{}}
   };
-  const results=[], patchDb=async(dbId,props,label)=>{ if(!dbId){results.push('⬜ '+label+': DB ID未設定（スキップ）');return;} try{const res=await fetch(workerUrl+'/notion/databases/'+dbId,{method:'PATCH',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify({properties:props})}),data=await res.json(); if(res.ok){results.push('✅ '+label+': セットアップ完了');}else{results.push('❌ '+label+': '+(data.message||data.error||res.status));}}catch(e){results.push('❌ '+label+': '+e.message);}};
-  await patchDb(envDbId,envProps,'環境認識DB'); if(jnlDbId) await patchDb(jnlDbId,jnlProps,'振り返りDB');
+
+  const results=[];
+
+  // 環境認識DBセットアップ
+  if(!envDbId){ results.push('⬜ 環境認識DB: DB ID未設定（スキップ）'); }
+  else {
+    try {
+      const res=await fetch(workerUrl+'/notion/databases/'+envDbId,{method:'PATCH',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify({properties:envProps})}), data=await res.json();
+      if(res.ok) results.push('✅ 環境認識DB: セットアップ完了');
+      else results.push('❌ 環境認識DB: '+(data.message||data.error||res.status));
+    } catch(e){ results.push('❌ 環境認識DB: '+e.message); }
+  }
+
+  // 振り返りDBセットアップ
+  if(!jnlDbId){ results.push('⬜ 振り返りDB: DB ID未設定（スキップ）'); }
+  else {
+    try {
+      // Step1: 既存DBの「結果」selectオプションを取得
+      const dbRes = await fetch(workerUrl+'/notion/databases/'+jnlDbId,{headers:{'X-Notion-Token':token}});
+      const dbData = await dbRes.json();
+      let resultOptions = [{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}];
+      if(dbRes.ok && dbData.properties?.['結果']?.select?.options) {
+        // 既存オプションをそのまま使い、建値がなければ追加
+        const existing = dbData.properties['結果'].select.options;
+        const hasKe = existing.some(o => o.name === '建値');
+        resultOptions = hasKe ? existing : [...existing, {name:'建値',color:'default'}];
+      }
+      // Step2: 結果selectを含む全プロパティをPATCH
+      const jnlProps = { ...jnlBaseProps, '結果':{select:{options:resultOptions}} };
+      const res=await fetch(workerUrl+'/notion/databases/'+jnlDbId,{method:'PATCH',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify({properties:jnlProps})}), data=await res.json();
+      if(res.ok){ results.push('✅ 振り返りDB: セットアップ完了'); localStorage.setItem('notionJnlDbSetup','1'); }
+      else results.push('❌ 振り返りDB: '+(data.message||data.error||res.status));
+    } catch(e){ results.push('❌ 振り返りDB: '+e.message); }
+  }
+
   const allOk=results.every(r=>r.startsWith('✅')||r.startsWith('⬜'));
-  if(allOk && jnlDbId) localStorage.setItem('notionJnlDbSetup','1');
-  st.className='notion-status '+(allOk?'ok':'err'); st.innerHTML=results.join('<br>')+(allOk?'<br><span style="font-size:11px;">✅ 次回から月足足型・節目もプロパティに保存されます</span>':'');
+  st.className='notion-status '+(allOk?'ok':'err');
+  st.innerHTML=results.join('<br>')+(allOk?'<br><span style="font-size:11px;">✅ 次回から月足足型・節目もプロパティに保存されます</span>':'');
 }
 
 function getWorkerUrl() { return (localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''); }
