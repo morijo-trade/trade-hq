@@ -705,7 +705,7 @@ select option{background:var(--bg3);}
 
         <!-- ===== 既存フォーム ===== -->
         <div class="grid2" style="margin-bottom:12px;">
-          <div><label>結果タイプ</label><select id="jType"><option value="win">✅ 勝ち</option><option value="loss">❌ 負け</option><option value="pass">⭕ 見送り成功</option><option value="miss">⚠️ 機会損失</option></select></div>
+          <div><label>結果タイプ</label><select id="jType" onchange="onJTypeChange(this.value)"><option value="win">✅ 勝ち</option><option value="loss">❌ 負け</option><option value="be">🔰 建値</option><option value="pass">⭕ 見送り成功</option><option value="miss">⚠️ 機会損失</option></select></div>
           <div><label>損切り幅（pips / oz）</label><div class="input-unit" style="position:relative;"><input id="jSlPips" type="number" placeholder="例: 8.0" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span></div></div>
         </div>
         <div style="margin-bottom:12px;"><label>損益</label><div class="pnl-group"><div class="input-unit" style="position:relative;"><input id="jPnlUsd" type="number" placeholder="+500 / -200" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">USD</span></div><div class="input-unit" style="position:relative;"><input id="jPnlPips" type="number" placeholder="+15.0 / -8.0" style="padding-right:44px;"><span class="unit-label" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--muted);">pips</span></div></div></div>
@@ -1404,6 +1404,21 @@ function calcATR() {
   document.getElementById('r_judge').innerHTML = judge;
 }
 
+// ===== 建値選択時に損益を自動0セット =====
+function onJTypeChange(val) {
+  if (val === 'be') {
+    const usdEl  = document.getElementById('jPnlUsd');
+    const pipsEl = document.getElementById('jPnlPips');
+    if (usdEl)  { usdEl.value  = '0'; usdEl.style.color  = 'var(--accent)'; }
+    if (pipsEl) { pipsEl.value = '0'; pipsEl.style.color = 'var(--accent)'; }
+  } else {
+    const usdEl  = document.getElementById('jPnlUsd');
+    const pipsEl = document.getElementById('jPnlPips');
+    if (usdEl  && usdEl.value  === '0') { usdEl.value  = ''; usdEl.style.color  = ''; }
+    if (pipsEl && pipsEl.value === '0') { pipsEl.value = ''; pipsEl.style.color = ''; }
+  }
+}
+
 // ===== 心理タグ =====
 function togglePsycho(el, tag) { const idx = selectedPsychoTags.indexOf(tag); if (idx === -1) { selectedPsychoTags.push(tag); el.classList.add('selected-long'); } else { selectedPsychoTags.splice(idx, 1); el.className = 'env-tag'; } }
 
@@ -1467,8 +1482,8 @@ async function addJournal() {
 function renderJournals() {
   const list = document.getElementById('journalList');
   if (!journals.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px;">まだ記録がありません</p>'; return; }
-  const tl = { win: '✅ 勝ち', loss: '❌ 負け', pass: '⭕ 見送り成功', miss: '⚠️ 機会損失' };
-  const bc = { win: 'badge-green', loss: 'badge-red', pass: 'badge-teal', miss: 'badge-amber' };
+  const tl = { win: '✅ 勝ち', loss: '❌ 負け', be: '🔰 建値', pass: '⭕ 見送り成功', miss: '⚠️ 機会損失' };
+  const bc = { win: 'badge-green', loss: 'badge-red', be: 'badge-blue', pass: 'badge-teal', miss: 'badge-amber' };
 
   const biasLabel = v => {
     if (v === 'ロング優位') return `<span class="badge badge-green" style="font-size:10px;">↑ロング</span>`;
@@ -1608,7 +1623,7 @@ renderJournals();
 
 // ===== パフォーマンス =====
 function updateStats() {
-  const total=journals.length, wins=journals.filter(j=>j.type==='win').length, losses=journals.filter(j=>j.type==='loss').length, pass=journals.filter(j=>j.type==='pass').length, miss=journals.filter(j=>j.type==='miss').length;
+  const total=journals.length, wins=journals.filter(j=>j.type==='win').length, losses=journals.filter(j=>j.type==='loss').length, bes=journals.filter(j=>j.type==='be').length, pass=journals.filter(j=>j.type==='pass').length, miss=journals.filter(j=>j.type==='miss').length;
   const pnlUsd=journals.reduce((s,j)=>s+(j.pnlUsd!==undefined&&j.pnlUsd!==null?j.pnlUsd:0),0), pnlPips=journals.reduce((s,j)=>s+(j.pnlPips||0),0);
   const wr=(wins+losses)>0?Math.round(wins/(wins+losses)*100):0;
   document.getElementById('s_total').textContent=total; document.getElementById('s_wr').textContent=wr+'%';
@@ -1616,7 +1631,7 @@ function updateStats() {
   document.getElementById('s_pips').textContent=(pnlPips>=0?'+':'')+pnlPips.toFixed(1); document.getElementById('s_pips').style.color=pnlPips>=0?'var(--green)':'var(--red)';
   document.getElementById('s_pass').textContent=pass; document.getElementById('s_miss').textContent=miss;
   const detail=document.getElementById('statsDetail'); if(!total){detail.textContent='記録が増えると分析が表示されます。';return;}
-  detail.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div>勝ち: <strong style="color:var(--green)">${wins}回</strong></div><div>負け: <strong style="color:var(--red)">${losses}回</strong></div><div>見送り成功: <strong style="color:var(--teal)">${pass}回</strong></div><div>機会損失: <strong style="color:var(--amber)">${miss}回</strong></div></div><div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">見送り成功率: <strong style="color:var(--accent)">${(pass+miss)>0?Math.round(pass/(pass+miss)*100):0}%</strong></div>`;
+  detail.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div>勝ち: <strong style="color:var(--green)">${wins}回</strong></div><div>負け: <strong style="color:var(--red)">${losses}回</strong></div><div>建値: <strong style="color:var(--accent)">${bes}回</strong></div><div>見送り成功: <strong style="color:var(--teal)">${pass}回</strong></div><div>機会損失: <strong style="color:var(--amber)">${miss}回</strong></div></div><div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">見送り成功率: <strong style="color:var(--accent)">${(pass+miss)>0?Math.round(pass/(pass+miss)*100):0}%</strong></div>`;
 }
 async function analyzeStats() {
   if (!journals.length) { alert('記録がありません'); return; }
@@ -1664,7 +1679,7 @@ async function setupNotionDatabases() {
   const envProps={'日付キー':{rich_text:{}},'月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'日足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'},{name:'未設定',color:'gray'}]}},'月足足型':{rich_text:{}},'週足足型':{rich_text:{}},'日足足型':{rich_text:{}},'AS高値':{rich_text:{}},'AS安値':{rich_text:{}}};
   // 振り返りDBに月足・週足コンテキスト用プロパティを追加
   const jnlProps={
-    '結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}]}},
+    '結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'建値',color:'blue'},{name:'見送り成功',color:'purple'},{name:'機会損失',color:'yellow'}]}},
     '損益USD':{number:{format:'dollar'}},'損益pips':{number:{}},'SL幅pips':{number:{}},
     '月足バイアス':{rich_text:{}},'月足足型':{rich_text:{}},'月足節目':{rich_text:{}},
     '週足バイアス':{rich_text:{}},'週足足型':{rich_text:{}},'週足節目':{rich_text:{}},
@@ -1706,7 +1721,7 @@ async function saveJournalToNotion(entry) {
     uploadImageToR2(entry.ctx?.monthly?.img, 'ctx-monthly'),
     uploadImageToR2(entry.ctx?.weekly?.img,  'ctx-weekly')
   ]);
-  const typeLabel={win:'勝ち',loss:'負け',pass:'見送り成功',miss:'機会損失'};
+  const typeLabel={win:'勝ち',loss:'負け',be:'建値',pass:'見送り成功',miss:'機会損失'};
   const title=`${entry.date} ${typeLabel[entry.type]||entry.type}`;
   const children=[];
   const addSection=(heading,text)=>{ if(!text) return; children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:heading}}]}}); children.push({object:'block',type:'paragraph',paragraph:{rich_text:[{text:{content:text}}]}}); };
