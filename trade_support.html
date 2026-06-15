@@ -1666,15 +1666,15 @@ async function setupNotionDatabases() {
   const jnlProps={
     '結果':{select:{options:[{name:'勝ち',color:'green'},{name:'負け',color:'red'},{name:'見送り成功',color:'blue'},{name:'機会損失',color:'yellow'}]}},
     '損益USD':{number:{format:'dollar'}},'損益pips':{number:{}},'SL幅pips':{number:{}},
-    '月足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'}]}},
-    '月足足型':{rich_text:{}},'月足節目':{rich_text:{}},
-    '週足バイアス':{select:{options:[{name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'}]}},
-    '週足足型':{rich_text:{}},'週足節目':{rich_text:{}},
+    '月足バイアス':{rich_text:{}},'月足足型':{rich_text:{}},'月足節目':{rich_text:{}},
+    '週足バイアス':{rich_text:{}},'週足足型':{rich_text:{}},'週足節目':{rich_text:{}},
     '日足バイアス':{rich_text:{}},'方向':{rich_text:{}},'心理タグ':{rich_text:{}}
   };
   const results=[], patchDb=async(dbId,props,label)=>{ if(!dbId){results.push('⬜ '+label+': DB ID未設定（スキップ）');return;} try{const res=await fetch(workerUrl+'/notion/databases/'+dbId,{method:'PATCH',headers:{'Content-Type':'application/json','X-Notion-Token':token},body:JSON.stringify({properties:props})}),data=await res.json(); if(res.ok){results.push('✅ '+label+': セットアップ完了');}else{results.push('❌ '+label+': '+(data.message||data.error||res.status));}}catch(e){results.push('❌ '+label+': '+e.message);}};
   await patchDb(envDbId,envProps,'環境認識DB'); if(jnlDbId) await patchDb(jnlDbId,jnlProps,'振り返りDB');
-  const allOk=results.every(r=>r.startsWith('✅')||r.startsWith('⬜')); st.className='notion-status '+(allOk?'ok':'err'); st.innerHTML=results.join('<br>');
+  const allOk=results.every(r=>r.startsWith('✅')||r.startsWith('⬜'));
+  if(allOk && jnlDbId) localStorage.setItem('notionJnlDbSetup','1');
+  st.className='notion-status '+(allOk?'ok':'err'); st.innerHTML=results.join('<br>')+(allOk?'<br><span style="font-size:11px;">✅ 次回から月足足型・節目もプロパティに保存されます</span>':'');
 }
 
 function getWorkerUrl() { return (localStorage.getItem('notionWorkerUrl')||'').replace(/\/+$/,''); }
@@ -1712,7 +1712,7 @@ async function saveJournalToNotion(entry) {
   const addSection=(heading,text)=>{ if(!text) return; children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:heading}}]}}); children.push({object:'block',type:'paragraph',paragraph:{rich_text:[{text:{content:text}}]}}); };
   const addImage=(label,url)=>{ if(!url) return; children.push({object:'block',type:'heading_3',heading_3:{rich_text:[{text:{content:label}}]}}); children.push({object:'block',type:'image',image:{type:'external',external:{url}}}); };
 
-  // 月足コンテキストブロック
+  // 月足コンテキストブロック（本文）
   const ctx = entry.ctx;
   if (ctx?.monthly?.dir || ctx?.monthly?.candle || ctx?.monthly?.note || ctxMonthlyUrl) {
     children.push({object:'block',type:'heading_2',heading_2:{rich_text:[{text:{content:'🌙 月足コンテキスト'}}]}});
@@ -1722,7 +1722,7 @@ async function saveJournalToNotion(entry) {
     addImage('🌙 月足チャート', ctxMonthlyUrl);
     if (ctx.monthly.note)   addSection('メモ',     ctx.monthly.note);
   }
-  // 週足コンテキストブロック
+  // 週足コンテキストブロック（本文）
   if (ctx?.weekly?.dir || ctx?.weekly?.candle || ctx?.weekly?.note || ctxWeeklyUrl) {
     children.push({object:'block',type:'heading_2',heading_2:{rich_text:[{text:{content:'📅 週足コンテキスト'}}]}});
     if (ctx.weekly.dir)    addSection('バイアス', ctx.weekly.dir);
@@ -1731,7 +1731,7 @@ async function saveJournalToNotion(entry) {
     addImage('📅 週足チャート', ctxWeeklyUrl);
     if (ctx.weekly.note)   addSection('メモ',     ctx.weekly.note);
   }
-  // トレード内容
+  // トレード内容（本文）
   children.push({object:'block',type:'heading_2',heading_2:{rich_text:[{text:{content:'📈 トレード内容'}}]}});
   addSection('📌 セットアップ',  entry.setup);
   addSection('📊 トレード状況',  entry.situation);
@@ -1739,28 +1739,34 @@ async function saveJournalToNotion(entry) {
   addSection('📝 良かった点/反省点', entry.note);
   addImage('📈 日足チャート', chartUrl);
 
-  // Notionプロパティ（月足・週足の select + テキスト）
-  const biasSelectOpts = [
-    {name:'ロング優位',color:'green'},{name:'ショート優位',color:'red'},{name:'レンジ',color:'yellow'}
-  ];
+  // --- Notionプロパティ ---
+  // ★ 月足/週足バイアスは rich_text で送る（DBセットアップ不要・型エラー回避）
+  // ★ 足型・節目は本文ブロックのみ（プロパティに含めない → 存在しなくてもエラーなし）
   const mDir = ctx?.monthly?.dir || entry.biasMonthly || '';
   const wDir = ctx?.weekly?.dir  || entry.biasWeekly  || '';
   const props = {
-    '名前': {title:[{text:{content:title}}]},
-    '結果': {select:{name:typeLabel[entry.type]||entry.type}},
+    '名前':     {title:[{text:{content:title}}]},
+    '結果':     {select:{name:typeLabel[entry.type]||entry.type}},
     '日足バイアス': {rich_text:[{text:{content:entry.biasDaily||''}}]},
     '方向':         {rich_text:[{text:{content:entry.direction||''}}]},
     '心理タグ':     {rich_text:[{text:{content:(entry.psychoTags||[]).join(', ')}}]},
-    '月足足型':     {rich_text:[{text:{content:ctx?.monthly?.candle||''}}]},
-    '月足節目':     {rich_text:[{text:{content:ctx?.monthly?.key||''}}]},
-    '週足足型':     {rich_text:[{text:{content:ctx?.weekly?.candle||''}}]},
-    '週足節目':     {rich_text:[{text:{content:ctx?.weekly?.key||''}}]}
+    // バイアスは rich_text（select型でのエラーを回避）
+    '月足バイアス': {rich_text:[{text:{content:mDir}}]},
+    '週足バイアス': {rich_text:[{text:{content:wDir}}]},
   };
-  if (mDir) props['月足バイアス'] = {select:{name:mDir}};
-  if (wDir) props['週足バイアス'] = {select:{name:wDir}};
   if (entry.pnlUsd!=null)  props['損益USD']  = {number:entry.pnlUsd};
   if (entry.pnlPips!=null) props['損益pips'] = {number:entry.pnlPips};
   if (entry.slPips!=null)  props['SL幅pips'] = {number:entry.slPips};
+
+  // DBセットアップ済みなら足型・節目プロパティも送る（存在しなくても本文で補完済み）
+  const jnlDbSetup = localStorage.getItem('notionJnlDbSetup') === '1';
+  if (jnlDbSetup) {
+    props['月足足型'] = {rich_text:[{text:{content:ctx?.monthly?.candle||''}}]};
+    props['月足節目'] = {rich_text:[{text:{content:ctx?.monthly?.key||''}}]};
+    props['週足足型'] = {rich_text:[{text:{content:ctx?.weekly?.candle||''}}]};
+    props['週足節目'] = {rich_text:[{text:{content:ctx?.weekly?.key||''}}]};
+  }
+
   return await notionPost('/notion/pages',{parent:{database_id:dbId},properties:props,children},token);
 }
 
