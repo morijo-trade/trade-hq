@@ -1913,63 +1913,67 @@ const INDICATORS = [
 
 // 2026年 主要指標発表日（確定分・推定分）
 // 形式: { id, date:'YYYY-MM-DD', label }
+// 日本時間の目安
+// 米国夏時間(3月第2日曜〜11月第1日曜): 経済指標=21:30JST / FOMC発表・議事録=翌3:00JST
+// 米国冬時間(11月〜3月): 経済指標=22:30JST / FOMC発表・議事録=翌4:00JST
+// ※ 夏時間内の指標はすべて21:30、FOMC系は翌3:00
 const SCHEDULED_DATES_2026 = [
-  // NFP (第1金曜) ─ 確定
-  { id:'nfp', date:'2026-07-10', label:'6月分NFP' },
-  { id:'nfp', date:'2026-08-07', label:'7月分NFP' },
-  { id:'nfp', date:'2026-09-04', label:'8月分NFP' },
-  { id:'nfp', date:'2026-10-02', label:'9月分NFP' },
-  { id:'nfp', date:'2026-11-06', label:'10月分NFP' },
-  { id:'nfp', date:'2026-12-04', label:'11月分NFP' },
-  // CPI (毎月中旬)
-  { id:'cpi', date:'2026-06-12', label:'5月分CPI' },
-  { id:'cpi', date:'2026-07-15', label:'6月分CPI' },
-  { id:'cpi', date:'2026-08-13', label:'7月分CPI' },
-  { id:'cpi', date:'2026-09-11', label:'8月分CPI' },
-  { id:'cpi', date:'2026-10-13', label:'9月分CPI' },
-  { id:'cpi', date:'2026-11-12', label:'10月分CPI' },
-  { id:'cpi', date:'2026-12-11', label:'11月分CPI' },
-  // FOMC (確定: Jun16-17, Jul28-29, Sep15-16, Oct27-28, Dec8-9 → 発表は2日目)
-  { id:'fomc', date:'2026-06-17', label:'FOMC政策金利発表（6月）' },
-  { id:'fomc', date:'2026-07-29', label:'FOMC政策金利発表（7月）' },
-  { id:'fomc', date:'2026-09-16', label:'FOMC政策金利発表（9月）' },
-  { id:'fomc', date:'2026-10-28', label:'FOMC政策金利発表（10月）' },
-  { id:'fomc', date:'2026-12-09', label:'FOMC政策金利発表（12月）' },
-  // PCE (毎月末付近)
-  { id:'pce', date:'2026-06-25', label:'5月分PCE' },
-  { id:'pce', date:'2026-07-30', label:'6月分PCE' },
-  { id:'pce', date:'2026-08-26', label:'7月分PCE' },
-  { id:'pce', date:'2026-09-30', label:'8月分PCE' },
-  { id:'pce', date:'2026-10-29', label:'9月分PCE' },
-  { id:'pce', date:'2026-11-25', label:'10月分PCE' },
-  // PPI (CPI翌日前後)
-  { id:'ppi', date:'2026-06-11', label:'5月分PPI' },
-  { id:'ppi', date:'2026-07-14', label:'6月分PPI' },
-  { id:'ppi', date:'2026-08-12', label:'7月分PPI' },
-  { id:'ppi', date:'2026-09-10', label:'8月分PPI' },
-  // GDP (四半期、速報)
-  { id:'gdp', date:'2026-07-30', label:'2Q26 GDP速報' },
-  { id:'gdp', date:'2026-10-29', label:'3Q26 GDP速報' },
-  // Retail Sales
-  { id:'retail', date:'2026-06-17', label:'5月分小売売上高' },
-  { id:'retail', date:'2026-07-16', label:'6月分小売売上高' },
-  { id:'retail', date:'2026-08-14', label:'7月分小売売上高' },
-  { id:'retail', date:'2026-09-16', label:'8月分小売売上高' },
-  // ISM Manufacturing (毎月第1営業日)
-  { id:'ismmfg', date:'2026-07-01', label:'6月分ISM製造業PMI' },
-  { id:'ismmfg', date:'2026-08-03', label:'7月分ISM製造業PMI' },
-  { id:'ismmfg', date:'2026-09-01', label:'8月分ISM製造業PMI' },
-  // ISM Services (毎月第3営業日前後)
-  { id:'ismsvc', date:'2026-07-07', label:'6月分ISMサービスPMI' },
-  { id:'ismsvc', date:'2026-08-05', label:'7月分ISMサービスPMI' },
-  { id:'ismsvc', date:'2026-09-03', label:'8月分ISMサービスPMI' },
-  // FOMC Minutes (会合3週間後)
-  { id:'fomcmin', date:'2026-07-08', label:'FOMC議事録（6月16-17日会合分）' },
-  { id:'fomcmin', date:'2026-08-19', label:'FOMC議事録（7月28-29日会合分）' },
-  // ADP (NFPの2日前)
-  { id:'adp', date:'2026-07-08', label:'6月分ADP雇用' },
-  { id:'adp', date:'2026-08-05', label:'7月分ADP雇用' },
-  { id:'adp', date:'2026-09-02', label:'8月分ADP雇用' },
+  // NFP (第1金曜) ─ 夏時間内: 21:30JST
+  { id:'nfp', date:'2026-07-10', label:'6月分NFP', time:'21:30' },
+  { id:'nfp', date:'2026-08-07', label:'7月分NFP', time:'21:30' },
+  { id:'nfp', date:'2026-09-04', label:'8月分NFP', time:'21:30' },
+  { id:'nfp', date:'2026-10-02', label:'9月分NFP', time:'21:30' },
+  { id:'nfp', date:'2026-11-06', label:'10月分NFP', time:'22:30' }, // 冬時間
+  { id:'nfp', date:'2026-12-04', label:'11月分NFP', time:'22:30' },
+  // CPI (毎月中旬) ─ 夏時間: 21:30JST
+  { id:'cpi', date:'2026-06-12', label:'5月分CPI', time:'21:30' },
+  { id:'cpi', date:'2026-07-15', label:'6月分CPI', time:'21:30' },
+  { id:'cpi', date:'2026-08-13', label:'7月分CPI', time:'21:30' },
+  { id:'cpi', date:'2026-09-11', label:'8月分CPI', time:'21:30' },
+  { id:'cpi', date:'2026-10-13', label:'9月分CPI', time:'21:30' },
+  { id:'cpi', date:'2026-11-12', label:'10月分CPI', time:'22:30' }, // 冬時間
+  { id:'cpi', date:'2026-12-11', label:'11月分CPI', time:'22:30' },
+  // FOMC ─ 発表は日本時間【翌3:00】（夏時間）/ 【翌4:00】（冬時間）
+  { id:'fomc', date:'2026-06-17', label:'FOMC政策金利発表（6月）', time:'翌3:00' },
+  { id:'fomc', date:'2026-07-29', label:'FOMC政策金利発表（7月）', time:'翌3:00' },
+  { id:'fomc', date:'2026-09-16', label:'FOMC政策金利発表（9月）', time:'翌3:00' },
+  { id:'fomc', date:'2026-10-28', label:'FOMC政策金利発表（10月）', time:'翌3:00' },
+  { id:'fomc', date:'2026-12-09', label:'FOMC政策金利発表（12月）', time:'翌4:00' }, // 冬時間
+  // PCE (毎月末付近) ─ 21:30JST
+  { id:'pce', date:'2026-06-25', label:'5月分PCE', time:'21:30' },
+  { id:'pce', date:'2026-07-30', label:'6月分PCE', time:'21:30' },
+  { id:'pce', date:'2026-08-26', label:'7月分PCE', time:'21:30' },
+  { id:'pce', date:'2026-09-30', label:'8月分PCE', time:'21:30' },
+  { id:'pce', date:'2026-10-29', label:'9月分PCE', time:'21:30' },
+  { id:'pce', date:'2026-11-25', label:'10月分PCE', time:'22:30' }, // 冬時間
+  // PPI (CPI翌日前後) ─ 21:30JST
+  { id:'ppi', date:'2026-06-11', label:'5月分PPI', time:'21:30' },
+  { id:'ppi', date:'2026-07-14', label:'6月分PPI', time:'21:30' },
+  { id:'ppi', date:'2026-08-12', label:'7月分PPI', time:'21:30' },
+  { id:'ppi', date:'2026-09-10', label:'8月分PPI', time:'21:30' },
+  // GDP (四半期、速報) ─ 21:30JST
+  { id:'gdp', date:'2026-07-30', label:'2Q26 GDP速報', time:'21:30' },
+  { id:'gdp', date:'2026-10-29', label:'3Q26 GDP速報', time:'21:30' },
+  // Retail Sales ─ 21:30JST
+  { id:'retail', date:'2026-06-17', label:'5月分小売売上高', time:'21:30' },
+  { id:'retail', date:'2026-07-16', label:'6月分小売売上高', time:'21:30' },
+  { id:'retail', date:'2026-08-14', label:'7月分小売売上高', time:'21:30' },
+  { id:'retail', date:'2026-09-16', label:'8月分小売売上高', time:'21:30' },
+  // ISM Manufacturing ─ 夏時間: 23:00JST
+  { id:'ismmfg', date:'2026-07-01', label:'6月分ISM製造業PMI', time:'23:00' },
+  { id:'ismmfg', date:'2026-08-03', label:'7月分ISM製造業PMI', time:'23:00' },
+  { id:'ismmfg', date:'2026-09-01', label:'8月分ISM製造業PMI', time:'23:00' },
+  // ISM Services ─ 夏時間: 23:00JST
+  { id:'ismsvc', date:'2026-07-07', label:'6月分ISMサービスPMI', time:'23:00' },
+  { id:'ismsvc', date:'2026-08-05', label:'7月分ISMサービスPMI', time:'23:00' },
+  { id:'ismsvc', date:'2026-09-03', label:'8月分ISMサービスPMI', time:'23:00' },
+  // FOMC議事録 ─ 翌3:00JST（夏時間）
+  { id:'fomcmin', date:'2026-07-08', label:'FOMC議事録（6月16-17日会合分）', time:'翌3:00' },
+  { id:'fomcmin', date:'2026-08-19', label:'FOMC議事録（7月28-29日会合分）', time:'翌3:00' },
+  // ADP (NFPの2日前) ─ 21:15JST
+  { id:'adp', date:'2026-07-08', label:'6月分ADP雇用', time:'21:15' },
+  { id:'adp', date:'2026-08-05', label:'7月分ADP雇用', time:'21:15' },
+  { id:'adp', date:'2026-09-02', label:'8月分ADP雇用', time:'21:15' },
 ];
 
 const RANK_LABELS = { S: 'S', A: 'A', B: 'B', C: 'C' };
@@ -2051,7 +2055,6 @@ function renderIndUpcoming() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // 今日以降の予定を全部取得してソート
   const upcoming = SCHEDULED_DATES_2026
     .map(ev => {
       const d = new Date(ev.date);
@@ -2063,21 +2066,28 @@ function renderIndUpcoming() {
     .filter(ev => ev.diffDays >= 0)
     .sort((a, b) => a.diffDays - b.diffDays);
 
-  // 次の重要発表バナー（S/Aランクの最近のもの）
-  const nextImportant = upcoming.find(ev => ev.ind && (ev.ind.rank === 'S' || ev.ind.rank === 'A'));
-  const nextAny = upcoming[0];
-  const bannerEv = nextImportant || nextAny;
+  // FOMC系かどうかで時刻ラベルを振り分け
+  const timeLabel = ev => {
+    const t = ev.time || '21:30';
+    const isFomc = t.startsWith('翌');
+    return isFomc
+      ? `<span style="color:var(--amber);">🕒 日本時間 ${t} JST</span>`
+      : `<span style="color:var(--muted);">🕒 日本時間 ${t} JST</span>`;
+  };
 
+  // バナー（次のS/Aランク）
+  const nextImportant = upcoming.find(ev => ev.ind && (ev.ind.rank === 'S' || ev.ind.rank === 'A'));
+  const bannerEv = nextImportant || upcoming[0];
   if (bannerEv) {
-    const dStr = bannerEv.dateObj.toLocaleDateString('ja-JP', { month:'long', day:'numeric', weekday:'short' });
-    const timeStr = bannerEv.diffDays === 0 ? '本日' : bannerEv.diffDays === 1 ? '明日' : `${bannerEv.diffDays}日後`;
-    document.getElementById('indNextCountdown').textContent = timeStr;
+    const dStr = bannerEv.dateObj.toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
+    const countStr = bannerEv.diffDays === 0 ? '本日' : bannerEv.diffDays === 1 ? '明日' : `${bannerEv.diffDays}日後`;
+    document.getElementById('indNextCountdown').textContent = countStr;
     document.getElementById('indNextName').textContent = bannerEv.label;
-    document.getElementById('indNextDate').textContent = `📅 ${dStr}（日本時間21:30〜）`;
+    document.getElementById('indNextDate').innerHTML = `📅 ${dStr}　${timeLabel(bannerEv)}`;
     document.getElementById('indNextRankBadge').innerHTML = bannerEv.ind ? getRankBadgeHtml(bannerEv.ind.rank) : '';
   }
 
-  // 直近リスト（次の14件、Sランク優先で上位20）
+  // 直近リスト（14件）
   const listItems = upcoming.slice(0, 14);
   const listEl = document.getElementById('indUpcomingList');
   if (!listEl) return;
@@ -2088,7 +2098,10 @@ function renderIndUpcoming() {
   listEl.innerHTML = listItems.map(ev => {
     const rank = ev.ind?.rank || 'B';
     const dStr = ev.dateObj.toLocaleDateString('ja-JP', { month:'numeric', day:'numeric', weekday:'short' });
-    const timeStr = ev.diffDays === 0 ? '<span class="days-urgent">本日</span>'
+    const t = ev.time || '21:30';
+    const isFomc = t.startsWith('翌');
+    const timeColor = isFomc ? 'var(--amber)' : 'var(--teal)';
+    const daysStr = ev.diffDays === 0 ? '<span class="days-urgent">本日</span>'
                   : ev.diffDays === 1 ? '<span class="days-urgent">明日</span>'
                   : ev.diffDays <= 7  ? `<span class="days-soon">${ev.diffDays}日後</span>`
                   :                     `<span class="days-normal">${ev.diffDays}日後</span>`;
@@ -2098,9 +2111,10 @@ function renderIndUpcoming() {
         <div class="ind-upcoming-name">${ev.label}</div>
         <div class="ind-upcoming-sub">${ev.ind?.name || ''}</div>
       </div>
-      <div style="text-align:right;">
+      <div style="text-align:right;min-width:90px;">
         <div class="ind-upcoming-date">${dStr}</div>
-        <div class="ind-upcoming-days">${timeStr}</div>
+        <div style="font-size:11px;font-weight:600;color:${timeColor};font-family:var(--mono);">${t} JST</div>
+        <div class="ind-upcoming-days">${daysStr}</div>
       </div>
     </div>`;
   }).join('');
