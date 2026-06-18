@@ -472,8 +472,8 @@ select option{background:var(--bg3);}
             <button class="env-tag" onclick="selectDirTF(this,'range','monthly')">↔ レンジ</button>
           </div>
           <div class="grid2" style="margin-bottom:10px;">
-            <div><label>直近月足の形</label><select id="prevCandle-monthly"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
-            <div><label>トレンド / レンジ</label><select id="marketState-monthly"><option value="">選択...</option><option>トレンド継続</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
+            <div><label>直近月足の形</label><select id="prevCandle-monthly"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option><option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
+            <div><label>トレンド / レンジ</label><select id="marketState-monthly"><option value="">選択...</option><option>トレンド継続</option><option>トレンドレス</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
           </div>
           <div style="margin-bottom:8px;"><label>月足の主要節目・意識ライン</label><input id="keyLevel-monthly" type="text" placeholder="例: 3000, 3200（心理的節目）"></div>
           <label>月足メモ</label><textarea id="envNote-monthly" placeholder="月足で見えるトレンド・大局観など"></textarea>
@@ -487,8 +487,8 @@ select option{background:var(--bg3);}
             <button class="env-tag" onclick="selectDirTF(this,'range','weekly')">↔ レンジ</button>
           </div>
           <div class="grid2" style="margin-bottom:10px;">
-            <div><label>直近週足の形</label><select id="prevCandle-weekly"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
-            <div><label>トレンド / レンジ</label><select id="marketState-weekly"><option value="">選択...</option><option>トレンド継続</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
+            <div><label>直近週足の形</label><select id="prevCandle-weekly"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option><option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
+            <div><label>トレンド / レンジ</label><select id="marketState-weekly"><option value="">選択...</option><option>トレンド継続</option><option>トレンドレス</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
           </div>
           <div style="margin-bottom:8px;"><label>週足の主要節目・意識ライン</label><input id="keyLevel-weekly" type="text" placeholder="例: 3280（先週安値）, 3320（先々週高値）"></div>
           <label>週足メモ</label><textarea id="envNote-weekly" placeholder="週足で見えるトレンド・節目・週ボラ残余など"></textarea>
@@ -501,8 +501,8 @@ select option{background:var(--bg3);}
             <button class="env-tag" onclick="selectDirTF(this,'range','daily')">↔ レンジ</button>
           </div>
           <div class="grid2" style="margin-bottom:10px;">
-            <div><label>前日足の形</label><select id="prevCandle-daily"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
-            <div><label>トレンド / レンジ</label><select id="marketState-daily"><option value="">選択...</option><option>トレンド継続</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
+            <div><label>前日足の形</label><select id="prevCandle-daily"><option value="">選択...</option><optgroup label="── トレンド継続 ──"><option>陽線（スラスト）</option><option>陰線（スラスト）</option></optgroup><optgroup label="── 反転・調整サイン ──"><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option><option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option></optgroup><optgroup label="── レンジ・迷い ──"><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>逆ヒゲ陽線（下ヒゲなし）</option><option>逆ヒゲ陰線（上ヒゲなし）</option><option>十字線（ドージ）</option></optgroup></select></div>
+            <div><label>トレンド / レンジ</label><select id="marketState-daily"><option value="">選択...</option><option>トレンド継続</option><option>トレンドレス</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select></div>
           </div>
           <div class="grid3" style="margin-bottom:10px;">
             <div><label>アジア高値</label><input id="asiaH" type="number" placeholder="例: 3310.5"></div>
@@ -632,6 +632,7 @@ select option{background:var(--bg3);}
                   <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
                   <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
                   <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
+                  <option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option>
                   <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
                   <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
                   <option>十字線（ドージ）</option>
@@ -677,6 +678,7 @@ select option{background:var(--bg3);}
                   <option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option>
                   <option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option>
                   <option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option>
+                  <option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option>
                   <option>コマ足（陽線）</option><option>コマ足（陰線）</option>
                   <option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option>
                   <option>十字線（ドージ）</option>
