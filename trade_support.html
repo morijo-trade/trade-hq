@@ -332,6 +332,22 @@ select option{background:var(--bg3);}
 .ind-arrow-nt{display:inline-block;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;}
 .ind-arrow-warn{display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(245,158,11,.15);color:var(--amber);font-size:11px;font-weight:600;white-space:nowrap;}
 .ind-section-header{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 10px 6px;background:var(--bg3);border-bottom:1px solid var(--border);}
+.holiday-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.holiday-item:last-child{border-bottom:none;}
+.holiday-item.past{opacity:0.38;}
+.holiday-date{font-size:12px;font-weight:600;font-family:var(--mono);color:var(--text);min-width:90px;white-space:nowrap;}
+.holiday-name{font-size:12px;color:var(--text);flex:1;}
+.holiday-flags{display:flex;gap:4px;flex-wrap:wrap;}
+.holiday-flag{font-size:11px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap;}
+.flag-US{background:rgba(239,68,68,.15);color:#f87171;}
+.flag-UK{background:rgba(79,142,247,.15);color:var(--accent);}
+.flag-EU{background:rgba(167,139,250,.15);color:var(--purple);}
+.flag-JP{background:rgba(20,184,166,.15);color:var(--teal);}
+.flag-HK{background:rgba(245,158,11,.15);color:var(--amber);}
+.flag-CN{background:rgba(239,68,68,.12);color:#fb923c;}
+.holiday-warn{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(245,158,11,.15);color:var(--amber);white-space:nowrap;}
+.holiday-month-header{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;padding:8px 10px 4px;text-transform:uppercase;background:var(--bg3);border-bottom:1px solid var(--border);}
+@media(max-width:640px){.holiday-date{min-width:76px;font-size:11px;}.holiday-name{font-size:11px;}}
 .ind-note-box{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--amber);line-height:1.7;margin-top:12px;}
 @media(max-width:640px){
   .ind-next-countdown{font-size:22px;}
@@ -809,6 +825,25 @@ select option{background:var(--bg3);}
       <div class="card" style="padding:14px 16px;">
         <div class="card-title" style="margin-bottom:10px;">📆 直近の主要発表スケジュール（2026年）</div>
         <div id="indUpcomingList" class="ind-upcoming-list"></div>
+      </div>
+
+      <!-- 主要国 休場カレンダー -->
+      <div class="card" style="padding:14px 16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <div class="card-title" style="margin-bottom:0;">🏖️ 主要国 市場休場日（2026年）</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;" id="holidayFilterRow">
+            <button class="ind-filter-btn active" onclick="setHolidayFilter('all',this)" style="font-size:11px;padding:4px 10px;">すべて</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('US',this)" style="font-size:11px;padding:4px 10px;">🇺🇸 米国</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('UK',this)" style="font-size:11px;padding:4px 10px;">🇬🇧 英国</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('EU',this)" style="font-size:11px;padding:4px 10px;">🇪🇺 欧州</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('JP',this)" style="font-size:11px;padding:4px 10px;">🇯🇵 日本</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('HK',this)" style="font-size:11px;padding:4px 10px;">🇭🇰 香港</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('CN',this)" style="font-size:11px;padding:4px 10px;">🇨🇳 中国</button>
+            <button class="ind-filter-btn" onclick="setHolidayFilter('upcoming',this)" style="font-size:11px;padding:4px 10px;">⏰ 直近のみ</button>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">🔴 米国休場は指標発表・流動性に直接影響。🟡 欧州・英国休場も薄商いに注意。🟠 香港・中国休場はアジア時間の流動性低下に注意。</div>
+        <div id="holidayList"></div>
       </div>
 
       <!-- フィルタ -->
@@ -1859,7 +1894,139 @@ function showCopyFallback(url, wrap) {
   try { const encoded=hash.replace('#t=',''), data=JSON.parse(atob(encoded)); if(data.ak) localStorage.setItem('anthropicApiKey',data.ak); if(data.nt) localStorage.setItem('notionToken',data.nt); if(data.ne) localStorage.setItem('notionEnvDbId',data.ne); if(data.nj) localStorage.setItem('notionJnlDbId',data.nj); if(data.nw) localStorage.setItem('notionWorkerUrl',data.nw); document.getElementById('apikeyModal').style.display='none'; } catch(e) {}
 })();
 
-// ===== 経済指標カレンダー =====
+// ===== 主要国 市場休場日データ（2026年） =====
+// markets: US=米国(COMEX含む) UK=英国 EU=欧州 JP=日本
+// warn: 流動性特に注意のフラグ
+const MARKET_HOLIDAYS_2026 = [
+  // ─ 1月 ─
+  { date:'2026-01-01', name:'元旦 / New Year\'s Day', markets:['US','UK','EU','JP','HK','CN'], warn:true },
+  { date:'2026-01-02', name:'元旦振替', markets:['JP'] },
+  { date:'2026-01-12', name:'成人の日', markets:['JP'] },
+  { date:'2026-01-19', name:'キング牧師記念日 (MLK Day)', markets:['US'] },
+  // ─ 2月 ─
+  { date:'2026-02-11', name:'建国記念の日', markets:['JP'] },
+  { date:'2026-02-16', name:'Presidents\' Day (Washington誕生日)', markets:['US'] },
+  { date:'2026-02-17', name:'春節（旧正月）', markets:['HK','CN'], warn:true },
+  { date:'2026-02-18', name:'春節2日目', markets:['HK','CN'], warn:true },
+  { date:'2026-02-19', name:'春節3日目', markets:['HK','CN'], warn:true },
+  { date:'2026-02-20', name:'春節（中国・連休）', markets:['CN'] },
+  { date:'2026-02-21', name:'春節（中国・連休）', markets:['CN'] },
+  { date:'2026-02-22', name:'春節（中国・連休）', markets:['CN'] },
+  { date:'2026-02-23', name:'天皇誕生日 / 春節（中国・連休最終日）', markets:['JP','CN'] },
+  // ─ 3月 ─
+  { date:'2026-03-20', name:'春分の日', markets:['JP'] },
+  // ─ 4月 ─
+  { date:'2026-04-03', name:'Good Friday（聖金曜日）', markets:['US','UK','EU','HK'], warn:true },
+  { date:'2026-04-05', name:'清明節（振替4/7）', markets:['HK','CN'] },
+  { date:'2026-04-06', name:'Easter Monday（復活祭翌月曜）', markets:['UK','EU','HK'] },
+  { date:'2026-04-07', name:'清明節 振替休日', markets:['HK'] },
+  { date:'2026-04-29', name:'昭和の日', markets:['JP'] },
+  // ─ 5月 ─
+  { date:'2026-05-01', name:'労働節（International Labour Day）', markets:['HK','CN'] },
+  { date:'2026-05-02', name:'労働節（中国・連休）', markets:['CN'] },
+  { date:'2026-05-03', name:'憲法記念日 / 労働節（中国・連休）', markets:['JP','CN'] },
+  { date:'2026-05-04', name:'みどりの日 / Early May Bank Holiday', markets:['JP','UK'] },
+  { date:'2026-05-04', name:'釈迦誕生日（仏誕節）振替', markets:['HK'] },
+  { date:'2026-05-05', name:'こどもの日', markets:['JP'] },
+  { date:'2026-05-06', name:'こどもの日 振替休日', markets:['JP'] },
+  { date:'2026-05-25', name:'Spring Bank Holiday', markets:['UK'] },
+  { date:'2026-05-25', name:'Memorial Day（戦没者追悼記念日）', markets:['US'], warn:true },
+  // ─ 6月 ─
+  { date:'2026-06-19', name:'Juneteenth National Independence Day', markets:['US'] },
+  { date:'2026-06-20', name:'端午節（ドラゴンボート・フェスティバル）', markets:['HK','CN'] },
+  // ─ 7月 ─
+  { date:'2026-07-01', name:'香港返還記念日（SAR Establishment Day）', markets:['HK'] },
+  { date:'2026-07-03', name:'Independence Day振替（7/4が土曜のため）', markets:['US'], warn:true },
+  { date:'2026-07-21', name:'海の日', markets:['JP'] },
+  // ─ 8月 ─
+  { date:'2026-08-03', name:'Summer Bank Holiday（スコットランド）', markets:['UK'] },
+  { date:'2026-08-11', name:'山の日', markets:['JP'] },
+  { date:'2026-08-31', name:'Summer Bank Holiday（英国）', markets:['UK'] },
+  // ─ 9月 ─
+  { date:'2026-09-07', name:'Labor Day（労働者の日）', markets:['US'], warn:true },
+  { date:'2026-09-21', name:'敬老の日', markets:['JP'] },
+  { date:'2026-09-22', name:'国民の休日（シルバーウィーク）', markets:['JP'] },
+  { date:'2026-09-23', name:'秋分の日', markets:['JP'] },
+  { date:'2026-09-26', name:'中秋節 翌日（Hong Kong）', markets:['HK'] },
+  // ─ 10月 ─
+  { date:'2026-10-01', name:'国慶節（建国記念日）', markets:['HK','CN'], warn:true },
+  { date:'2026-10-02', name:'国慶節（中国・連休）', markets:['CN'] },
+  { date:'2026-10-03', name:'国慶節（中国・連休）', markets:['CN'] },
+  { date:'2026-10-04', name:'国慶節（中国・連休）', markets:['CN'] },
+  { date:'2026-10-05', name:'国慶節（中国・連休）', markets:['CN'] },
+  { date:'2026-10-06', name:'国慶節（中国・連休）', markets:['CN'] },
+  { date:'2026-10-07', name:'国慶節（中国・連休最終日）', markets:['CN'] },
+  { date:'2026-10-12', name:'Columbus Day / Indigenous Peoples\' Day', markets:['US'] },
+  { date:'2026-10-12', name:'スポーツの日', markets:['JP'] },
+  // ─ 11月 ─
+  { date:'2026-11-03', name:'文化の日', markets:['JP'] },
+  { date:'2026-11-11', name:'Veterans Day（退役軍人の日）', markets:['US'] },
+  { date:'2026-11-23', name:'勤労感謝の日', markets:['JP'] },
+  { date:'2026-11-26', name:'Thanksgiving Day（感謝祭）', markets:['US'], warn:true },
+  { date:'2026-11-27', name:'Black Friday（半休場日）', markets:['US'] },
+  // ─ 12月 ─
+  { date:'2026-12-25', name:'Christmas Day（クリスマス）', markets:['US','UK','EU','HK'], warn:true },
+  { date:'2026-12-26', name:'Boxing Day（ボクシング・デー）', markets:['UK','EU','HK'] },
+  { date:'2026-12-31', name:'大晦日（年末）', markets:['JP'] },
+];
+
+let currentHolidayFilter = 'all';
+
+function setHolidayFilter(filter, btn) {
+  currentHolidayFilter = filter;
+  document.querySelectorAll('#holidayFilterRow .ind-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHolidays();
+}
+
+function renderHolidays() {
+  const el = document.getElementById('holidayList'); if (!el) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const f = currentHolidayFilter;
+
+  let list = MARKET_HOLIDAYS_2026.map(h => {
+    const d = new Date(h.date);
+    return { ...h, dateObj: d, isPast: d < today };
+  });
+
+  if (f === 'upcoming') list = list.filter(h => !h.isPast);
+  else if (f !== 'all') list = list.filter(h => h.markets.includes(f));
+
+  // 過去分は最後に
+  list.sort((a,b) => a.dateObj - b.dateObj);
+
+  if (!list.length) { el.innerHTML = '<div style="font-size:13px;color:var(--muted);padding:12px;">対象の休場日はありません</div>'; return; }
+
+  const FLAG_LABELS = { US:'🇺🇸 米国', UK:'🇬🇧 英国', EU:'🇪🇺 欧州', JP:'🇯🇵 日本', HK:'🇭🇰 香港', CN:'🇨🇳 中国' };
+  const months = {}; // 月ごとにグループ化
+  list.forEach(h => {
+    const key = h.date.slice(0,7);
+    if (!months[key]) months[key] = [];
+    months[key].push(h);
+  });
+
+  let html = '';
+  Object.entries(months).forEach(([ym, items]) => {
+    const [y, m] = ym.split('-');
+    html += `<div class="holiday-month-header">${y}年 ${parseInt(m)}月</div>`;
+    items.forEach(h => {
+      const d = h.dateObj;
+      const dayNames = ['日','月','火','水','木','金','土'];
+      const dStr = `${parseInt(h.date.slice(5,7))}/${parseInt(h.date.slice(8,10))}(${dayNames[d.getDay()]})`;
+      const flags = h.markets.map(m => `<span class="holiday-flag flag-${m}">${FLAG_LABELS[m]}</span>`).join('');
+      const warn = h.warn ? `<span class="holiday-warn">⚠️ 流動性注意</span>` : '';
+      const isToday = d.getTime() === today.getTime();
+      const todayBadge = isToday ? `<span class="holiday-warn" style="background:rgba(239,68,68,.2);color:var(--red);">本日</span>` : '';
+      html += `<div class="holiday-item${h.isPast?' past':''}">
+        <span class="holiday-date">${dStr}</span>
+        <span class="holiday-name">${h.name}</span>
+        <div class="holiday-flags">${flags}${warn}${todayBadge}</div>
+      </div>`;
+    });
+  });
+  el.innerHTML = html;
+}
+
 const INDICATORS = [
   // ===== 雇用・労働市場 =====
   { id:'nfp',    rank:'S', cat:'employment', name:'非農業部門雇用者数', en:'NFP (Non-Farm Payrolls)', summary:'毎月第1金曜。最重要の雇用指標', strong:'↓下落', weak:'↑上昇', neutral:'→中立', strongNote:'', weakNote:'', neutralNote:'',
@@ -2220,6 +2387,7 @@ function renderIndUpcoming() {
 function initIndicatorsPage() {
   renderIndUpcoming();
   renderIndTable();
+  renderHolidays();
 }
 
 // ページ表示時に初期化 - showPage/showPageMobileをフック
