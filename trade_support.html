@@ -821,6 +821,7 @@ select option{background:var(--bg3);}
         <button class="ind-filter-btn" onclick="setIndFilter('inflation',this)">インフレ</button>
         <button class="ind-filter-btn" onclick="setIndFilter('growth',this)">景気</button>
         <button class="ind-filter-btn" onclick="setIndFilter('policy',this)">金融政策</button>
+        <button class="ind-filter-btn" onclick="setIndFilter('speakers',this)">🎤 要人発言</button>
       </div>
 
       <!-- 指標一覧テーブル -->
@@ -1911,6 +1912,13 @@ const INDICATORS = [
     goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'黒字拡大', weakLabel:'赤字拡大' },
   { id:'housing',rank:'B', cat:'growth', name:'住宅着工件数', en:'Housing Starts', summary:'景気全般の先行指標のひとつ', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
     goldStrong:'down', goldWeak:'up', goldNeutral:'neutral' },
+  // ===== 要人発言 =====
+  { id:'warsh',   rank:'S', cat:'policy', name:'Warsh議長 発言', en:'Fed Chair Warsh Speech', summary:'新議長（2026年5月就任）。金融政策の方向性に最大の影響', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'タカ派', weakLabel:'ハト派' },
+  { id:'fedmember',rank:'A', cat:'policy', name:'FOMC投票メンバー発言', en:'FOMC Voting Member Speech', summary:'投票権を持つ地区連銀総裁・理事の発言', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'タカ派', weakLabel:'ハト派' },
+  { id:'jacksonhole', rank:'S', cat:'policy', name:'ジャクソンホール講演', en:'Jackson Hole Symposium', summary:'年1回。議長講演は金融政策の転換を示唆することが多い最重要イベント', strong:'↓下落', weak:'↑上昇', neutral:'→中立',
+    goldStrong:'down', goldWeak:'up', goldNeutral:'neutral', strongLabel:'タカ派', weakLabel:'ハト派' },
 ];
 
 // 2026年 主要指標発表日（確定分・推定分）
@@ -1976,6 +1984,30 @@ const SCHEDULED_DATES_2026 = [
   { id:'adp', date:'2026-07-08', label:'6月分ADP雇用', time:'21:15' },
   { id:'adp', date:'2026-08-05', label:'7月分ADP雇用', time:'21:15' },
   { id:'adp', date:'2026-09-02', label:'8月分ADP雇用', time:'21:15' },
+
+  // ===== 要人発言スケジュール =====
+  // ── Warsh議長（FOMC後ブラックアウト明け・主要イベント） ──
+  // FOMC後のブラックアウト解除は発表翌々日以降。FOMC後1週間以内に発言が集中する傾向
+  { id:'warsh',    date:'2026-06-19', label:'Warsh議長 発言（FOMC後初回）', time:'翌1:00', note:'FOMC後ブラックアウト明け' },
+  { id:'warsh',    date:'2026-07-14', label:'Warsh議長 発言（7月）', time:'22:00' },
+  { id:'warsh',    date:'2026-08-27', label:'Warsh議長 ジャクソンホール講演', time:'22:00' },
+  { id:'warsh',    date:'2026-09-18', label:'Warsh議長 発言（FOMC後）', time:'翌1:00' },
+
+  // ── ジャクソンホール・シンポジウム（8/27-29確定） ──
+  { id:'jacksonhole', date:'2026-08-27', label:'ジャクソンホール初日', time:'22:00' },
+  { id:'jacksonhole', date:'2026-08-28', label:'ジャクソンホール2日目', time:'22:00' },
+  { id:'jacksonhole', date:'2026-08-29', label:'ジャクソンホール最終日', time:'22:00' },
+
+  // ── FOMC投票メンバー発言（FOMC後ブラックアウト明け想定） ──
+  { id:'fedmember', date:'2026-06-19', label:'FOMCメンバー発言（6月FOMC後）', time:'23:00' },
+  { id:'fedmember', date:'2026-06-23', label:'FOMCメンバー発言', time:'23:00' },
+  { id:'fedmember', date:'2026-06-25', label:'FOMCメンバー発言', time:'00:30' },
+  { id:'fedmember', date:'2026-07-13', label:'FOMCメンバー発言（7月FOMC前）', time:'23:00' },
+  { id:'fedmember', date:'2026-07-15', label:'FOMCメンバー発言', time:'23:00' },
+  { id:'fedmember', date:'2026-07-31', label:'FOMCメンバー発言（7月FOMC後）', time:'23:00' },
+  { id:'fedmember', date:'2026-08-04', label:'FOMCメンバー発言', time:'23:00' },
+  { id:'fedmember', date:'2026-09-17', label:'FOMCメンバー発言（9月FOMC後）', time:'23:00' },
+  { id:'fedmember', date:'2026-09-22', label:'FOMCメンバー発言', time:'23:00' },
 ];
 
 const RANK_LABELS = { S: 'S', A: 'A', B: 'B', C: 'C' };
@@ -2014,6 +2046,7 @@ function renderIndTable() {
   else if (f === 'inflation')  filtered = filtered.filter(i => i.cat === 'inflation');
   else if (f === 'growth')     filtered = filtered.filter(i => i.cat === 'growth');
   else if (f === 'policy')     filtered = filtered.filter(i => i.cat === 'policy');
+  else if (f === 'speakers')   filtered = filtered.filter(i => ['warsh','fedmember','jacksonhole','fedspeak'].includes(i.id));
 
   // カテゴリーごとにグループ化
   const groups = {};
@@ -2057,16 +2090,56 @@ function renderIndUpcoming() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  // 発表時刻をUTC Dateに変換（JSTで考える）
+  // '2026-06-17' + '21:30' → 2026-06-17 21:30 JST → 2026-06-17 12:30 UTC
+  // '2026-06-17' + '翌3:00' → 2026-06-18 03:00 JST → 2026-06-17 18:00 UTC
+  function toJSTDateTime(dateStr, timeStr) {
+    const t = (timeStr || '21:30');
+    const isNext = t.startsWith('翌');
+    const hm = t.replace('翌','').split(':');
+    const h = parseInt(hm[0]), m = parseInt(hm[1]);
+    // dateStr = 'YYYY-MM-DD'（指標の発表基準日）
+    const [y, mo, d] = dateStr.split('-').map(Number);
+    // JSTをUTCに変換: UTC = JST - 9h
+    let utcH = h - 9;
+    let day = d;
+    let month = mo;
+    let year = y;
+    if (isNext) {
+      // 「翌」= その日の翌日の早朝
+      utcH = h - 9; // 翌3:00 JST = 前日18:00 UTC → 発表日の翌日3:00-9 = 前日18:00 UTC
+      // 実際には: 発表日 '2026-06-17' + 翌3:00 = 2026-06-18 03:00 JST = 2026-06-17 18:00 UTC
+      day = d; // 基準日のままUTC18:00
+    }
+    if (utcH < 0) {
+      // 前日のUTCになる（isNextの翌3:00: 3-9=-6 → 前日の24-6=18時）
+      utcH += 24;
+      // 日付を1日戻す必要はない（isNextの場合は基準日そのまま）
+      if (!isNext) {
+        day -= 1;
+        if (day === 0) {
+          month -= 1;
+          if (month === 0) { month = 12; year -= 1; }
+          day = new Date(year, month, 0).getDate();
+        }
+      }
+    }
+    return new Date(Date.UTC(year, month - 1, day, utcH, m, 0, 0));
+  }
+
+  const now = new Date();
+
   const upcoming = SCHEDULED_DATES_2026
     .map(ev => {
-      const d = new Date(ev.date);
-      const diffMs = d - today;
-      const diffDays = Math.ceil(diffMs / 86400000);
+      const dateObj = new Date(ev.date);
+      const evDateTime = toJSTDateTime(ev.date, ev.time);
+      const diffMs = evDateTime - now;
+      const diffDays = Math.floor((dateObj - today) / 86400000);
       const ind = INDICATORS.find(i => i.id === ev.id);
-      return { ...ev, dateObj: d, diffDays, ind };
+      return { ...ev, dateObj, evDateTime, diffMs, diffDays, ind };
     })
-    .filter(ev => ev.diffDays >= 0)
-    .sort((a, b) => a.diffDays - b.diffDays);
+    .filter(ev => ev.diffMs > 0)   // ← 発表時刻を過ぎたものは除外
+    .sort((a, b) => a.diffMs - b.diffMs);
 
   // FOMC系かどうかで時刻ラベルを振り分け
   const timeLabel = ev => {
@@ -2077,16 +2150,41 @@ function renderIndUpcoming() {
       : `<span style="color:var(--muted);">🕒 日本時間 ${t} JST</span>`;
   };
 
+  // 残り時間を人間向け文字列に
+  const diffLabel = ev => {
+    const ms = ev.diffMs;
+    const totalMin = Math.floor(ms / 60000);
+    if (totalMin < 60) return `<span class="days-urgent">${totalMin}分後</span>`;
+    const h = Math.floor(totalMin / 60);
+    if (h < 24) return `<span class="days-urgent">${h}時間後</span>`;
+    const days = ev.diffDays;
+    if (days === 0) return `<span class="days-urgent">本日</span>`;
+    if (days === 1) return `<span class="days-urgent">明日</span>`;
+    if (days <= 7)  return `<span class="days-soon">${days}日後</span>`;
+    return `<span class="days-normal">${days}日後</span>`;
+  };
+
   // バナー（次のS/Aランク）
   const nextImportant = upcoming.find(ev => ev.ind && (ev.ind.rank === 'S' || ev.ind.rank === 'A'));
   const bannerEv = nextImportant || upcoming[0];
   if (bannerEv) {
     const dStr = bannerEv.dateObj.toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-    const countStr = bannerEv.diffDays === 0 ? '本日' : bannerEv.diffDays === 1 ? '明日' : `${bannerEv.diffDays}日後`;
+    const ms = bannerEv.diffMs;
+    const totalMin = Math.floor(ms / 60000);
+    let countStr;
+    if (totalMin < 60) countStr = `${totalMin}分後`;
+    else if (totalMin < 1440) countStr = `${Math.floor(totalMin/60)}時間後`;
+    else if (bannerEv.diffDays === 0) countStr = '本日';
+    else if (bannerEv.diffDays === 1) countStr = '明日';
+    else countStr = `${bannerEv.diffDays}日後`;
     document.getElementById('indNextCountdown').textContent = countStr;
     document.getElementById('indNextName').textContent = bannerEv.label;
     document.getElementById('indNextDate').innerHTML = `📅 ${dStr}　${timeLabel(bannerEv)}`;
     document.getElementById('indNextRankBadge').innerHTML = bannerEv.ind ? getRankBadgeHtml(bannerEv.ind.rank) : '';
+  } else {
+    document.getElementById('indNextCountdown').textContent = '—';
+    document.getElementById('indNextName').textContent = '2026年の予定は終了しました';
+    document.getElementById('indNextDate').textContent = '';
   }
 
   // 直近リスト（14件）
@@ -2103,12 +2201,9 @@ function renderIndUpcoming() {
     const t = ev.time || '21:30';
     const isFomc = t.startsWith('翌');
     const timeColor = isFomc ? 'var(--amber)' : 'var(--teal)';
-    const daysStr = ev.diffDays === 0 ? '<span class="days-urgent">本日</span>'
-                  : ev.diffDays === 1 ? '<span class="days-urgent">明日</span>'
-                  : ev.diffDays <= 7  ? `<span class="days-soon">${ev.diffDays}日後</span>`
-                  :                     `<span class="days-normal">${ev.diffDays}日後</span>`;
+    const isSpeaker = ['warsh','fedmember','jacksonhole'].includes(ev.id);
     return `<div class="ind-upcoming-item rank-${rank.toLowerCase()}-item">
-      <span class="ind-next-rank rank-${rank.toLowerCase()}">${rank}</span>
+      <span class="ind-next-rank rank-${rank.toLowerCase()}">${isSpeaker ? '🎤' : rank}</span>
       <div style="flex:1;">
         <div class="ind-upcoming-name">${ev.label}</div>
         <div class="ind-upcoming-sub">${ev.ind?.name || ''}</div>
@@ -2116,7 +2211,7 @@ function renderIndUpcoming() {
       <div style="text-align:right;min-width:90px;">
         <div class="ind-upcoming-date">${dStr}</div>
         <div style="font-size:11px;font-weight:600;color:${timeColor};font-family:var(--mono);">${t} JST</div>
-        <div class="ind-upcoming-days">${daysStr}</div>
+        <div class="ind-upcoming-days">${diffLabel(ev)}</div>
       </div>
     </div>`;
   }).join('');
