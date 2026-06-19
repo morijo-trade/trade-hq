@@ -332,6 +332,29 @@ select option{background:var(--bg3);}
 .ind-arrow-nt{display:inline-block;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;}
 .ind-arrow-warn{display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(245,158,11,.15);color:var(--amber);font-size:11px;font-weight:600;white-space:nowrap;}
 .ind-section-header{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 10px 6px;background:var(--bg3);border-bottom:1px solid var(--border);}
+/* ===== 本日ダッシュボード ===== */
+.today-db{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.today-db-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg3);flex-wrap:wrap;gap:8px;}
+.today-db-date{font-size:15px;font-weight:700;color:var(--text);font-family:var(--mono);}
+.today-db-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.today-db-col{padding:12px 14px;}
+.today-db-col:first-child{border-right:1px solid var(--border);}
+.today-db-col-title{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.today-ev-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);}
+.today-ev-item:last-child{border-bottom:none;}
+.today-ev-time{font-size:12px;font-weight:700;font-family:var(--mono);color:var(--accent);min-width:46px;white-space:nowrap;}
+.today-ev-time.fomc-time{color:var(--amber);}
+.today-ev-name{font-size:12px;color:var(--text);flex:1;line-height:1.3;}
+.today-hol-item{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.today-hol-item:last-child{border-bottom:none;}
+.today-hol-name{font-size:11px;color:var(--muted);flex:1;}
+.today-empty{font-size:12px;color:var(--muted);padding:6px 0;font-style:italic;}
+.today-us-holiday{background:rgba(239,68,68,.08);border-top:2px solid var(--red);}
+.today-us-holiday .today-db-col-title{color:var(--red);}
+@media(max-width:640px){
+  .today-db-body{grid-template-columns:1fr;}
+  .today-db-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
+}
 .holiday-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
 .holiday-item:last-child{border-bottom:none;}
 .holiday-item.past{opacity:0.38;}
@@ -618,7 +641,14 @@ select option{background:var(--bg3);}
         <div id="tvWrap-jnl" style="display:none;"><div id="tv-widget-jnl" style="height:400px;"></div></div>
       </div>
       <div class="card">
-        <div class="card-title">新規記録</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <div class="card-title" style="margin-bottom:0;">新規記録</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label style="font-size:11px;color:var(--muted);margin:0;white-space:nowrap;">📅 トレード日</label>
+            <input type="date" id="jTradeDate" style="width:auto;padding:6px 10px;font-size:13px;">
+            <button class="btn btn-ghost btn-sm" onclick="setJournalDateToday()" style="font-size:11px;padding:5px 10px;white-space:nowrap;">今日</button>
+          </div>
+        </div>
 
         <!-- ===== 上位足コンテキスト（自動引き継ぎ＋手動修正） ===== -->
         <div id="jnlCtxBanner"></div>
@@ -808,10 +838,13 @@ select option{background:var(--bg3);}
       <div class="page-title">経済指標カレンダー</div>
       <div class="page-sub">金先物に影響する米経済指標一覧・ランク付け・次回発表まで</div>
 
+      <!-- ===== 本日ダッシュボード ===== -->
+      <div id="todayDashboard" style="margin-bottom:16px;"></div>
+
       <!-- 次回発表バナー -->
       <div class="ind-next-banner" id="indNextBanner">
         <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">⏰ 次の重要発表まで</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">⏭ 次の重要発表</div>
           <div class="ind-next-countdown" id="indNextCountdown">—</div>
         </div>
         <div class="ind-next-info">
@@ -1442,6 +1475,20 @@ function calcATR() {
   document.getElementById('r_judge').innerHTML = judge;
 }
 
+// ===== 振り返りノート 日付ピッカー =====
+function initJournalDate() {
+  const el = document.getElementById('jTradeDate');
+  if (!el) return;
+  // 今日の日付をYYYY-MM-DD形式でセット
+  const now = new Date();
+  el.value = now.toISOString().slice(0, 10);
+}
+function setJournalDateToday() {
+  const el = document.getElementById('jTradeDate');
+  if (el) el.value = new Date().toISOString().slice(0, 10);
+}
+initJournalDate();
+
 // ===== 建値選択時に損益を自動0セット =====
 function onJTypeChange(val) {
   if (val === 'be') {
@@ -1482,10 +1529,14 @@ async function addJournal() {
   const ctxWeeklyKey     = document.getElementById('jCtxWeeklyKey').value;
   const ctxWeeklyNote    = document.getElementById('jCtxWeeklyNote').value;
 
+  const tradeDateVal = document.getElementById('jTradeDate').value;
+  const tradeDate = tradeDateVal
+    ? new Date(tradeDateVal + 'T00:00:00').toLocaleDateString('ja-JP', { year:'numeric', month:'numeric', day:'numeric' })
+    : new Date().toLocaleDateString('ja-JP');
   if (!note && !setup && !situation) { alert('セットアップ・状況・メモのいずれかを入力してください'); return; }
   const entry = {
     id: Date.now(),
-    date: new Date().toLocaleDateString('ja-JP'),
+    date: tradeDate,
     type, pnlUsd: pnlUsd?parseFloat(pnlUsd):null, pnlPips: pnlPips?parseFloat(pnlPips):null,
     slPips: slPips?parseFloat(slPips):null, setup, situation,
     psychoTags: [...selectedPsychoTags], psychoNote, note,
@@ -1512,6 +1563,7 @@ async function addJournal() {
   document.querySelectorAll('#psychoTags .env-tag').forEach(b => b.className = 'env-tag');
   selectedPsychoTags = []; jnlUploadDataUrl = null;
   clearPreview('jnl');
+  setJournalDateToday(); // 日付を今日にリセット
   // 上位足コンテキストはクリアしない（次の記録でも使い回せるように）
   renderJournals();
 }
@@ -2336,15 +2388,9 @@ function renderIndUpcoming() {
   const bannerEv = nextImportant || upcoming[0];
   if (bannerEv) {
     const dStr = bannerEv.dateObj.toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-    const ms = bannerEv.diffMs;
-    const totalMin = Math.floor(ms / 60000);
-    let countStr;
-    if (totalMin < 60) countStr = `${totalMin}分後`;
-    else if (totalMin < 1440) countStr = `${Math.floor(totalMin/60)}時間後`;
-    else if (bannerEv.diffDays === 0) countStr = '本日';
-    else if (bannerEv.diffDays === 1) countStr = '明日';
-    else countStr = `${bannerEv.diffDays}日後`;
-    document.getElementById('indNextCountdown').textContent = countStr;
+    const days = bannerEv.diffDays;
+    const dayLabel = days === 0 ? '本日' : days === 1 ? '明日' : `${days}日後`;
+    document.getElementById('indNextCountdown').textContent = dayLabel;
     document.getElementById('indNextName').textContent = bannerEv.label;
     document.getElementById('indNextDate').innerHTML = `📅 ${dStr}　${timeLabel(bannerEv)}`;
     document.getElementById('indNextRankBadge').innerHTML = bannerEv.ind ? getRankBadgeHtml(bannerEv.ind.rank) : '';
@@ -2354,7 +2400,7 @@ function renderIndUpcoming() {
     document.getElementById('indNextDate').textContent = '';
   }
 
-  // 直近リスト（14件）
+  // 直近リスト（14件）─ 日付＋時刻表示（「何時」形式）
   const listItems = upcoming.slice(0, 14);
   const listEl = document.getElementById('indUpcomingList');
   if (!listEl) return;
@@ -2369,22 +2415,116 @@ function renderIndUpcoming() {
     const isFomc = t.startsWith('翌');
     const timeColor = isFomc ? 'var(--amber)' : 'var(--teal)';
     const isSpeaker = ['warsh','fedmember','jacksonhole'].includes(ev.id);
+    // 日付ラベル
+    const days = ev.diffDays;
+    const dayBadge = days === 0
+      ? `<span class="days-urgent" style="font-size:10px;">本日</span>`
+      : days === 1
+      ? `<span class="days-urgent" style="font-size:10px;">明日</span>`
+      : days <= 7
+      ? `<span class="days-soon" style="font-size:10px;">${days}日後</span>`
+      : '';
     return `<div class="ind-upcoming-item rank-${rank.toLowerCase()}-item">
       <span class="ind-next-rank rank-${rank.toLowerCase()}">${isSpeaker ? '🎤' : rank}</span>
       <div style="flex:1;">
         <div class="ind-upcoming-name">${ev.label}</div>
         <div class="ind-upcoming-sub">${ev.ind?.name || ''}</div>
       </div>
-      <div style="text-align:right;min-width:90px;">
-        <div class="ind-upcoming-date">${dStr}</div>
-        <div style="font-size:11px;font-weight:600;color:${timeColor};font-family:var(--mono);">${t} JST</div>
-        <div class="ind-upcoming-days">${diffLabel(ev)}</div>
+      <div style="text-align:right;min-width:100px;">
+        <div style="display:flex;align-items:center;justify-content:flex-end;gap:4px;">
+          <span class="ind-upcoming-date">${dStr}</span>${dayBadge}
+        </div>
+        <div style="font-size:12px;font-weight:700;color:${timeColor};font-family:var(--mono);margin-top:2px;">${t} JST</div>
       </div>
     </div>`;
   }).join('');
 }
 
+// ===== 本日ダッシュボード =====
+function renderTodayDashboard() {
+  const el = document.getElementById('todayDashboard');
+  if (!el) return;
+
+  const now  = new Date();
+  const todayStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+  const dayNames = ['日','月','火','水','木','金','土'];
+  const dateLabel = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${dayNames[now.getDay()]}）`;
+
+  // 本日の指標（まだ発表されていないもの）
+  function toJSTDt(dateStr, timeStr) {
+    const t = timeStr || '21:30';
+    const isNext = t.startsWith('翌');
+    const hm = t.replace('翌','').split(':');
+    const h = parseInt(hm[0]), m = parseInt(hm[1]);
+    const [y, mo, d] = dateStr.split('-').map(Number);
+    let utcH = h - 9, day = d, month = mo, year = y;
+    if (utcH < 0) { utcH += 24; if (!isNext) { day -= 1; if (day===0){month-=1;if(month===0){month=12;year-=1;}day=new Date(year,month,0).getDate();} } }
+    return new Date(Date.UTC(year, month-1, day, utcH, m, 0, 0));
+  }
+
+  const todayEvents = SCHEDULED_DATES_2026
+    .filter(ev => ev.date === todayStr)
+    .map(ev => ({
+      ...ev,
+      evDt: toJSTDt(ev.date, ev.time),
+      ind: INDICATORS.find(i => i.id === ev.id)
+    }))
+    .filter(ev => ev.evDt > now)
+    .sort((a,b) => a.evDt - b.evDt);
+
+  // 本日の休場国
+  const todayHolidays = MARKET_HOLIDAYS_2026.filter(h => h.date === todayStr);
+  const FLAG_LABELS_SHORT = { US:'🇺🇸 米国', UK:'🇬🇧 英国', EU:'🇪🇺 欧州', JP:'🇯🇵 日本', HK:'🇭🇰 香港', CN:'🇨🇳 中国' };
+  const isUSHoliday = todayHolidays.some(h => h.markets.includes('US'));
+
+  // イベントHTML
+  const evHtml = todayEvents.length === 0
+    ? `<div class="today-empty">本日の発表予定はありません（または全て終了）</div>`
+    : todayEvents.map(ev => {
+        const t = ev.time || '21:30';
+        const isFomc = t.startsWith('翌');
+        const rank = ev.ind?.rank || 'B';
+        const isSpeaker = ['warsh','fedmember','jacksonhole'].includes(ev.id);
+        return `<div class="today-ev-item">
+          <span class="today-ev-time${isFomc?' fomc-time':''}">${t}</span>
+          <span class="ind-next-rank rank-${rank.toLowerCase()}" style="font-size:10px;flex-shrink:0;">${isSpeaker?'🎤':rank}</span>
+          <span class="today-ev-name">${ev.label}</span>
+        </div>`;
+      }).join('');
+
+  // 休場HTML
+  const holHtml = todayHolidays.length === 0
+    ? `<div class="today-empty">休場なし</div>`
+    : todayHolidays.map(h => {
+        const flags = h.markets.map(m => `<span class="holiday-flag flag-${m}">${FLAG_LABELS_SHORT[m]}</span>`).join('');
+        const warn  = h.warn ? `<span class="holiday-warn">⚠️ 流動性注意</span>` : '';
+        return `<div class="today-hol-item">
+          <span class="today-hol-name">${h.name}</span>
+          <div class="holiday-flags">${flags}${warn}</div>
+        </div>`;
+      }).join('');
+
+  el.innerHTML = `
+    <div class="today-db${isUSHoliday?' today-us-holiday':''}">
+      <div class="today-db-header">
+        <span class="today-db-date">📅 ${dateLabel}</span>
+        ${isUSHoliday ? '<span class="badge badge-red" style="font-size:11px;">🇺🇸 米国休場日</span>' : ''}
+      </div>
+      <div class="today-db-body">
+        <div class="today-db-col">
+          <div class="today-db-col-title">⏰ 本日の経済指標・イベント（JST）</div>
+          ${evHtml}
+        </div>
+        <div class="today-db-col">
+          <div class="today-db-col-title">🏖️ 本日の休場市場</div>
+          ${holHtml}
+        </div>
+      </div>
+    </div>`;
+}
+
 function initIndicatorsPage() {
+  renderTodayDashboard();
   renderIndUpcoming();
   renderIndTable();
   renderHolidays();
