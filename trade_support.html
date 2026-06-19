@@ -502,6 +502,20 @@ select option{background:var(--bg3);}
     <div class="edit-section" style="margin-bottom:12px;"><label>トレード状況</label><textarea id="jEditSituation"></textarea></div>
     <div class="edit-section" style="margin-bottom:12px;"><label>心理メモ</label><textarea id="jEditPsycho"></textarea></div>
     <div class="edit-section" style="margin-bottom:12px;"><label>良かった点 / 反省点</label><textarea id="jEditNote"></textarea></div>
+
+    <!-- 日足チャート画像 -->
+    <div style="margin-bottom:14px;">
+      <div class="tf-label daily" style="margin-bottom:6px;">📆 日足チャート</div>
+      <div id="jEditDailyImgPreviewWrap" style="display:none;position:relative;margin-bottom:6px;">
+        <button class="img-clear-btn" onclick="clearEditImg('jEditDaily')" title="削除">✕</button>
+        <img id="jEditDailyImgPreview" class="preview-img" style="max-height:160px;" onclick="openLightbox(this.src)">
+      </div>
+      <div class="paste-zone" id="pasteZone-jEditDaily" tabindex="0" style="min-height:60px;">
+        <input type="file" id="fileJEditDaily" accept="image/*" style="display:none" onchange="handleEditImgUpload(event,'jEditDaily')">
+        <div style="font-size:16px;">📋</div><p>タップ / Ctrl+V で貼り付け</p>
+      </div>
+    </div>
+
     <!-- 上位足コンテキスト -->
     <div style="background:var(--bg3);border-radius:8px;padding:12px;margin-bottom:12px;border:1px solid var(--border);">
       <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;">📊 上位足コンテキスト</div>
@@ -512,7 +526,19 @@ select option{background:var(--bg3);}
         <div class="edit-section"><label>月足足型</label><input type="text" id="jEditCtxMCandle"></div>
       </div>
       <div class="edit-section" style="margin-bottom:8px;"><label>月足節目</label><input type="text" id="jEditCtxMKey"></div>
-      <div class="edit-section" style="margin-bottom:10px;"><label>月足メモ</label><textarea id="jEditCtxMNote" style="min-height:52px;"></textarea></div>
+      <div class="edit-section" style="margin-bottom:8px;"><label>月足メモ</label><textarea id="jEditCtxMNote" style="min-height:52px;"></textarea></div>
+      <!-- 月足チャート画像 -->
+      <div style="margin-bottom:12px;">
+        <div class="tf-label monthly" style="margin-bottom:6px;">🌙 月足チャート</div>
+        <div id="jEditMonthlyImgPreviewWrap" style="display:none;position:relative;margin-bottom:6px;">
+          <button class="img-clear-btn" onclick="clearEditImg('jEditMonthly')" title="削除">✕</button>
+          <img id="jEditMonthlyImgPreview" class="preview-img" style="max-height:140px;" onclick="openLightbox(this.src)">
+        </div>
+        <div class="paste-zone" id="pasteZone-jEditMonthly" tabindex="0" style="min-height:52px;">
+          <input type="file" id="fileJEditMonthly" accept="image/*" style="display:none" onchange="handleEditImgUpload(event,'jEditMonthly')">
+          <div style="font-size:14px;">📋</div><p>タップ / Ctrl+V で貼り付け</p>
+        </div>
+      </div>
       <div class="edit-grid2" style="margin-bottom:8px;">
         <div class="edit-section"><label>週足バイアス</label>
           <select id="jEditCtxWDir"><option value="">-</option><option value="ロング優位">↑ ロング優位</option><option value="ショート優位">↓ ショート優位</option><option value="レンジ">↔ レンジ</option></select>
@@ -520,7 +546,19 @@ select option{background:var(--bg3);}
         <div class="edit-section"><label>週足足型</label><input type="text" id="jEditCtxWCandle"></div>
       </div>
       <div class="edit-section" style="margin-bottom:8px;"><label>週足節目</label><input type="text" id="jEditCtxWKey"></div>
-      <div class="edit-section"><label>週足メモ</label><textarea id="jEditCtxWNote" style="min-height:52px;"></textarea></div>
+      <div class="edit-section" style="margin-bottom:8px;"><label>週足メモ</label><textarea id="jEditCtxWNote" style="min-height:52px;"></textarea></div>
+      <!-- 週足チャート画像 -->
+      <div>
+        <div class="tf-label weekly" style="margin-bottom:6px;">📅 週足チャート</div>
+        <div id="jEditWeeklyImgPreviewWrap" style="display:none;position:relative;margin-bottom:6px;">
+          <button class="img-clear-btn" onclick="clearEditImg('jEditWeekly')" title="削除">✕</button>
+          <img id="jEditWeeklyImgPreview" class="preview-img" style="max-height:140px;" onclick="openLightbox(this.src)">
+        </div>
+        <div class="paste-zone" id="pasteZone-jEditWeekly" tabindex="0" style="min-height:52px;">
+          <input type="file" id="fileJEditWeekly" accept="image/*" style="display:none" onchange="handleEditImgUpload(event,'jEditWeekly')">
+          <div style="font-size:14px;">📋</div><p>タップ / Ctrl+V で貼り付け</p>
+        </div>
+      </div>
     </div>
     <div class="edit-actions">
       <button class="btn btn-primary" style="flex:1;" onclick="saveJournalEdit()">💾 保存</button>
@@ -1257,6 +1295,17 @@ function initPasteZones() {
     for (const item of items) {
       if (!item.type.startsWith('image/')) continue;
       const file = item.getAsFile(); if (!file) continue;
+      // 編集モーダルが開いているかチェック
+      if (document.getElementById('jnlEditModal')?.classList.contains('open')) {
+        // アクティブなペーストゾーンを探す
+        const activeZone = ['jEditDaily','jEditMonthly','jEditWeekly'].find(key => {
+          const z = document.getElementById('pasteZone-' + key);
+          return z && z.classList.contains('paste-active');
+        });
+        const targetKey = activeZone || 'jEditDaily'; // デフォルトは日足
+        const r = new FileReader(); r.onload = ev => setEditImg(targetKey, ev.target.result); r.readAsDataURL(file);
+        e.preventDefault(); break;
+      }
       let targetPreviewId = null;
       if (activePasteZoneId && PASTE_MAP[activePasteZoneId]) { targetPreviewId = PASTE_MAP[activePasteZoneId]; }
       else if (document.activeElement?.classList.contains('paste-zone')) { targetPreviewId = PASTE_MAP[document.activeElement.id]; }
@@ -1636,6 +1685,30 @@ function calcATR() {
 }
 
 // ===== 振り返りノート 編集 =====
+// 編集モーダル用の一時画像ストア
+let jEditImgs = { jEditDaily: null, jEditMonthly: null, jEditWeekly: null };
+
+function handleEditImgUpload(event, key) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => setEditImg(key, e.target.result);
+  reader.readAsDataURL(file);
+}
+function setEditImg(key, src) {
+  jEditImgs[key] = src;
+  const previewWrap = document.getElementById(key + 'ImgPreviewWrap');
+  const previewImg  = document.getElementById(key + 'ImgPreview');
+  if (previewImg)  previewImg.src = src;
+  if (previewWrap) previewWrap.style.display = 'block';
+}
+function clearEditImg(key) {
+  jEditImgs[key] = null;
+  const previewWrap = document.getElementById(key + 'ImgPreviewWrap');
+  const previewImg  = document.getElementById(key + 'ImgPreview');
+  if (previewImg)  previewImg.src = '';
+  if (previewWrap) previewWrap.style.display = 'none';
+}
+
 function openJnlEditModal(id) {
   const e = journals.find(j => String(j.id) === String(id)); if (!e) return;
   document.getElementById('jEditId').value = id;
@@ -1668,9 +1741,41 @@ function openJnlEditModal(id) {
   document.getElementById('jEditCtxWCandle').value = ctx.weekly?.candle  || '';
   document.getElementById('jEditCtxWKey').value    = ctx.weekly?.key     || '';
   document.getElementById('jEditCtxWNote').value   = ctx.weekly?.note    || '';
+  // 画像の初期化（既存画像があれば表示）
+  const imgs = {
+    jEditDaily:   e.img || null,
+    jEditMonthly: ctx.monthly?.img || null,
+    jEditWeekly:  ctx.weekly?.img  || null
+  };
+  Object.entries(imgs).forEach(([key, src]) => {
+    jEditImgs[key] = src;
+    const wrap = document.getElementById(key + 'ImgPreviewWrap');
+    const img  = document.getElementById(key + 'ImgPreview');
+    if (src) { if (img) img.src = src; if (wrap) wrap.style.display = 'block'; }
+    else     { if (img) img.src = '';  if (wrap) wrap.style.display = 'none';  }
+  });
+  // paste zoneをeditモーダル用にも登録
+  ['jEditDaily','jEditMonthly','jEditWeekly'].forEach(key => {
+    const zone = document.getElementById('pasteZone-' + key);
+    const fileInput = document.getElementById('file' + key.charAt(0).toUpperCase() + key.slice(1));
+    if (zone && !zone._editInited) {
+      zone._editInited = true;
+      zone.addEventListener('click', () => { if (fileInput) fileInput.click(); });
+      zone.addEventListener('dragover', ev => { ev.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', ev => {
+        ev.preventDefault(); zone.classList.remove('drag-over');
+        const file = ev.dataTransfer.files[0]; if (!file || !file.type.startsWith('image/')) return;
+        const r = new FileReader(); r.onload = e2 => setEditImg(key, e2.target.result); r.readAsDataURL(file);
+      });
+    }
+  });
   document.getElementById('jnlEditModal').classList.add('open');
 }
-function closeJnlEditModal() { document.getElementById('jnlEditModal').classList.remove('open'); }
+function closeJnlEditModal() {
+  document.getElementById('jnlEditModal').classList.remove('open');
+  jEditImgs = { jEditDaily: null, jEditMonthly: null, jEditWeekly: null };
+}
 
 function saveJournalEdit() {
   const id = document.getElementById('jEditId').value;
@@ -1681,6 +1786,10 @@ function saveJournalEdit() {
     : journals[idx].date;
   const mDir = document.getElementById('jEditCtxMDir').value;
   const wDir = document.getElementById('jEditCtxWDir').value;
+  // 画像：新しくセットされていれば更新、nullなら既存を保持（clearEditImgで明示削除した場合はnull）
+  const dailyImg   = jEditImgs.jEditDaily   !== undefined ? jEditImgs.jEditDaily   : journals[idx].img;
+  const monthlyImg = jEditImgs.jEditMonthly !== undefined ? jEditImgs.jEditMonthly : journals[idx].ctx?.monthly?.img;
+  const weeklyImg  = jEditImgs.jEditWeekly  !== undefined ? jEditImgs.jEditWeekly  : journals[idx].ctx?.weekly?.img;
   journals[idx] = {
     ...journals[idx],
     date:         tradeDate,
@@ -1696,9 +1805,10 @@ function saveJournalEdit() {
     situation:    document.getElementById('jEditSituation').value,
     psychoNote:   document.getElementById('jEditPsycho').value,
     note:         document.getElementById('jEditNote').value,
+    img:          dailyImg,
     ctx: {
-      monthly: { dir: mDir, candle: document.getElementById('jEditCtxMCandle').value, key: document.getElementById('jEditCtxMKey').value, note: document.getElementById('jEditCtxMNote').value, img: journals[idx].ctx?.monthly?.img || null },
-      weekly:  { dir: wDir, candle: document.getElementById('jEditCtxWCandle').value, key: document.getElementById('jEditCtxWKey').value, note: document.getElementById('jEditCtxWNote').value, img: journals[idx].ctx?.weekly?.img  || null }
+      monthly: { dir: mDir, candle: document.getElementById('jEditCtxMCandle').value, key: document.getElementById('jEditCtxMKey').value, note: document.getElementById('jEditCtxMNote').value, img: monthlyImg },
+      weekly:  { dir: wDir, candle: document.getElementById('jEditCtxWCandle').value, key: document.getElementById('jEditCtxWKey').value, note: document.getElementById('jEditCtxWNote').value, img: weeklyImg  }
     }
   };
   const toSave = journals.map(j => ({ ...j, img: null, ctx: j.ctx ? { monthly:{...j.ctx.monthly,img:null}, weekly:{...j.ctx.weekly,img:null} } : null }));
