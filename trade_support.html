@@ -267,6 +267,18 @@ select option{background:var(--bg3);}
   .hist-meta-grid{grid-template-columns:1fr;}
   .hist-card-header{padding:10px 12px;}
 }
+.edit-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:flex-start;justify-content:center;z-index:99998;padding:16px;overflow-y:auto;}
+.edit-modal.open{display:flex;}
+.edit-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px 20px;width:100%;max-width:620px;margin:auto;}
+.edit-box h2{font-size:16px;font-weight:700;margin-bottom:14px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.edit-section{margin-bottom:14px;}
+.edit-section label{font-size:12px;color:var(--muted);margin-bottom:4px;display:block;}
+.edit-section input,.edit-section select,.edit-section textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;}
+.edit-section input:focus,.edit-section select:focus,.edit-section textarea:focus{border-color:var(--accent);}
+.edit-section textarea{resize:vertical;min-height:72px;}
+.edit-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.edit-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:640px){.edit-grid2{grid-template-columns:1fr;}.edit-box{padding:14px;}}
 .apikey-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;}
 .apikey-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px 24px;max-width:440px;width:100%;}
 .apikey-box h2{font-size:17px;font-weight:700;margin-bottom:6px;color:var(--text);}
@@ -441,6 +453,154 @@ select option{background:var(--bg3);}
       <button class="btn btn-ghost" onclick="closeApiKeyModal()">あとで</button>
     </div>
     <div class="apikey-note">🔒 キーはブラウザのlocalStorageに保存されます。<br>📋 取得先: <span style="color:var(--accent);">console.anthropic.com</span> → APIキー</div>
+  </div>
+</div>
+
+<!-- ===== 振り返りノート 編集モーダル ===== -->
+<div class="edit-modal" id="jnlEditModal">
+  <div class="edit-box">
+    <h2>✏️ 振り返りノート編集</h2>
+    <input type="hidden" id="jEditId">
+    <div class="edit-grid2" style="margin-bottom:12px;">
+      <div class="edit-section">
+        <label>📅 トレード日</label>
+        <input type="date" id="jEditDate">
+      </div>
+      <div class="edit-section">
+        <label>結果タイプ</label>
+        <select id="jEditType">
+          <option value="win">✅ 勝ち</option>
+          <option value="loss">❌ 負け</option>
+          <option value="be">🔰 建値</option>
+          <option value="pass">⭕ 見送り成功</option>
+          <option value="miss">⚠️ 機会損失</option>
+        </select>
+      </div>
+    </div>
+    <div class="edit-grid2" style="margin-bottom:12px;">
+      <div class="edit-section"><label>損益 USD</label><input type="number" id="jEditPnlUsd" placeholder="+500 / -200"></div>
+      <div class="edit-section"><label>損益 pips</label><input type="number" id="jEditPnlPips" placeholder="+15 / -8"></div>
+    </div>
+    <div class="edit-grid2" style="margin-bottom:12px;">
+      <div class="edit-section"><label>損切り幅 (pips)</label><input type="number" id="jEditSlPips"></div>
+      <div class="edit-section"><label>エントリー方向</label>
+        <select id="jEditDirection"><option value="">-</option><option>ロング</option><option>ショート</option></select>
+      </div>
+    </div>
+    <div class="edit-grid2" style="margin-bottom:12px;">
+      <div class="edit-section"><label>月足バイアス</label>
+        <select id="jEditBiasMonthly"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select>
+      </div>
+      <div class="edit-section"><label>週足バイアス</label>
+        <select id="jEditBiasWeekly"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select>
+      </div>
+    </div>
+    <div class="edit-section" style="margin-bottom:12px;"><label>日足バイアス</label>
+      <select id="jEditBiasDaily"><option value="">-</option><option>ロング優位</option><option>ショート優位</option><option>レンジ</option></select>
+    </div>
+    <div class="edit-section" style="margin-bottom:12px;"><label>セットアップ・環境</label><input type="text" id="jEditSetup"></div>
+    <div class="edit-section" style="margin-bottom:12px;"><label>トレード状況</label><textarea id="jEditSituation"></textarea></div>
+    <div class="edit-section" style="margin-bottom:12px;"><label>心理メモ</label><textarea id="jEditPsycho"></textarea></div>
+    <div class="edit-section" style="margin-bottom:12px;"><label>良かった点 / 反省点</label><textarea id="jEditNote"></textarea></div>
+    <!-- 上位足コンテキスト -->
+    <div style="background:var(--bg3);border-radius:8px;padding:12px;margin-bottom:12px;border:1px solid var(--border);">
+      <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;">📊 上位足コンテキスト</div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>月足バイアス</label>
+          <select id="jEditCtxMDir"><option value="">-</option><option value="ロング優位">↑ ロング優位</option><option value="ショート優位">↓ ショート優位</option><option value="レンジ">↔ レンジ</option></select>
+        </div>
+        <div class="edit-section"><label>月足足型</label><input type="text" id="jEditCtxMCandle"></div>
+      </div>
+      <div class="edit-section" style="margin-bottom:8px;"><label>月足節目</label><input type="text" id="jEditCtxMKey"></div>
+      <div class="edit-section" style="margin-bottom:10px;"><label>月足メモ</label><textarea id="jEditCtxMNote" style="min-height:52px;"></textarea></div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>週足バイアス</label>
+          <select id="jEditCtxWDir"><option value="">-</option><option value="ロング優位">↑ ロング優位</option><option value="ショート優位">↓ ショート優位</option><option value="レンジ">↔ レンジ</option></select>
+        </div>
+        <div class="edit-section"><label>週足足型</label><input type="text" id="jEditCtxWCandle"></div>
+      </div>
+      <div class="edit-section" style="margin-bottom:8px;"><label>週足節目</label><input type="text" id="jEditCtxWKey"></div>
+      <div class="edit-section"><label>週足メモ</label><textarea id="jEditCtxWNote" style="min-height:52px;"></textarea></div>
+    </div>
+    <div class="edit-actions">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveJournalEdit()">💾 保存</button>
+      <button class="btn btn-ghost" onclick="closeJnlEditModal()">キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 環境認識 編集モーダル ===== -->
+<div class="edit-modal" id="envEditModal">
+  <div class="edit-box">
+    <h2>✏️ 環境認識メモ編集</h2>
+    <input type="hidden" id="eEditId">
+    <div style="font-size:12px;color:var(--accent);background:rgba(79,142,247,.08);border-radius:6px;padding:8px 12px;margin-bottom:14px;">📅 <span id="eEditDateLabel"></span></div>
+    <!-- 月足 -->
+    <div style="border-left:3px solid var(--purple);padding-left:10px;margin-bottom:14px;">
+      <div class="tf-label monthly" style="margin-bottom:8px;">🌙 月足</div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>バイアス</label>
+          <select id="eEditMDir"><option value="">未設定</option><option value="ロング優位">↑ ロング優位</option><option value="ショート優位">↓ ショート優位</option><option value="レンジ">↔ レンジ</option></select>
+        </div>
+        <div class="edit-section"><label>足型</label>
+          <select id="eEditMCandle"><option value="">選択...</option><option>陽線（スラスト）</option><option>陰線（スラスト）</option><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option><option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>十字線（ドージ）</option></select>
+        </div>
+      </div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>トレンド/レンジ</label>
+          <select id="eEditMState"><option value="">選択...</option><option>トレンド継続</option><option>トレンドレス</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select>
+        </div>
+        <div class="edit-section"><label>節目</label><input type="text" id="eEditMKey"></div>
+      </div>
+      <div class="edit-section"><label>メモ</label><textarea id="eEditMNote"></textarea></div>
+    </div>
+    <!-- 週足 -->
+    <div style="border-left:3px solid var(--amber);padding-left:10px;margin-bottom:14px;">
+      <div class="tf-label weekly" style="margin-bottom:8px;">📅 週足</div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>バイアス</label>
+          <select id="eEditWDir"><option value="">未設定</option><option value="ロング優位">↑ ロング優位</option><option value="ショート優位">↓ ショート優位</option><option value="レンジ">↔ レンジ</option></select>
+        </div>
+        <div class="edit-section"><label>足型</label>
+          <select id="eEditWCandle"><option value="">選択...</option><option>陽線（スラスト）</option><option>陰線（スラスト）</option><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option><option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>十字線（ドージ）</option></select>
+        </div>
+      </div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>トレンド/レンジ</label>
+          <select id="eEditWState"><option value="">選択...</option><option>トレンド継続</option><option>トレンドレス</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select>
+        </div>
+        <div class="edit-section"><label>節目</label><input type="text" id="eEditWKey"></div>
+      </div>
+      <div class="edit-section"><label>メモ</label><textarea id="eEditWNote"></textarea></div>
+    </div>
+    <!-- 日足 -->
+    <div style="border-left:3px solid var(--teal);padding-left:10px;margin-bottom:14px;">
+      <div class="tf-label daily" style="margin-bottom:8px;">📆 日足</div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>バイアス</label>
+          <select id="eEditDDir"><option value="">未設定</option><option value="ロング優位">↑ ロング優位</option><option value="ショート優位">↓ ショート優位</option><option value="レンジ">↔ レンジ</option></select>
+        </div>
+        <div class="edit-section"><label>足型</label>
+          <select id="eEditDCandle"><option value="">選択...</option><option>陽線（スラスト）</option><option>陰線（スラスト）</option><option>陽線（上ヒゲ＞実体）</option><option>陰線（上ヒゲ＞実体）</option><option>陽線（下ヒゲ＞実体）</option><option>陰線（下ヒゲ＞実体）</option><option>ピンバー（上ヒゲ）</option><option>ピンバー（下ヒゲ）</option><option>アウトサイド（陽線）</option><option>アウトサイド（陰線）</option><option>コマ足（陽線）</option><option>コマ足（陰線）</option><option>ハラミ足（陽線）</option><option>ハラミ足（陰線）</option><option>十字線（ドージ）</option></select>
+        </div>
+      </div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>トレンド/レンジ</label>
+          <select id="eEditDState"><option value="">選択...</option><option>トレンド継続</option><option>トレンドレス</option><option>レンジ中</option><option>レンジ→トレンド移行疑い</option><option>トレンド→レンジ移行疑い</option></select>
+        </div>
+        <div class="edit-section"><label>節目・キリ番</label><input type="text" id="eEditDKey"></div>
+      </div>
+      <div class="edit-grid2" style="margin-bottom:8px;">
+        <div class="edit-section"><label>アジア高値</label><input type="number" id="eEditAsiaH"></div>
+        <div class="edit-section"><label>アジア安値</label><input type="number" id="eEditAsiaL"></div>
+      </div>
+      <div class="edit-section"><label>メモ</label><textarea id="eEditDNote"></textarea></div>
+    </div>
+    <div class="edit-section" style="margin-bottom:4px;"><label>🤖 AI分析結果（任意修正）</label><textarea id="eEditAI" style="min-height:80px;"></textarea></div>
+    <div class="edit-actions">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveEnvEdit()">💾 保存</button>
+      <button class="btn btn-ghost" onclick="closeEnvEditModal()">キャンセル</button>
+    </div>
   </div>
 </div>
 
@@ -1404,7 +1564,7 @@ function renderEnvHistory() {
   const biasChip = dir => { if (dir==='ロング優位') return `<span class="hist-bias-chip hist-bias-long">↑ ロング</span>`; if (dir==='ショート優位') return `<span class="hist-bias-chip hist-bias-short">↓ ショート</span>`; if (dir==='レンジ') return `<span class="hist-bias-chip hist-bias-range">↔ レンジ</span>`; return `<span class="hist-bias-chip hist-bias-none">未設定</span>`; };
   const tfSection = (tf, data, label, cls) => { if (!data) return ''; const hasContent = data.candle||data.state||data.note||data.key||data.asiaH||data.asiaL; if (!hasContent) return ''; return `<div class="hist-tf-section"><div class="hist-tf-label ${cls}">${label}</div><div class="hist-meta-grid">${data.candle?`<div class="hist-meta-item">足型: <strong>${data.candle}</strong></div>`:''} ${data.state?`<div class="hist-meta-item">状態: <strong>${data.state}</strong></div>`:''} ${data.key?`<div class="hist-meta-item">節目: <strong>${data.key}</strong></div>`:''} ${data.asiaH?`<div class="hist-meta-item">AS高値: <strong>${data.asiaH}</strong></div>`:''} ${data.asiaL?`<div class="hist-meta-item">AS安値: <strong>${data.asiaL}</strong></div>`:''}</div>${data.note?`<div class="hist-note">${data.note}</div>`:''}</div>`; };
   const chartCol = (monthly, weekly, daily) => { const hasAny = monthly?.img||weekly?.img||daily?.img; if (!hasAny) return ''; const item = (img, label, cls) => img?`<div class="hist-chart-item"><div class="hist-chart-label ${cls}">${label}</div><img src="${img}" class="hist-chart-img" onclick="openLightbox(this.src)" loading="lazy"></div>` : ''; return `<div class="hist-charts-col">${item(monthly?.img,'🌙 月足','monthly')}${item(weekly?.img,'📅 週足','weekly')}${item(daily?.img,'📆 日足','daily')}</div>`; };
-  list.innerHTML = Object.entries(groups).map(([key, group]) => `<div class="month-group"><div class="month-group-label">📅 ${group.label} (${group.items.length}件)</div>${group.items.map(m => `<div class="hist-card" id="histCard-${m.id}"><div class="hist-card-header" onclick="toggleHistCard('${m.id}')"><span class="hist-date-badge">${m.dateLabel}</span><div class="hist-bias-row">${biasChip(m.monthly?.dir)}${biasChip(m.weekly?.dir)}${biasChip(m.daily?.dir)}</div><span class="hist-chevron" id="chevron-${m.id}">▼</span></div><div class="hist-body" id="histBody-${m.id}">${chartCol(m.monthly,m.weekly,m.daily)}${tfSection('monthly',m.monthly,'🌙 月足','monthly')}${tfSection('weekly',m.weekly,'📅 週足','weekly')}${tfSection('daily',m.daily,'📆 日足','daily')}${m.aiResult?`<div style="margin-top:12px;"><div class="hist-tf-label" style="color:var(--accent);margin-bottom:6px;">🤖 AI分析結果</div><div class="hist-ai">${m.aiResult}</div></div>`:''}<div class="hist-actions"><button class="btn btn-ghost btn-sm" onclick="deleteEnvMemo('${m.id}')">🗑 削除</button></div></div></div>`).join('')}</div>`).join('');
+  list.innerHTML = Object.entries(groups).map(([key, group]) => `<div class="month-group"><div class="month-group-label">📅 ${group.label} (${group.items.length}件)</div>${group.items.map(m => `<div class="hist-card" id="histCard-${m.id}"><div class="hist-card-header" onclick="toggleHistCard('${m.id}')"><span class="hist-date-badge">${m.dateLabel}</span><div class="hist-bias-row">${biasChip(m.monthly?.dir)}${biasChip(m.weekly?.dir)}${biasChip(m.daily?.dir)}</div><span class="hist-chevron" id="chevron-${m.id}">▼</span></div><div class="hist-body" id="histBody-${m.id}">${chartCol(m.monthly,m.weekly,m.daily)}${tfSection('monthly',m.monthly,'🌙 月足','monthly')}${tfSection('weekly',m.weekly,'📅 週足','weekly')}${tfSection('daily',m.daily,'📆 日足','daily')}${m.aiResult?`<div style="margin-top:12px;"><div class="hist-tf-label" style="color:var(--accent);margin-bottom:6px;">🤖 AI分析結果</div><div class="hist-ai">${m.aiResult}</div></div>`:''}<div class="hist-actions"><button class="btn btn-ghost btn-sm" onclick="openEnvEditModal('${m.id}')">✏️ 編集</button><button class="btn btn-ghost btn-sm" onclick="deleteEnvMemo('${m.id}')">🗑 削除</button></div></div></div>`).join('')}</div>`).join('');
 }
 function toggleHistCard(id) { const body = document.getElementById('histBody-'+id); const chevron = document.getElementById('chevron-'+id); if (!body) return; const isOpen = body.classList.toggle('open'); if (chevron) chevron.classList.toggle('open', isOpen); }
 function deleteEnvMemo(id) { if (!confirm('このメモを削除しますか？')) return; envMemos = envMemos.filter(m => String(m.id) !== String(id)); localStorage.setItem('envMemos', JSON.stringify(envMemos)); renderEnvHistory(); }
@@ -1475,7 +1635,134 @@ function calcATR() {
   document.getElementById('r_judge').innerHTML = judge;
 }
 
-// ===== 振り返りノート 日付ピッカー =====
+// ===== 振り返りノート 編集 =====
+function openJnlEditModal(id) {
+  const e = journals.find(j => String(j.id) === String(id)); if (!e) return;
+  document.getElementById('jEditId').value = id;
+  // 日付をYYYY-MM-DD形式に変換
+  const dateObj = new Date(e.date);
+  if (!isNaN(dateObj)) {
+    document.getElementById('jEditDate').value = dateObj.toISOString().slice(0,10);
+  } else {
+    document.getElementById('jEditDate').value = new Date().toISOString().slice(0,10);
+  }
+  document.getElementById('jEditType').value       = e.type || 'win';
+  document.getElementById('jEditPnlUsd').value     = e.pnlUsd ?? '';
+  document.getElementById('jEditPnlPips').value    = e.pnlPips ?? '';
+  document.getElementById('jEditSlPips').value     = e.slPips ?? '';
+  document.getElementById('jEditDirection').value  = e.direction || '';
+  document.getElementById('jEditBiasMonthly').value= e.biasMonthly || '';
+  document.getElementById('jEditBiasWeekly').value = e.biasWeekly || '';
+  document.getElementById('jEditBiasDaily').value  = e.biasDaily || '';
+  document.getElementById('jEditSetup').value      = e.setup || '';
+  document.getElementById('jEditSituation').value  = e.situation || '';
+  document.getElementById('jEditPsycho').value     = e.psychoNote || '';
+  document.getElementById('jEditNote').value       = e.note || '';
+  // 上位足コンテキスト
+  const ctx = e.ctx || {};
+  document.getElementById('jEditCtxMDir').value    = ctx.monthly?.dir    || '';
+  document.getElementById('jEditCtxMCandle').value = ctx.monthly?.candle || '';
+  document.getElementById('jEditCtxMKey').value    = ctx.monthly?.key    || '';
+  document.getElementById('jEditCtxMNote').value   = ctx.monthly?.note   || '';
+  document.getElementById('jEditCtxWDir').value    = ctx.weekly?.dir     || '';
+  document.getElementById('jEditCtxWCandle').value = ctx.weekly?.candle  || '';
+  document.getElementById('jEditCtxWKey').value    = ctx.weekly?.key     || '';
+  document.getElementById('jEditCtxWNote').value   = ctx.weekly?.note    || '';
+  document.getElementById('jnlEditModal').classList.add('open');
+}
+function closeJnlEditModal() { document.getElementById('jnlEditModal').classList.remove('open'); }
+
+function saveJournalEdit() {
+  const id = document.getElementById('jEditId').value;
+  const idx = journals.findIndex(j => String(j.id) === String(id)); if (idx < 0) return;
+  const dateVal = document.getElementById('jEditDate').value;
+  const tradeDate = dateVal
+    ? new Date(dateVal + 'T00:00:00').toLocaleDateString('ja-JP', { year:'numeric', month:'numeric', day:'numeric' })
+    : journals[idx].date;
+  const mDir = document.getElementById('jEditCtxMDir').value;
+  const wDir = document.getElementById('jEditCtxWDir').value;
+  journals[idx] = {
+    ...journals[idx],
+    date:         tradeDate,
+    type:         document.getElementById('jEditType').value,
+    pnlUsd:       document.getElementById('jEditPnlUsd').value  !== '' ? parseFloat(document.getElementById('jEditPnlUsd').value)  : null,
+    pnlPips:      document.getElementById('jEditPnlPips').value !== '' ? parseFloat(document.getElementById('jEditPnlPips').value) : null,
+    slPips:       document.getElementById('jEditSlPips').value  !== '' ? parseFloat(document.getElementById('jEditSlPips').value)  : null,
+    direction:    document.getElementById('jEditDirection').value,
+    biasMonthly:  mDir,
+    biasWeekly:   wDir,
+    biasDaily:    document.getElementById('jEditBiasDaily').value,
+    setup:        document.getElementById('jEditSetup').value,
+    situation:    document.getElementById('jEditSituation').value,
+    psychoNote:   document.getElementById('jEditPsycho').value,
+    note:         document.getElementById('jEditNote').value,
+    ctx: {
+      monthly: { dir: mDir, candle: document.getElementById('jEditCtxMCandle').value, key: document.getElementById('jEditCtxMKey').value, note: document.getElementById('jEditCtxMNote').value, img: journals[idx].ctx?.monthly?.img || null },
+      weekly:  { dir: wDir, candle: document.getElementById('jEditCtxWCandle').value, key: document.getElementById('jEditCtxWKey').value, note: document.getElementById('jEditCtxWNote').value, img: journals[idx].ctx?.weekly?.img  || null }
+    }
+  };
+  const toSave = journals.map(j => ({ ...j, img: null, ctx: j.ctx ? { monthly:{...j.ctx.monthly,img:null}, weekly:{...j.ctx.weekly,img:null} } : null }));
+  localStorage.setItem('tradeJournals', JSON.stringify(toSave));
+  closeJnlEditModal();
+  renderJournals();
+  updateStats();
+  alert('✅ 振り返りノートを更新しました');
+}
+
+// ===== 環境認識メモ 編集 =====
+function openEnvEditModal(id) {
+  const m = envMemos.find(x => String(x.id) === String(id)); if (!m) return;
+  document.getElementById('eEditId').value = id;
+  document.getElementById('eEditDateLabel').textContent = m.dateLabel || '';
+  // 月足
+  document.getElementById('eEditMDir').value    = m.monthly?.dir    || '';
+  document.getElementById('eEditMCandle').value = m.monthly?.candle || '';
+  document.getElementById('eEditMState').value  = m.monthly?.state  || '';
+  document.getElementById('eEditMKey').value    = m.monthly?.key    || '';
+  document.getElementById('eEditMNote').value   = m.monthly?.note   || '';
+  // 週足
+  document.getElementById('eEditWDir').value    = m.weekly?.dir    || '';
+  document.getElementById('eEditWCandle').value = m.weekly?.candle || '';
+  document.getElementById('eEditWState').value  = m.weekly?.state  || '';
+  document.getElementById('eEditWKey').value    = m.weekly?.key    || '';
+  document.getElementById('eEditWNote').value   = m.weekly?.note   || '';
+  // 日足
+  document.getElementById('eEditDDir').value    = m.daily?.dir    || '';
+  document.getElementById('eEditDCandle').value = m.daily?.candle || '';
+  document.getElementById('eEditDState').value  = m.daily?.state  || '';
+  document.getElementById('eEditDKey').value    = m.daily?.key    || '';
+  document.getElementById('eEditAsiaH').value   = m.daily?.asiaH  || '';
+  document.getElementById('eEditAsiaL').value   = m.daily?.asiaL  || '';
+  document.getElementById('eEditDNote').value   = m.daily?.note   || '';
+  // AI結果
+  document.getElementById('eEditAI').value = m.aiResult || '';
+  document.getElementById('envEditModal').classList.add('open');
+}
+function closeEnvEditModal() { document.getElementById('envEditModal').classList.remove('open'); }
+
+function saveEnvEdit() {
+  const id = document.getElementById('eEditId').value;
+  const idx = envMemos.findIndex(m => String(m.id) === String(id)); if (idx < 0) return;
+  envMemos[idx] = {
+    ...envMemos[idx],
+    monthly: { ...envMemos[idx].monthly, dir: document.getElementById('eEditMDir').value, candle: document.getElementById('eEditMCandle').value, state: document.getElementById('eEditMState').value, key: document.getElementById('eEditMKey').value, note: document.getElementById('eEditMNote').value },
+    weekly:  { ...envMemos[idx].weekly,  dir: document.getElementById('eEditWDir').value, candle: document.getElementById('eEditWCandle').value, state: document.getElementById('eEditWState').value, key: document.getElementById('eEditWKey').value, note: document.getElementById('eEditWNote').value },
+    daily:   { ...envMemos[idx].daily,   dir: document.getElementById('eEditDDir').value, candle: document.getElementById('eEditDCandle').value, state: document.getElementById('eEditDState').value, key: document.getElementById('eEditDKey').value, asiaH: document.getElementById('eEditAsiaH').value, asiaL: document.getElementById('eEditAsiaL').value, note: document.getElementById('eEditDNote').value },
+    aiResult: document.getElementById('eEditAI').value
+  };
+  const toSave = envMemos.map(m => ({ ...m, monthly:{...m.monthly,img:null}, weekly:{...m.weekly,img:null}, daily:{...m.daily,img:null} }));
+  localStorage.setItem('envMemos', JSON.stringify(toSave));
+  closeEnvEditModal();
+  renderEnvHistory();
+  alert('✅ 環境認識メモを更新しました');
+}
+
+// モーダル外クリックで閉じる
+document.addEventListener('click', e => {
+  if (e.target === document.getElementById('jnlEditModal')) closeJnlEditModal();
+  if (e.target === document.getElementById('envEditModal')) closeEnvEditModal();
+});
+
 function initJournalDate() {
   const el = document.getElementById('jTradeDate');
   if (!el) return;
@@ -1687,7 +1974,8 @@ function renderJournals() {
       ${e.psychoNote?`<div style="font-size:12px;color:#a78bfa;margin-bottom:4px;">🧠 心理: ${e.psychoNote}</div>`:''}
       <div class="entry-body">${e.note}</div>
       ${e.img?`<img src="${e.img}" class="entry-img" onclick="openLightbox(this.src)">`:''}
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="openJnlEditModal('${e.id}')" style="font-size:11px;padding:5px 10px;">✏️ 編集</button>
         <button class="btn btn-ghost btn-sm" onclick="deleteJournal('${e.id}')" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red);">🗑 削除</button>
       </div>
     </div>`;
